@@ -33,5 +33,8 @@ in {
         };
       };
     };
+    programs.bash.shellAliases = {
+      d = "br";
+    };
   };
 }

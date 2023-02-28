@@ -33,19 +33,13 @@ in {
       shellAliases = {
         cat = "bat";
         less = "bat --paging=always";
-        ls = "lsd";
-        la = "ls --long --all --no-symlink";
-        lt = "ls --tree --no-symlink";
         sudo = "doas";
         pandoc = "pandoc --pdf-engine tectonic";
-        d = "br";
         ".." = "cd ..";
         "..." = "cd ../..";
         "...." = "cd ../../..";
         md = "mkdir -pv";
         rm = "rm -rf";
-        # brave = "GDK_BACKEND='wayland' brave --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
-        # x = "startx";
       };
       shellOptions = ["histappend" "checkwinsize" "extglob" "globstar" "checkjobs"];
 
@@ -58,18 +52,11 @@ in {
       bashrcExtra = ''
         export PS1="\e[0;32m\w\e[m\n% "
       '';
-      # logoutExtra = '''';
-      # profileExtra = '''';
     };
 
-    # Edit ~/.inputrc
     programs.readline = {
       enable = true;
       includeSystemConfig = true;
-      # variables = {};
-      # bindings = {
-      #   # "\\C-b" = ''cd ..\n'';
-      # };
       extraConfig = ''
         # Prettify
         set colored-stats on
@@ -78,7 +65,6 @@ in {
         # Completion Settings
         set show-all-if-ambiguous on
         set completion-ignore-case on
-
       '';
     };
   };
