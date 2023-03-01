@@ -12,7 +12,7 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     hyprland.url = "github:hyprwm/Hyprland";
-
+    #
     # nur = {
     #   url = "github:nix-community/NUR";
     #   inputs.nixpkgs.follows = "nixpkgs";
