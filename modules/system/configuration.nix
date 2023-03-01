@@ -134,7 +134,7 @@
       isNormalUser = true;
       uid = 1000;
       group = "users";
-      extraGroups = ["adbusers" "input" "wheel" "video" "audio"];
+      extraGroups = ["adbusers" "input" "wheel" "video" "audio" "networkmanager"];
       shell = pkgs.bash;
     };
   };
@@ -144,25 +144,26 @@
   # Set up networking and secure it
   networking = {
     nameservers = ["9.9.9.9" "149.112.112.112"];
-    # networkmanager = {
-    #   enable = true;
-    #   wifi = {
-    #     backend = "wpa_supplicant"; # or iwd
-    #     macAddress = "random";
-    #   };
-    #   dns = "none";
-    # };
-    wireless.iwd = {
+    networkmanager = {
       enable = true;
-      settings = {
-        General.AddressRandomization = "network";
-        Settings = {
-          # change both to true for ipv6.
-          AlwaysRandomizeAddress = true;
-          EnableIPv6 = true;
-        };
+      wifi = {
+        backend = "wpa_supplicant"; # or iwd
+        macAddress = "random";
       };
+      # dns = "none";
     };
+    # wireless.iwd = {
+    #   enable = true;
+    #   settings = {
+    #     General.AddressRandomization = "network";
+    #     Settings = {
+    #       # change both to true for ipv6.
+    #       AlwaysRandomizeAddress = true;
+    #       EnableIPv6 = true;
+    #     };
+    #   };
+    # };
+
     firewall = {
       enable = false;
       #    allowedTCPPorts = [ 80 443 ];

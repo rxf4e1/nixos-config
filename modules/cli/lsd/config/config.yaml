@@ -60,7 +60,7 @@ icons:
   # When to use icons.
   # When "classic" is set, this is set to "never".
   # Possible values: always, auto, never
-  when: auto
+  when: never
   # Which icon theme to use.
   # Possible values: fancy, unicode
   theme: fancy
@@ -101,7 +101,7 @@ size: default
 # == Permission ==
 # Specify the format of the permission column
 # Possible value: rwx, octal
-permission: rwx
+permission: octal
 
 # == Sorting ==
 sorting:
