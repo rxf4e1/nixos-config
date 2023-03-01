@@ -46,7 +46,8 @@ in {
         xwayland
         wlroots
         wlrctl
-        wlr-randr
+        # wlr-randr
+        kanshi
         wlsunset
         xorg.xprop
         brightnessctl

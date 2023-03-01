@@ -12,5 +12,6 @@ in {
   };
   config = mkIf cfg.enable {
     home.packages = [pkgs.brave];
+    home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
   };
 }

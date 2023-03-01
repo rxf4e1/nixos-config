@@ -15,7 +15,7 @@
     editor = {
       emacs.enable = false;
       kakoune.enable = true;
-      micro.enable = false;
+      micro.enable = true;
       nano.enable = true;
       neovim.enable = false;
     };
