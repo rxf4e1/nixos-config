@@ -12,10 +12,18 @@ with lib; let
     wireshark
   ];
 
+  rust-env = with pkgs; [
+    cargo
+    clippy
+    rustc
+    # rustup
+    rustfmt
+    rust-analyzer
+  ];
+
   code-tools = with pkgs; [
     pandoc
     tectonic
-    cargo
     python3
     perl
     shfmt
@@ -54,6 +62,7 @@ in {
         # zettlr
       ]
       ++ code-tools
+      ++ rust-env
       ++ inet-tools;
     programs.fzf = {
       enable = true;
