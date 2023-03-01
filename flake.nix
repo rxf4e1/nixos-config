@@ -51,7 +51,7 @@
               users.rxf4e1 = ./. + "/hosts/${hostname}/user.nix";
             };
             nixpkgs.overlays = [
-              inputs.emacs-overlay.overlay
+              # inputs.emacs-overlay.overlay
               # nur.overlay
               # (import ./overlays)
             ];
