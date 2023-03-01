@@ -9,7 +9,7 @@
   config.modules = {
     # Browsers
     brave.enable = true;
-    qutebrowser.enable = true;
+    qutebrowser.enable = false;
 
     # Editors
     editor = {
@@ -29,9 +29,12 @@
     # Gui
     desktop = {
       wland = {
-        hyprland.enable = true;
+        # hyprland.enable = true;
+        labwc.enable = true;
         notify.enable = true;
       };
+      gtk.enable = true;
+      # qt6.enable = true; # :TODO:
     };
 
     # CLI

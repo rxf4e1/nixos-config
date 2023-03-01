@@ -73,25 +73,6 @@ in {
     home.shellAliases = {
       x = "wrappedhypr";
     };
-
-    gtk = {
-      enable = true;
-      cursorTheme = {
-        name = "Nordzy-cursor";
-        package = pkgs.nordzy-cursor-theme;
-        size = 16;
-      };
-      font = {
-        name = "Monospace";
-        size = 10;
-      };
-      iconTheme = {name = "Sweet-Rainbow";};
-      theme = {
-        name = "Sweet-Dark";
-        package = pkgs.sweet;
-      };
-    };
-
     # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
     # home.file.".config/tofi/config".source = ./config/tofi.config;
   };

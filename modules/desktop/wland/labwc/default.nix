@@ -21,29 +21,39 @@ with lib; let
     '';
   };
 
-  cfg = config.modules.desktop.labwc;
+  utils = with pkgs; [
+    # ScreenShots
+    grim
+    slurp
+    slop
+    jq
+    # Theme
+    sweet
+    lxappearance-gtk2
+  ];
+
+  cfg = config.modules.desktop.wland.labwc;
 in {
-  options.modules.desktop.labwc = {enable = mkEnableOption "labwc";};
+  options.modules.desktop.wland.labwc = {enable = mkEnableOption "LabWC";};
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      dbus-labwc-environment
-      labwc
-      tofi
-      swaybg
-      wl-clipboard
-      xorg.xprop
-      xwayland
-      wlroots
-      wlrctl
-      wlr-randr
-      wlsunset
-      brightnessctl
-      jaq
-      lxappearance-gtk2
-      matcha-gtk-theme
-      papirus-maia-icon-theme
-      bibata-cursors-translucent
-    ];
+    home.packages = with pkgs;
+      [
+        dbus-labwc-environment
+        labwc
+        tofi
+        bemenu
+        swaybg
+        wl-clipboard
+        xorg.xprop
+        xwayland
+        wlroots
+        wlrctl
+        kanshi
+        wlsunset
+        brightnessctl
+        jaq
+      ]
+      ++ utils;
 
     home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "wlroots";
@@ -58,6 +68,10 @@ in {
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
+    };
+
+    home.shellAliases = {
+      x = "wrappedlab";
     };
   };
 }
