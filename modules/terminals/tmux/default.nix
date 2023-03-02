@@ -12,7 +12,7 @@ in {
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
-      prefix = "C-a";
+      prefix = "C-s";
       keyMode = "emacs";
       baseIndex = 1;
       aggressiveResize = true;

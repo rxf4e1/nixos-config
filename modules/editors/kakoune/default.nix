@@ -14,7 +14,7 @@ in {
       kakoune-cr
     ];
 
-    home.file.".config/kak/kakrc".source = ./config/kakrc;
+    # home.file.".config/kak/kakrc".source = ./config/kakrc;
     # home.file.".config/kak/kakrc.local".source = ./config/kakrc.local;
 
     programs.bash = {

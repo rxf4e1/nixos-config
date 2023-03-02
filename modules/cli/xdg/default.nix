@@ -14,14 +14,10 @@ in {
       enable = true;
       userDirs = {
         enable = true;
-        createDirectories = true;
-        documents = "$HOME/Documents/";
-        download = "$HOME/Downloads/";
-        videos = "$HOME/Videos/";
-        music = "$HOME/Music/";
-        pictures = "$HOME/Pictures/";
-        desktop = "$HOME/Desktop/";
-        publicShare = "$HOME/Public/";
+        createDirectories = false;
+        documents = "$HOME/doc/";
+        download = "$HOME/dl";
+        pictures = "$HOME/pic/";
       };
       # mimeApps = {
       #   enable = true;
