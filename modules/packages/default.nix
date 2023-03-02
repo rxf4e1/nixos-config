@@ -45,7 +45,6 @@ in {
         ripgrep
         ffmpeg
         htop
-        lsd
         bat
         fd
         feh
@@ -66,17 +65,6 @@ in {
       ++ rust-env
       ++ inet-tools
       ++ nix-tools;
-    programs.fzf = {
-      enable = true;
-      enableBashIntegration = true;
-      tmux.enableShellIntegration = true;
-      tmux.shellIntegrationOptions = ["-d 30%"];
-      changeDirWidgetCommand = "fd --color=auto --type=d";
-      changeDirWidgetOptions = ["--preview 'lsd --tree --color=always -L 4 {}'"];
-      defaultCommand = "fd --color=auto";
-      fileWidgetCommand = "fd --color=auto --type=f";
-      fileWidgetOptions = ["--preview 'head -n 100 {}'"];
-    };
 
     programs.bash = {
       initExtra = ''
