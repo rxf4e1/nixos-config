@@ -16,8 +16,9 @@ with lib; let
     cargo
     clippy
     cmake
+    gcc
     rustc
-    # rustup
+    rustup
     rustfmt
     rust-analyzer
   ];
@@ -28,9 +29,14 @@ with lib; let
     python3
     perl
     shfmt
-    alejandra #nixpkgs-fmt
     nodejs
     yarn
+  ];
+
+  nix-tools = with pkgs; [
+    alejandra
+    nix-prefetch-git
+    nix-index
     rnix-lsp
   ];
 
@@ -56,72 +62,25 @@ in {
         pulsemixer
         lolcat
         figlet
-        nix-prefetch-git
         pcmanfm
         poppler
         zathura
-        zettlr
       ]
       ++ code-tools
       ++ rust-env
-      ++ inet-tools;
+      ++ inet-tools
+      ++ nix-tools;
     programs.fzf = {
       enable = true;
       enableBashIntegration = true;
       tmux.enableShellIntegration = true;
       tmux.shellIntegrationOptions = ["-d 30%"];
       changeDirWidgetCommand = "fd --color=auto --type=d";
-      changeDirWidgetOptions = ["--preview 'exa --tree --color=always -L 4 {}'"];
+      changeDirWidgetOptions = ["--preview 'lsd --tree --color=always -L 4 {}'"];
       defaultCommand = "fd --color=auto";
       fileWidgetCommand = "fd --color=auto --type=f";
       fileWidgetOptions = ["--preview 'head -n 100 {}'"];
     };
-    # programs.skim = {
-    #   enable = true;
-    #   enableBashIntegration = true;
-    #   changeDirWidgetCommand = "fd --color=auto --type=d";
-    #   changeDirWidgetOptions = ["--preview 'tree -C {} | head -100'"];
-    #   defaultOptions = ["--prompt ̣⟫ " "--height 40%"];
-    #   defaultCommand = "fd --color=auto";
-    #   fileWidgetCommand = "fd --color=auto --type=f";
-    #   fileWidgetOptions = ["--preview 'head -n 100 {}'"];
-    #   historyWidgetOptions = ["--tac" "--exact"];
-    # };
-
-    # programs.lsd = {
-    #   enable = true;
-    #   enableAliases = true;
-    #   settings = {
-    #     color.when = "auto";
-    #     color.theme = "default";
-    #     date = "date";
-    #     deference = false;
-    #     icons = {
-    #       when = "auto";
-    #       theme = "fancy";
-    #       separator = " ";
-    #     };
-    #     ignore-globs = [".direnv" ".git"];
-    #     indicators = true;
-    #     layout = "grid";
-    #     recursion = {
-    #       enabled = false;
-    #       depth = 3;
-    #     };
-    #     size = "default";
-    #     permission = "octal"; # rwx
-    #     sorting = {
-    #       column = "name";
-    #       reverse = false;
-    #       dir-grouping = "first";
-    #     };
-    #     no-symlink = true;
-    #     total-size = false;
-    #     hyperlink = "auto";
-    #     symlink-arrow = "⇒";
-    #     header = false;
-    #   };
-    # };
 
     programs.bash = {
       initExtra = ''
