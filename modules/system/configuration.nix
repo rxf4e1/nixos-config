@@ -11,7 +11,7 @@
   imports = [
     # ./acme.nix
     # ./nextcloud.nix
-    ./scripts
+    # ./scripts
   ];
 
   environment = {

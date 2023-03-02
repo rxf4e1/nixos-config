@@ -5,6 +5,7 @@
   ...
 }:
 with lib; let
+  machine_id = "aspire-a315";
   cfg = config.modules.bash;
 in {
   options.modules.bash = {enable = mkEnableOption "bash";};
@@ -40,6 +41,9 @@ in {
         "...." = "cd ../../..";
         md = "mkdir -pv";
         rm = "rm -rf";
+        nr = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";
+        nb = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";
+        gc = "nix-collect-garbage --delete-old";
       };
       shellOptions = ["histappend" "checkwinsize" "extglob" "globstar" "checkjobs"];
 

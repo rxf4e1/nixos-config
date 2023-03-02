@@ -72,7 +72,7 @@ in {
     };
 
     home.shellAliases = {
-      x = "wrappedhypr";
+      x = "wrappedhl";
     };
     # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
     # home.file.".config/tofi/config".source = ./config/tofi.config;

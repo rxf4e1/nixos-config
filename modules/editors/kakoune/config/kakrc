@@ -101,10 +101,8 @@ hook global BufCreate .+[rc|\.local|\.conf|\.sh] %{
   set-option buffer filetype sh
 }
 
-hook global BufCreate .+[rs] %{
-  set-option buffer filetype rust
-  set-option buffer formatcmd rustfmt
-}
+hook global BufCreate .+[rs] \
+  %{ set-option buffer filetype rust }
 
 # Tabs to Spaces
 hook global InsertChar \t %{ exec -draft h@ }

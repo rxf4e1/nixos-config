@@ -15,7 +15,7 @@
     editor = {
       emacs.enable = false;
       kakoune.enable = true;
-      micro.enable = true;
+      micro.enable = false;
       nano.enable = true;
       neovim.enable = false;
     };
@@ -29,8 +29,8 @@
     # Gui
     desktop = {
       wland = {
-        # hyprland.enable = true;
-        labwc.enable = true;
+        hyprland.enable = true;
+        labwc.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;

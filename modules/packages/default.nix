@@ -15,6 +15,7 @@ with lib; let
   rust-env = with pkgs; [
     cargo
     clippy
+    cmake
     rustc
     # rustup
     rustfmt
@@ -59,7 +60,7 @@ in {
         pcmanfm
         poppler
         zathura
-        # zettlr
+        zettlr
       ]
       ++ code-tools
       ++ rust-env
