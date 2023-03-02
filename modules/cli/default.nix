@@ -3,6 +3,7 @@
     ./broot
     ./ipfs
     ./direnv
+    ./fzf
     ./git
     ./gpg
     ./lsd

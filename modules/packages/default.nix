@@ -13,19 +13,15 @@ with lib; let
   ];
 
   rust-env = with pkgs; [
-    cargo
-    clippy
-    cmake
-    gcc
-    rustc
     rustup
-    rustfmt
     rust-analyzer
   ];
 
   code-tools = with pkgs; [
     pandoc
     tectonic
+    cmake
+    gcc
     python3
     perl
     shfmt

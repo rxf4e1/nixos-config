@@ -41,6 +41,7 @@
     cli = {
       broot.enable = true;
       direnv.enable = true;
+      fzf.enable = true;
       ipfs.enable = false;
       git.enable = true;
       gpg.enable = true;
