@@ -23,10 +23,10 @@ with lib; let
 
   utils = with pkgs; [
     # ScreenShots
+    flameshot
     grim
     slurp
     slop
-    jq
     # Theming
     sweet
     lxappearance-gtk2
