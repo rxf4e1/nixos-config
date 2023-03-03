@@ -24,6 +24,7 @@ in {
   options.modules.desktop.wland.hikari = {enable = mkEnableOption "Hikari";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
+      hikari
       dbus-hikari-environment
       swaybg
       swayimg
@@ -33,7 +34,7 @@ in {
       kanshi
       wlsunset
       brightnessctl
-      wlrctr
+      wlrctl
       jaq
       jq
       grim
