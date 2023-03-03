@@ -39,6 +39,8 @@ in {
         ".." = "cd ..";
         "..." = "cd ../..";
         "...." = "cd ../../..";
+        du = "du -hs";
+        df = "df -h";
         md = "mkdir -pv";
         rm = "rm -rf";
         nr = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";

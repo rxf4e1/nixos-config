@@ -11,15 +11,11 @@ classic: false
 # layout.
 # Possible values: permission, user, group, context, size, date, name, inode, links
 blocks:
-  # - permission
-  # - user
+  - permission
+  - user
   # - group
   # - size
   # - date
-  # - name
-  - size
-  - permission
-  - user
   - name
 
 # == Color ==
@@ -101,7 +97,7 @@ size: default
 # == Permission ==
 # Specify the format of the permission column
 # Possible value: rwx, octal
-permission: octal
+permission: rwx
 
 # == Sorting ==
 sorting:
