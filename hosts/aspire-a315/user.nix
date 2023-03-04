@@ -22,8 +22,8 @@
 
     # Terminal
     bash.enable = true;
-    foot.enable = true;
-    kitty.enable = false;
+    foot.enable = false;
+    kitty.enable = true;
     tmux.enable = true;
 
     # Gui
