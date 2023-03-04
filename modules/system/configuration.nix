@@ -54,12 +54,12 @@
 
   # Install Fonts
   fonts = {
-    fonts = with pkgs; [roboto openmoji-color terminus-nerdfont tamsyn];
+    fonts = with pkgs; [roboto terminus-nerdfont tamsyn];
 
-    fontconfig = {
-      hinting.autohint = true;
-      defaultFonts = {emoji = ["OpenMoji Color"];};
-    };
+    # fontconfig = {
+    #   hinting.autohint = true;
+    #   defaultFonts = {emoji = ["OpenMoji Color"];};
+    # };
   };
 
   # Wayland stuff: XDG integration, allow sway to use brillo

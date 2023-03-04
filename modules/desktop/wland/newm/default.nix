@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   lib,
   config,
@@ -20,53 +21,59 @@ with lib; let
     '';
   };
 
+  utils = with pkgs; [
+    # ScreenShots
+    grim
+    slurp
+    slop
+    # Theming
+    sweet
+    lxappearance-gtk2
+  ];
+
   cfg = config.modules.desktop.wland.newm;
 in {
-  options.modules.desktop.wland.newm = {enable = mkEnableOption "Newm";};
+  options.modules.desktop.wland.newm = {enable = mkEnableOption "newm";};
   config = mkIf cfg.enable {
-    home.packages =
-      if providePkgs
-      then
-        with pkgs; [
-          dbus-newm-environment
+    # xdg.configFile."newm/config.py".text = "$HOME/.config/newm/config.py";
 
-          newm
-          pywm-fullscreen
+    home.packages = with pkgs; [
+      dbus-newm-environment
+      newm
+      pywm-fullscreen
+      # tofi
+      wofi
+      swayimg
+      wl-clipboard
+      kanshi
+      wlsunset
+      brightnessctl
+      jaq
+    ];
 
-          tofi
-          wl-clipboard
+    home.sessionVariables = {
+      XDG_CURRENT_DESKTOP = "wlroots";
+      XDG_CURRENT_SESSION = "wlroots";
+      XDG_SESSION_DESKTOP = "wlroots";
+      XDG_SESSION_TYPE = "wayland";
+      GDK_BACKEND = "wayland";
+      GDK_SCALE = "2";
+      CLUTTER_BACKEND = "wayland";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_QPA_PLATFORM = "wayland-egl";
+      QT_WAYLAND_FORCE_DPI = "physical";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      SDL_VIDEODRIVER = "wayland";
+      LIBSEAT_BACKEND = "logind";
+    };
 
-          brightnessctl
-          jaq
+    home.shellAliases = {
+    };
 
-          swayimg
-          grim
-          slurp
-          kanshi
-          sweet
-          lxappearance-gtk2
-        ]
-      else [];
-  };
-
-  home.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "newm";
-    XDG_SESSION_DESKTOP = "newm";
-    XDG_SESSION_TYPE = "wayland";
-    GDK_BACKEND = "wayland";
-    GDK_SCALE = "2";
-    WLR_NO_HARDWARE_CURSORS = 1; # Hardware cursors don't properly work inside qemu
-    CLUTTER_BACKEND = "wayland";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-    QT_QPA_PLATFORM = "wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    SDL_VIDEODRIVER = "wayland";
-    LIBSEAT_BACKEND = "logind";
-  };
-
-  programs.bash.shellAliases = {
-    x = "start-newm -d";
+    programs.bash.shellAliases = {
+      x = "wrappedn";
+    };
   };
 }

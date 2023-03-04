@@ -1,8 +1,8 @@
-{...}: {
+inputs @ {...}: {
   imports = [
     ./newm
     ./hyprland
-    ./labwc
+    # ./labwc
     ./notify
   ];
 }

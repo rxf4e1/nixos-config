@@ -19,10 +19,10 @@
     pywm-fullscreenpkg.url = "github:jbuchermn/pywm-fullscreen";
     pywm-fullscreenpkg.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nur = {
-    #   url = "github:nix-community/NUR";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -30,6 +30,7 @@
     nixpkgs,
     newmpkg,
     pywm-fullscreenpkg,
+    nur,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -63,7 +64,7 @@
                 pywm-fullscreen = pywm-fullscreenpkg.packages.${system}.pywm-fullscreen;
               })
               # inputs.emacs-overlay.overlay
-              # nur.overlay
+              nur.overlay
               # (import ./overlays)
             ];
           }

@@ -31,7 +31,7 @@
       wland = {
         newm.enable = true;
         hyprland.enable = false;
-        labwc.enable = false;
+        # labwc.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;
