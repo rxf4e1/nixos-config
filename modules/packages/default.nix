@@ -47,7 +47,6 @@ in {
         htop
         bat
         fd
-        feh
         unzip
         zip
         imagemagick

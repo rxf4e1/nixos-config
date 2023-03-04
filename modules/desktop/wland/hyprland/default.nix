@@ -23,7 +23,6 @@ with lib; let
 
   utils = with pkgs; [
     # ScreenShots
-    flameshot
     grim
     slurp
     slop
@@ -40,6 +39,7 @@ in {
       [
         dbus-hyprland-environment
         tofi
+        swayimg
         swaybg
         wl-clipboard
         wayland-protocols
@@ -72,8 +72,12 @@ in {
     };
 
     home.shellAliases = {
+    };
+
+    programs.bash.shellAliases = {
       x = "wrappedhl";
     };
+
     # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
     # home.file.".config/tofi/config".source = ./config/tofi.config;
   };

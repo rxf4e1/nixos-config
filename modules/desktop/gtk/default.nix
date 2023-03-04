@@ -9,18 +9,20 @@ with lib; let
 in {
   options.modules.desktop.gtk = {enable = mkEnableOption "Gtk";};
   config = mkIf cfg.enable {
+    home.packages = [pkgs.hicolor-icon-theme];
     gtk = {
       enable = true;
       cursorTheme = {
-        name = "Nordzy-cursor";
-        package = pkgs.nordzy-cursor-theme;
-        size = 16;
+        name = "Punk";
+        # name = "Nordzy-cursors";
+        # package = pkgs.nordzy-cursor-theme;
+        size = 24;
       };
       font = {
         name = "Monospace";
         size = 10;
       };
-      iconTheme = {name = "Sweet-Rainbow";};
+      iconTheme.name = "candy-icons";
       theme = {
         name = "Sweet-Dark";
         package = pkgs.sweet;

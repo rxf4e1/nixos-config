@@ -12,9 +12,11 @@ with lib; let
 
     text = ''
       dbus-update-activation-environment --systemd \
-        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
       systemctl --user stop pipewire pipewire-media-session \
         xdg-desktop-portal xdg-desktop-portal-wlr
+
       systemctl --user start pipewire pipewire-media-session \
         xdg-desktop-portal xdg-desktop-portal-wlr
     '';
@@ -45,8 +47,8 @@ in {
     ];
 
     home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "wlroots";
-      XDG_SESSION_DESKTOP = "wlroots";
+      XDG_CURRENT_DESKTOP = "hikari";
+      XDG_SESSION_DESKTOP = "hikari";
       XDG_SESSION_TYPE = "wayland";
       GDK_BACKEND = "wayland";
       GDK_SCALE = "2";
