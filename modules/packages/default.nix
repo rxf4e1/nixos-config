@@ -59,9 +59,6 @@ in {
         pcmanfm
         poppler
         zathura
-
-        newm
-        pywm-fullscreen
       ]
       ++ code-tools
       ++ rust-env

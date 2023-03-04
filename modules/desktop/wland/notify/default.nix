@@ -9,7 +9,7 @@ with lib; let
 in {
   options.modules.desktop.wland.notify = {enable = mkEnableOption "notify";};
   config = mkIf cfg.enable {
-    programs.mako = {
+    services.mako = {
       enable = true;
       actions = true;
       anchor = "bottom-right";

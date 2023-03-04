@@ -28,7 +28,7 @@
   outputs = {
     home-manager,
     nixpkgs,
-    newpkg,
+    newmpkg,
     pywm-fullscreenpkg,
     ...
   } @ inputs: let

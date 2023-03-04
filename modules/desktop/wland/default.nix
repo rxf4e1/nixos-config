@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ./hikari
+    ./newm
     ./hyprland
     ./labwc
     ./notify

@@ -1,4 +1,0 @@
-
-
-foot --server >/dev/null 2>&1 &
-mako >/dev/null 2>&1 &
