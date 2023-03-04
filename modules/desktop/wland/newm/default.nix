@@ -42,7 +42,7 @@ in {
       newm
       pywm-fullscreen
       # tofi
-      wofi
+      rofi-wayland
       swayimg
       wl-clipboard
       kanshi

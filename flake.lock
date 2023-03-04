@@ -74,11 +74,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1677938560,
-        "narHash": "sha256-y7dov34Pbfq2CKPRB3Gis+Q9UuV5uDjsszDReNWXtns=",
+        "lastModified": 1677946956,
+        "narHash": "sha256-5kzTfzNVzN/VOssGfNko5O2BTYciWSKlqb+q7oX1lh4=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "f678789dfd4936f3b3420352f0d0b6fd5af9bdb5",
+        "rev": "5184b542b1f505c90f9ef4715ae949ac45b2b7ef",
         "type": "github"
       },
       "original": {
@@ -162,21 +162,6 @@
         "type": "github"
       }
     },
-    "nur": {
-      "locked": {
-        "lastModified": 1677937538,
-        "narHash": "sha256-NNQVDenK6rmUH9XkmarlzZff8X53KTd1J/cbnyAD01Q=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "5a09f766566ae6f2b0137b102ffc9484283dfeda",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
     "pywm": {
       "inputs": {
         "flake-utils": "flake-utils_3",
@@ -252,7 +237,6 @@
         "hyprland": "hyprland",
         "newmpkg": "newmpkg",
         "nixpkgs": "nixpkgs_2",
-        "nur": "nur",
         "pywm-fullscreenpkg": "pywm-fullscreenpkg"
       }
     },
