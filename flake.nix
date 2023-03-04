@@ -13,8 +13,9 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    newpkg.url = "github:jbuchermn/newm";
-    newpkg.inputs.nixpkgs.follows = "nixpkgs";
+    newmpkg.url = "github:jbuchermn/newm";
+    newmpkg.inputs.nixpkgs.follows = "nixpkgs";
+
     pywm-fullscreenpkg.url = "github:jbuchermn/pywm-fullscreen";
     pywm-fullscreenpkg.inputs.nixpkgs.follows = "nixpkgs";
 
