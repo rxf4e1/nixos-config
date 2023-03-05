@@ -37,19 +37,21 @@ in {
   config = mkIf cfg.enable {
     # xdg.configFile."newm/config.py".text = "$HOME/.config/newm/config.py";
 
-    home.packages = with pkgs; [
-      dbus-newm-environment
-      newm
-      pywm-fullscreen
-      # tofi
-      rofi-wayland
-      swayimg
-      wl-clipboard
-      kanshi
-      wlsunset
-      brightnessctl
-      jaq
-    ];
+    home.packages = with pkgs;
+      [
+        dbus-newm-environment
+        newm
+        pywm-fullscreen
+        # tofi
+        rofi-wayland
+        swayimg
+        wl-clipboard
+        kanshi
+        wlsunset
+        brightnessctl
+        jaq
+      ]
+      ++ utils;
 
     home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "wlroots";

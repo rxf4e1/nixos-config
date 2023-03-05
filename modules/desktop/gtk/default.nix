@@ -13,7 +13,7 @@ in {
     gtk = {
       enable = true;
       cursorTheme = {
-        name = "Punk";
+        name = "Sweet-cursors";
         # name = "Nordzy-cursors";
         # package = pkgs.nordzy-cursor-theme;
         size = 24;

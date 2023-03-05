@@ -38,7 +38,7 @@ in {
     home.packages = with pkgs;
       [
         dbus-hyprland-environment
-        tofi
+        rofi
         swayimg
         swaybg
         wl-clipboard
