@@ -38,14 +38,12 @@ in {
     home.packages = with pkgs;
       [
         dbus-hyprland-environment
-        rofi
+        rofi-wayland
         swayimg
         swaybg
         wl-clipboard
-        wayland-protocols
         xwayland
         wlroots
-        wlrctl
         # wlr-randr
         kanshi
         wlsunset
@@ -66,13 +64,13 @@ in {
       MOZ_ENABLE_WAYLAND = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       QT_QPA_PLATFORM = "wayland";
+      QT_WAYLAND_FORCE_DPI = "physical";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
       LIBSEAT_BACKEND = "logind";
     };
 
-    home.shellAliases = {
-    };
+    # home.shellAliases = {};
 
     programs.bash.shellAliases = {
       x = "wrappedhl";

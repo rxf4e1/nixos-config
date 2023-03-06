@@ -56,7 +56,8 @@ in {
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
       '';
       bashrcExtra = ''
-        export PS1="\e[0;32m\w\e[m\n% "
+        # export PS1="\e[0;32m\w\e[m\n% "
+        source .bashrc.local
       '';
     };
 
@@ -73,5 +74,7 @@ in {
         set completion-ignore-case on
       '';
     };
+
+    home.file.".bashrc.local".source = ./bashrc.local;
   };
 }

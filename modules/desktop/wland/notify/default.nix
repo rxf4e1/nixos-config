@@ -10,7 +10,7 @@ in {
   options.modules.desktop.wland.notify = {enable = mkEnableOption "notify";};
   config = mkIf cfg.enable {
     services.mako = {
-      enable = true;
+      enable = false;
       actions = true;
       anchor = "bottom-right";
       backgroundColor = "#141a1b";
@@ -30,5 +30,6 @@ in {
       textColor = "#FFFFFF";
       # extraConfig = '' '';
     };
+    home.packages = with pkgs; [dunst];
   };
 }

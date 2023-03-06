@@ -29,8 +29,8 @@
     # Gui
     desktop = {
       wland = {
-        newm.enable = true;
-        hyprland.enable = false;
+        newm.enable = false;
+        hyprland.enable = true;
         # labwc.enable = false;
         notify.enable = true;
       };

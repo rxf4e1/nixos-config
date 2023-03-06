@@ -5,6 +5,13 @@
   ...
 }:
 with lib; let
+  # custom-cursor = import (pkgs.fetchFromGitHub {
+  #   owner = "EliverLara";
+  #   repo = "Sweet";
+  #   rev = "f0957eec6bea8752449308ccb8c325d199c129";
+  #   sha256 = "06h5w71qfb32khfaggqlpi8wzhbw4g18ggs18bwhz9nxnjbdr7lb";
+  # });
+  # custom-icons = (fetchFromGitHub "");
   cfg = config.modules.desktop.gtk;
 in {
   options.modules.desktop.gtk = {enable = mkEnableOption "Gtk";};

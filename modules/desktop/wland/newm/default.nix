@@ -42,12 +42,13 @@ in {
         dbus-newm-environment
         newm
         pywm-fullscreen
-        # tofi
         rofi-wayland
         swayimg
         wl-clipboard
-        kanshi
+        wlr-randr
         wlsunset
+        xwayland
+        wlrctl
         brightnessctl
         jaq
       ]
@@ -71,8 +72,7 @@ in {
       LIBSEAT_BACKEND = "logind";
     };
 
-    home.shellAliases = {
-    };
+    # home.shellAliases = {};
 
     programs.bash.shellAliases = {
       x = "wrappedn";
