@@ -22,7 +22,7 @@ in {
           {
             invocation = "ok";
             key = "enter";
-            leave_broot = true;
+            leave_broot = false;
             external = "$EDITOR +{line} {file}";
             apply_to = "file";
           }

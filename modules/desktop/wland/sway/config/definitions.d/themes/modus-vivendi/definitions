@@ -1,0 +1,46 @@
+# based on Protesilaos Modus-Themes
+# Author: rxf4e1
+
+# some global theme specific variables
+set $gtk-theme Sweet-Dark
+set $icon-theme candy-icons
+set $cursor-theme Sweet-cursors
+set $gui-font Inconsolata Nerd Font 11
+set $term-font Inconsolata Nerd Font Mono 14
+set $gtk-color-scheme prefer-dark
+# set $kvantum-theme Sweet-Dark
+
+set $color0  #000000
+set $color1  #FF8059
+set $color2  #44BC44
+set $color3  #D0BC00
+set $color4  #2FAFFF
+set $color5  #FEACD0
+set $color6  #00D3D0
+set $color7  #BFBFBF
+set $color8  #595959
+set $color9  #EF8B50
+set $color10 #70B900
+set $color11 #C0C530
+set $color12 #79A8FF
+set $color13 #B6A0FF
+set $color14 #6AE4B9
+set $color15 #FFFFFF
+
+#$color0
+set $background-color $color0
+#$color6
+set $text-color $color6
+#color1
+set $selection-color $color1
+#color12
+set $accent-color $color12
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG       Text    Indicator Child Border
+client.focused          $color5 $color12 $color0 $color6   $color12
+client.focused_inactive $color1 $color1  $color5 $color3   $color1
+client.unfocused        $color1 $color0  $color5 $color6   $color1
+client.urgent           $color8 $color8  $color0 $color9   $color8
+client.placeholder      $color0 $color0  $color5 $color0   $color0
+client.background       $color7

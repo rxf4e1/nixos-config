@@ -22,7 +22,7 @@
 
     # Terminal
     bash.enable = true;
-    foot.enable = false;
+    foot.enable = true;
     kitty.enable = true;
     tmux.enable = true;
 

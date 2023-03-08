@@ -20,7 +20,6 @@ in {
     programs.bash = {
       shellAliases = {
         k = "kcr edit";
-        ks = "kcr shell --session";
         kl = "kcr list";
         a = "kcr attach";
       };

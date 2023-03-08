@@ -1,0 +1,26 @@
+# Default config for swayd.
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+# styles - set folder for your theme definition file
+set $theme ./definitions.d/themes/modus-vivendi
+
+# theme variables
+include $theme/definitions
+
+# global variables
+include ./definitions.d/definitions
+
+include ./inputs/*
+include ./outputs/*
+
+# enable modes
+include ./modes/*
+
+# only enable this if every app you use is compatible with wayland
+# xwayland disable
+
+# include additional configs e.g. to autostart applications
+include ./config.d/*

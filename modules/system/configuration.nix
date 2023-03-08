@@ -29,6 +29,7 @@
       vulkan-headers
       vulkan-loader
       vulkan-tools
+      gnome.adwaita-icon-theme
     ];
     # Set environment variables
     variables = {
@@ -54,7 +55,13 @@
 
   # Install Fonts
   fonts = {
-    fonts = with pkgs; [roboto terminus-nerdfont tamsyn];
+    fonts = with pkgs; [
+      inconsolata-nerdfont
+      fantasque-sans-mono
+      fira-code
+      fira-code-symbols
+      ibm-plex
+    ];
 
     # fontconfig = {
     #   hinting.autohint = true;
@@ -81,12 +88,12 @@
       experimental-features = ["nix-command" "flakes"];
       builders-use-substitutes = true;
       substituters = [
-        "https://hyprland.cachix.org"
+        # "https://hyprland.cachix.org"
         "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
       allowed-users = ["rxf4e1"];
       keep-outputs = true;
@@ -134,7 +141,14 @@
       isNormalUser = true;
       uid = 1000;
       group = "users";
-      extraGroups = ["adbusers" "input" "wheel" "video" "audio" "networkmanager"];
+      extraGroups = [
+        "adbusers"
+        "input"
+        "wheel"
+        "video"
+        "audio"
+        "networkmanager"
+      ];
       shell = pkgs.bash;
     };
   };
@@ -143,6 +157,7 @@
 
   # Set up networking and secure it
   networking = {
+    # Quad-9 DNS
     nameservers = ["9.9.9.9" "149.112.112.112"];
     networkmanager = {
       enable = true;
@@ -191,6 +206,7 @@
 
   programs.adb.enable = true;
   programs.dconf.enable = true;
+  # programs.light.enable = true;
 
   # DBUS
   services = {
@@ -200,22 +216,31 @@
     };
     udev = {
       enable = true;
-      packages = with pkgs; [gnome.gnome-settings-daemon];
+      # packages = with pkgs; [gnome.gnome-settings-daemon];
     };
     # journald.console = "tty7";
     upower.enable = true; # Battery info & stuff
   };
 
+  # kanshi systemd service
+  # systemd.user.services.kanshi = {
+  #   description = "kanshi daemon";
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     ExecStart = ''${pkgs.kanshi}/bin/kanshi -c $HOME/.config/kanshi/config'';
+  #   };
+  # };
+
   # Sound
   sound.enable = true;
   # hardware.pulseaudio.enable = true;
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  security.rtkit.enable = true;
 
   # Set up hardware stuff: bluetooth opengl etc
   hardware = {

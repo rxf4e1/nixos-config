@@ -1,0 +1,128 @@
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt and Mod4 for Super.
+set $mod Mod4
+
+# Direction keys
+set $left Left
+set $down Down
+set $up Up
+set $right Right
+
+# Alternative direction keys
+set $left_alt h
+set $down_alt j
+set $up_alt k
+set $right_alt l
+
+# Add --to-code to bindsym, support for non-latin layouts
+set $bindsym bindsym --to-code
+
+# For user's convenience, the same for unbindsym
+set $unbindsym unbindsym --to-code
+
+# background
+set $background ./backgrounds/1.jpg
+
+# Your preferred terminal emulator
+set $term ./scripts/foot.sh
+set $term_cwd $term -D "$(swaycwd 2>/dev/null || echo $HOME)"
+set $term_float footclient -a floating_shell
+
+# onscreen bar
+set $onscreen_bar ./scripts/wob.sh "$accent-color" "$background-color"
+
+# brightness control
+set $brightness ./scripts/brightness.sh
+set $brightness_up $brightness up | $onscreen_bar
+set $brightness_down $brightness down | $onscreen_bar
+
+# scaling
+set $scale_up ./scripts/scale.sh up
+set $scale_down ./scripts/scale.sh down
+
+# audio control
+set $sink_volume wpctl get-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $source_volume wpctl get-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $volume_down $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%- && $sink_volume)
+set $volume_up $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%+ && $sink_volume)
+set $volume_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SINK@ toggle && wpctl get-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
+set $mic_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SOURCE@ toggle && wpctl get-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
+
+# rofi theme
+set $rofi_theme "* {\nlightbg: $background-color;\nbackground: $background-color;\nlightfg: $accent-color;\nforeground: $text-color;\n}"
+
+# clipboard history
+set $clipboard cliphist list | rofi -dmenu -font "$gui-font" -p "Select item to copy" -lines 10 -width 35 | cliphist decode | wl-copy
+set $clipboard-del cliphist list | rofi -dmenu -font "$gui-font" -p "Select item to delete" -lines 10 -width 35 | cliphist delete
+
+# Your preferred application launcher
+set $menu rofi -show combi -combi-modi "drun,run" -terminal $term -ssh-command "{terminal} {ssh-client} {host} [-p {port}]" -run-shell-command "{terminal} {cmd}" -show-icons -font "$gui-font" -lines 10 -width 35
+
+# bluetooth menu
+#set $bluetooth $term_float bluetuith
+
+### Idle configuration
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+#
+#set $idle_timeout 240
+#set $locking_timeout 300
+#set $screen_timeout 600
+#set $swayidle swayidle -w \
+#    timeout $idle_timeout 'light -G > /tmp/brightness && light -S 10' resume 'light -S $([ -f /tmp/brightness ] && cat /tmp/brightness || echo 100%)' \
+#    timeout $locking_timeout 'exec $locking' \
+#    timeout $screen_timeout 'swaymsg "output * dpms off"' \
+#    resume 'swaymsg "output * dpms on"' \
+#    before-sleep 'playerctl pause' \
+#    before-sleep 'exec $locking'
+
+# statusbar command
+set $statusbar bar
+#set $waybar_position top
+
+# pulseaudio command
+set $pulseaudio $term_float pulsemixer
+
+# workspace names
+set $ws1 number 1
+set $ws2 number 2
+set $ws3 number 3
+set $ws4 number 4
+set $ws5 number 5
+set $ws6 number 6
+set $ws7 number 7
+set $ws8 number 8
+set $ws9 number 9
+set $ws10 number 10
+
+# screenshot 
+set $grimshot ./scripts/grimshot
+set $pipe_output $grimshot save output -
+set $pipe_selection $grimshot save window -
+set $notify_paste  [[ $(wl-paste -l) == "image/png" ]] && notify-send "Screenshot copied to clipboard"
+set $upload_pipe curl -s -F "file=@-;filename=.png" https://x0.at/ | tee >(wl-copy) >(xargs notify-send)
+
+set $screenshot_screen $pipe_output && $notify_paste
+set $screenshot_screen_upload $pipe_output | $upload_pipe 
+
+set $screenshot_selection $pipe_selection && $notify_paste
+set $screenshot_selection_upload $pipe_selection | $upload_pipe
+
+# autostarts
+set $wlsunset '[ -x "$(command -v wlsunset)" ] && ./scripts/sunset.sh "on"'
+# set $autotiling '[ -x "$(command -v autotiling)" ] && autotiling'
+set $foot_server '[ -x "$(command -v foot)" ] && ./scripts/foot.sh --server'
+set $mounting_daemon '[ -x "$(command -v pcmanfm)" ] && pcmanfm -d'
+# restart kanshi https://github.com/emersion/kanshi/issues/43#issuecomment-531679213
+set $kanshi '[ -x "$(command -v kanshi)" ] && pkill kanshi; exec kanshi'
+set $xdg-dirs '[ -x "$(command -v xdg-user-dirs-update)" ] && exec xdg-user-dirs-update'
+
+# daemons
+set $dunst './scripts/dunst.sh' 
+set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch'
+set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store'
+set $nm_applet '[ -x "$(command -v nm-applet)" ] && nm-applet'
+set $watch_playerctl '[ -x "$(command -v playerctl)" ] && pkill playerctl; playerctl -a metadata --format \'{{status}} {{title}}\' --follow
