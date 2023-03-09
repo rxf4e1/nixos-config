@@ -41,6 +41,7 @@ in {
         rofi-wayland
         swayimg
         swaybg
+        eww-wayland
         wl-clipboard
         xwayland
         wlroots
@@ -49,7 +50,7 @@ in {
         wlsunset
         xorg.xprop
         brightnessctl
-        jaq
+        jq
       ]
       ++ utils;
 
@@ -67,13 +68,12 @@ in {
       QT_WAYLAND_FORCE_DPI = "physical";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
+      WLR_NO_HARDWARE_CURSORS = "1";
       LIBSEAT_BACKEND = "logind";
     };
 
-    # home.shellAliases = {};
-
     programs.bash.shellAliases = {
-      x = "wrappedhl";
+      x = "wrapped-hl";
     };
 
     # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;

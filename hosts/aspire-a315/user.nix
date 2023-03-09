@@ -30,12 +30,13 @@
     desktop = {
       wld = {
         newm.enable = false;
-        hyprland.enable = false;
-        sway.enable = true;
+        hyprland.enable = true;
+        sway.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;
       # qt6.enable = true; # :TODO:
+      # eww.enable = true;
     };
 
     # CLI
