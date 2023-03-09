@@ -3,5 +3,6 @@ inputs @ {...}: {
     # ./x11
     ./wld
     ./gtk
+    ./widgets
   ];
 }

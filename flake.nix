@@ -11,7 +11,7 @@
 
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-    # hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland";
 
     # newmpkg.url = "github:jbuchermn/newm";
     # newmpkg.inputs.nixpkgs.follows = "nixpkgs";
@@ -68,8 +68,8 @@
               # (import ./overlays)
             ];
           }
-          # inputs.hyprland.nixosModules.default
-          # {programs.hyprland.enable = true;}
+          inputs.hyprland.nixosModules.default
+          {programs.hyprland.enable = true;}
         ];
         specialArgs = {inherit inputs;};
       };

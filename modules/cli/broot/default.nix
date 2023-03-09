@@ -26,6 +26,13 @@ in {
             external = "$EDITOR +{line} {file}";
             apply_to = "file";
           }
+          {
+            invocation = "ok";
+            key = "alt+enter";
+            leave_broot = true;
+            external = "$EDITOR +{line} {file}";
+            apply_to = "file";
+          }
         ];
         special_paths = {
           "**/.direnv" = "no-enter";
