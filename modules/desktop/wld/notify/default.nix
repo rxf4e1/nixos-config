@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.desktop.wland.notify;
+  cfg = config.modules.desktop.wld.notify;
 in {
-  options.modules.desktop.wland.notify = {enable = mkEnableOption "notify";};
+  options.modules.desktop.wld.notify = {enable = mkEnableOption "notify";};
   config = mkIf cfg.enable {
     services.mako = {
       enable = false;
@@ -30,6 +30,9 @@ in {
       textColor = "#FFFFFF";
       # extraConfig = '' '';
     };
-    home.packages = with pkgs; [dunst];
+    home.packages = with pkgs; [
+      # dunst
+      mako
+    ];
   };
 }

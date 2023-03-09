@@ -12,8 +12,8 @@ start() {
     sunrise=${sunrise:-"07:00"}
     sunset=${sunset:-"19:00"}
     location=${location:-"on"}
-    fallback_longitude=${fallback_longitude:-"-23.5"}
-    fallback_latitude=${fallback_latitude:-"-46.5"}
+    fallback_longitude=${fallback_longitude:-"-46.6"}
+    fallback_latitude=${fallback_latitude:-"-23.5"}
 
     if [ "${location}" = "on" ]; then
         if [ -z ${longitude+x} ] || [ -z ${latitude+x} ]; then

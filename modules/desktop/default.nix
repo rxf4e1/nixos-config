@@ -1,7 +1,7 @@
 inputs @ {...}: {
   imports = [
     # ./x11
-    ./wland
+    ./wld
     ./gtk
   ];
 }

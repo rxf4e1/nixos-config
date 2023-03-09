@@ -5,15 +5,17 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.desktop.wland.sway;
+  cfg = config.modules.desktop.wld.sway;
 in {
-  options.modules.desktop.wland.sway = {enable = mkEnableOption "Sway";};
+  options.modules.desktop.wld.sway = {enable = mkEnableOption "Sway";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       sway
       swaybg
       swayimg
       swaycwd
+      eww-wayland
+      waybar
       cliphist
       wob
       wl-clipboard
@@ -25,6 +27,7 @@ in {
       lxappearance-gtk2
       # brightnessctl
       playerctl
+      sway-contrib.grimshot
       grim
       slurp
       jq

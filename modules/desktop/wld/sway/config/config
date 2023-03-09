@@ -23,4 +23,4 @@ include ./modes/*
 # xwayland disable
 
 # include additional configs e.g. to autostart applications
-include ./config.d/*
+include ./config.d/*.conf

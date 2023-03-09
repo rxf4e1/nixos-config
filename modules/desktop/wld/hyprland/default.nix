@@ -6,14 +6,14 @@
   ...
 }:
 with lib; let
-  dbus-newm-environment = pkgs.writeTextFile {
-    name = "dbus-newm-environment";
-    destination = "/bin/dbus-newm-environment";
+  dbus-hyprland-environment = pkgs.writeTextFile {
+    name = "dbus-hyprland-environment";
+    destination = "/bin/dbus-hyprland-environment";
     executable = true;
 
     text = ''
       dbus-update-activation-environment --systemd \
-        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
       systemctl --user stop pipewire pipewire-media-session \
         xdg-desktop-portal xdg-desktop-portal-wlr
       systemctl --user start pipewire pipewire-media-session \
@@ -31,33 +31,31 @@ with lib; let
     lxappearance-gtk2
   ];
 
-  cfg = config.modules.desktop.wland.newm;
+  cfg = config.modules.desktop.wld.hyprland;
 in {
-  options.modules.desktop.wland.newm = {enable = mkEnableOption "newm";};
+  options.modules.desktop.wld.hyprland = {enable = mkEnableOption "hyprland";};
   config = mkIf cfg.enable {
-    # xdg.configFile."newm/config.py".text = "$HOME/.config/newm/config.py";
-
     home.packages = with pkgs;
       [
-        dbus-newm-environment
-        newm
-        pywm-fullscreen
+        dbus-hyprland-environment
         rofi-wayland
         swayimg
+        swaybg
         wl-clipboard
-        wlr-randr
-        wlsunset
         xwayland
-        wlrctl
+        wlroots
+        # wlr-randr
+        kanshi
+        wlsunset
+        xorg.xprop
         brightnessctl
         jaq
       ]
       ++ utils;
 
     home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "wlroots";
-      XDG_CURRENT_SESSION = "wlroots";
-      XDG_SESSION_DESKTOP = "wlroots";
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
       GDK_BACKEND = "wayland";
       GDK_SCALE = "2";
@@ -65,7 +63,7 @@ in {
       _JAVA_AWT_WM_NONREPARENTING = "1";
       MOZ_ENABLE_WAYLAND = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-      QT_QPA_PLATFORM = "wayland-egl";
+      QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_FORCE_DPI = "physical";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
@@ -75,7 +73,10 @@ in {
     # home.shellAliases = {};
 
     programs.bash.shellAliases = {
-      x = "wrappedn";
+      x = "wrappedhl";
     };
+
+    # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
+    # home.file.".config/tofi/config".source = ./config/tofi.config;
   };
 }

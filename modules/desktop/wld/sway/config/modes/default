@@ -3,8 +3,9 @@
 # Basics:
 #
 ## Launch // Terminal ##
-$bindsym $mod+Return exec $term_cwd
-$bindsym $mod+Shift+Return exec $term
+# $bindsym $mod+Return exec $term_cwd
+# $bindsym $mod+Shift+Return exec $term
+$bindsym $mod+Return exec kitty -e tmux
 
 ## Action // Kill focused window ##
 $bindsym $mod+Shift+q kill
@@ -26,7 +27,7 @@ floating_modifier $mod normal
 $bindsym $mod+Shift+c reload
 
 ## Action // Toggle Waybar ##    
-# $bindsym $mod+Shift+b exec pkill -SIGUSR1 waybar
+$bindsym $mod+Shift+b exec pkill -SIGUSR1 waybar
 
 # --locked flags allow the buttons to be used whilst the screen is locked.
 $bindsym --locked XF86AudioRaiseVolume exec $volume_up

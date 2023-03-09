@@ -22,13 +22,13 @@
 
     # Terminal
     bash.enable = true;
-    foot.enable = true;
+    foot.enable = false;
     kitty.enable = true;
     tmux.enable = true;
 
     # Gui
     desktop = {
-      wland = {
+      wld = {
         newm.enable = false;
         hyprland.enable = false;
         sway.enable = true;
