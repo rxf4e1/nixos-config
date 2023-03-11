@@ -57,7 +57,7 @@ in {
       '';
       bashrcExtra = ''
         # export PS1="\e[0;32m\w\e[m\n% "
-        source .bashrc.local
+        source .bash_prompt
       '';
     };
 

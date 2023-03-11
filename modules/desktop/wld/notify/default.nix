@@ -34,7 +34,7 @@ in {
     services.fnott = {
       enable = true;
       package = pkgs.fnott;
-      configFile = "$XDG_CONFIG_HOME/fnott/fnott.ini";
+      # configFile = "$XDG_CONFIG_HOME/fnott/fnott.ini";
     };
     home.packages = with pkgs; [
       # dunst
