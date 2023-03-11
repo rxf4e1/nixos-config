@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 # wrapper script for mako
 
-USER_CONFIG_PATH="${HOME}/.config/mako/config"
+USER_CONFIG_PATH="${HOME}/.config/fnott/fnott.ini"
 
 if [ -f "$USER_CONFIG_PATH" ]; then
     USER_CONFIG=$USER_CONFIG_PATH
 fi
 
-mako -c "${USER_CONFIG}" "$@"
+fnott -c "${USER_CONFIG}"

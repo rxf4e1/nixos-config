@@ -21,7 +21,6 @@ with lib; let
     pandoc
     tectonic
     cmake
-    gcc
     python3
     perl
     shfmt
@@ -44,9 +43,10 @@ in {
       [
         ripgrep
         ffmpeg
-        htop
+        btop
         bat
         fd
+        procs
         unzip
         zip
         imagemagick

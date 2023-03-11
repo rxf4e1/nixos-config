@@ -28,7 +28,7 @@ in {
           }
           {
             invocation = "ok";
-            key = "alt+enter";
+            key = "alt-enter";
             leave_broot = true;
             external = "$EDITOR +{line} {file}";
             apply_to = "file";

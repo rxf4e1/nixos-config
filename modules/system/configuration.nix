@@ -206,7 +206,7 @@
 
   programs.adb.enable = true;
   programs.dconf.enable = true;
-  # programs.light.enable = true;
+  programs.light.enable = true;
 
   # DBUS
   services = {
