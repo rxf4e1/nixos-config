@@ -56,11 +56,11 @@
   # Install Fonts
   fonts = {
     fonts = with pkgs; [
-      inconsolata-nerdfont
-      fantasque-sans-mono
       fira-code
-      fira-code-symbols
-      ibm-plex
+      inconsolata-nerdfont
+      iosevka-comfy.comfy-duo
+      iosevka-comfy.comfy-motion-duo
+      iosevka-comfy.comfy-wide-duo
     ];
 
     # fontconfig = {

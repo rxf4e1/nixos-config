@@ -43,6 +43,7 @@ in {
       [
         ripgrep
         ffmpeg
+        bc
         btop
         bat
         fd
@@ -59,6 +60,9 @@ in {
         pcmanfm
         poppler
         zathura
+
+        w3m
+        nb
       ]
       ++ code-tools
       ++ rust-env

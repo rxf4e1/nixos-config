@@ -31,14 +31,15 @@ in {
       # extraConfig = '' '';
     };
 
-    services.fnott = {
-      enable = true;
-      package = pkgs.fnott;
-      # configFile = "$XDG_CONFIG_HOME/fnott/fnott.ini";
-    };
+    # services.fnott = {
+    #   enable = true;
+    #   package = pkgs.fnott;
+    #   configFile = "$XDG_CONFIG_HOME/fnott/fnott.ini";
+    # };
     home.packages = with pkgs; [
-      # dunst
-      fnott
+      dunst
+      # fnott
+      # mako
     ];
   };
 }

@@ -30,8 +30,8 @@
     desktop = {
       wld = {
         newm.enable = false;
-        hyprland.enable = false;
-        sway.enable = true;
+        hyprland.enable = true;
+        sway.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;

@@ -5,8 +5,8 @@
 set $gtk-theme Sweet-Dark
 set $icon-theme candy-icons
 set $cursor-theme Sweet-cursors
-set $gui-font Inconsolata Nerd Font 11
-set $term-font Inconsolata Nerd Font Mono 14
+set $gui-font Iosevka Comfy Duo 10
+set $term-font Iosevka Comfy Wide Duo 10
 set $gtk-color-scheme prefer-dark
 # set $kvantum-theme Sweet-Dark
 

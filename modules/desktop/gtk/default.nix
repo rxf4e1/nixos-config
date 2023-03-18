@@ -26,7 +26,7 @@ in {
         size = 24;
       };
       font = {
-        name = "Monospace";
+        name = "Iosevka Comfy Duo";
         size = 10;
       };
       iconTheme.name = "candy-icons";

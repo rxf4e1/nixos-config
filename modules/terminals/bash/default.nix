@@ -42,10 +42,14 @@ in {
         du = "du -hs";
         df = "df -h";
         md = "mkdir -pv";
-        rm = "rm -rf";
-        nr = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";
-        nb = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";
+        cp = "cp -iv";
+        mv = "mv -iv";
+        rm = "rm -Iv";
+
+        rebuild = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";
+        rebuild-boot = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";
         gc = "nix-collect-garbage --delete-old";
+        gcd = "doas nix-collect-garbage --delete-old";
       };
       shellOptions = ["histappend" "checkwinsize" "extglob" "globstar" "checkjobs"];
 
@@ -56,8 +60,8 @@ in {
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
       '';
       bashrcExtra = ''
-        # export PS1="\e[0;32m\w\e[m\n% "
-        source ~/.bash_prompt
+        export PS1="\e[0;32m\w\e[m\n% "
+        # source ~/.bash_prompt
       '';
     };
 
@@ -68,13 +72,16 @@ in {
         # Prettify
         set colored-stats on
         set colored-completion-prefix on
+        set visible-stats on
+        set mark-symlinked-directories on
 
         # Completion Settings
         set show-all-if-ambiguous on
         set completion-ignore-case on
+        set menu-complete-display-prefix on
       '';
     };
 
-    home.file.".bashrc.local".source = ./bashrc.local;
+    # home.file.".bashrc.local".source = ./bashrc.local;
   };
 }
