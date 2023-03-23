@@ -16,7 +16,12 @@ with lib; let
 in {
   options.modules.desktop.gtk = {enable = mkEnableOption "Gtk";};
   config = mkIf cfg.enable {
-    home.packages = [pkgs.hicolor-icon-theme];
+    home.packages = with pkgs; [
+      hicolor-icon-theme
+      sweet
+      lxappearance-gtk2
+    ];
+
     gtk = {
       enable = true;
       cursorTheme = {

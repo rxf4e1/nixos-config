@@ -11,13 +11,6 @@
 
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-    # hyprland.url = "github:hyprwm/Hyprland";
-
-    # newmpkg.url = "github:jbuchermn/newm";
-    # newmpkg.inputs.nixpkgs.follows = "nixpkgs";
-    # pywm-fullscreenpkg.url = "github:jbuchermn/pywm-fullscreen";
-    # pywm-fullscreenpkg.inputs.nixpkgs.follows = "nixpkgs";
-
     # nur = {
     #   url = "github:nix-community/NUR";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -27,8 +20,6 @@
   outputs = {
     home-manager,
     nixpkgs,
-    # newmpkg,
-    # pywm-fullscreenpkg,
     # nur,
     ...
   } @ inputs: let
@@ -58,17 +49,11 @@
               users.rxf4e1 = ./. + "/hosts/${hostname}/user.nix";
             };
             nixpkgs.overlays = [
-              # (self: super: {
-              #   newm = newmpkg.packages.${system}.newm;
-              #   pywm-fullscreen = pywm-fullscreenpkg.packages.${system}.pywm-fullscreen;
-              # })
               # inputs.emacs-overlay.overlay
               # nur.overlay
               # (import ./overlays)
             ];
           }
-          # inputs.hyprland.nixosModules.default
-          # {programs.hyprland.enable = true;}
         ];
         specialArgs = {inherit inputs;};
       };

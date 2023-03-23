@@ -29,7 +29,7 @@
     # Gui
     desktop = {
       wld = {
-        newm.enable = false;
+        common.enable = true;
         hyprland.enable = false;
         sway.enable = true;
         notify.enable = true;
