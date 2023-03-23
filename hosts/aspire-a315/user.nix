@@ -25,6 +25,7 @@
     foot.enable = true;
     kitty.enable = true;
     tmux.enable = true;
+    zsh.enable = true;
 
     # Gui
     desktop = {

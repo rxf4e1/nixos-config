@@ -5,18 +5,17 @@
   ...
 }:
 with lib; let
+  machine_id = "aspire-a315";
   cfg = config.modules.zsh;
 in {
   options.modules.zsh = {enable = mkEnableOption "zsh";};
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [zsh-fzf-tab];
-
     programs.zsh = {
       enable = true;
-      dotDir = "\${XDG_CONFIG_HOME}/zsh";
+      dotDir = ".config/zsh";
       history = {
-        path = "\${XDG_CONFIG_HOME}/zsh/zsh_history";
-        expireDuplicateFirst = true;
+        path = "\${XDG_CONFIG_HOME}/.config/zsh/zsh_history";
+        expireDuplicatesFirst = true;
         extended = true;
         ignoreDups = true;
         ignoreSpace = true;
@@ -27,15 +26,19 @@ in {
         cat = "bat";
         less = "bat --paging=always";
         sudo = "doas";
-        ".." = "cd ..";
-        "..." = "cd ../..";
-        "...." = "cd ../../..";
+        # ".." = "cd ..";
+        # "..." = "cd ../..";
+        # "...." = "cd ../../..";
         du = "du -hs";
         df = "df -h";
         md = "mkdir -pv";
         cp = "cp -iv";
         mv = "mv -iv";
         rm = "rm -Iv";
+
+        ls = "lsd";
+        la = "ls --long --all --no-symlink";
+        lt = "ls --tree --no-symlink";
 
         rebuild = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";
         rebuild-boot = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";
@@ -53,6 +56,27 @@ in {
       initExtra = ''
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
       '';
+      plugins = [
+        {
+          name = "fzf-tab";
+          src = pkgs.fetchFromGitHub {
+            owner = "Aloxaf";
+            repo = "fzf-tab";
+            rev = "5a81e13792a1eed4a03d2083771ee6e5b616b9ab";
+            sha256 = "0lfl4r44ci0wflfzlzzxncrb3frnwzghll8p365ypfl0n04bkxvl";
+          };
+        }
+        {
+          name = "powerlevel10k";
+          src = pkgs.zsh-powerlevel10k;
+          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        }
+        {
+          name = "powerlevel10k-config";
+          src = ./p10k-config;
+          file = "p10k.zsh";
+        }
+      ];
     };
   };
 }

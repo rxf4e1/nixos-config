@@ -1,3 +1,9 @@
 {...}: {
-  imports = [./bash ./foot ./kitty ./tmux];
+  imports = [
+    ./bash
+    ./foot
+    ./kitty
+    ./tmux
+    ./zsh
+  ];
 }
