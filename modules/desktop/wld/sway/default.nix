@@ -14,7 +14,6 @@ in {
       swaybg
       swayimg
       swaycwd
-      eww-wayland
       waybar
       cliphist
       wob
@@ -27,10 +26,12 @@ in {
       lxappearance-gtk2
       # brightnessctl
       playerctl
+      glfw-wayland
       sway-contrib.grimshot
       grim
       slurp
       jq
+      viewnior
     ];
 
     home.sessionVariables = {
@@ -38,7 +39,7 @@ in {
       XDG_SESSION_DESKTOP = "sway";
       XDG_SESSION_TYPE = "wayland";
       GDK_BACKEND = "wayland";
-      GDK_SCALE = "2";
+      GDK_SCALE = "1";
       CLUTTER_BACKEND = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       MOZ_ENABLE_WAYLAND = "1";

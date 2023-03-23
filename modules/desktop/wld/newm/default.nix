@@ -45,11 +45,11 @@ in {
         rofi-wayland
         swayimg
         wl-clipboard
-        wlr-randr
+        kanshi
         wlsunset
         xwayland
-        wlrctl
-        brightnessctl
+        # wlrctl
+        # brightnessctl
         jaq
       ]
       ++ utils;
@@ -75,7 +75,7 @@ in {
     # home.shellAliases = {};
 
     programs.bash.shellAliases = {
-      x = "wrappedn";
+      x = "wrapped-newm";
     };
   };
 }

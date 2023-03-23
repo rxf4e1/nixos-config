@@ -29,7 +29,7 @@ def on_startup():
     "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
     "dbus-update-activation-environment 2>/dev/null \
     && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots"
-    "mako"
+    "dunst"
     "wlsunset -l -23.5 -L -46.5"
   )
   execute_iter(INIT_SERVICE)
@@ -41,7 +41,7 @@ def on_reconfigure():
 background = {
     'path': os.environ['NIXOS_CONFIG'] + '/modules/desktop/wallpapers/1.jpg',
     'time_scale': 0.125,
-    'anim': True,
+    'anim': False,
 }
 
 corner_radius = 0
@@ -51,7 +51,7 @@ pywm = {
   'xkb_variant': "abnt2",
   'xkb_options': "caps:ctrl_modifier",
 
-  'xcursor_theme': 'Punk',
+  'xcursor_theme': 'Sweet-cursors',
   'xcursor_size': 16,
 
   'encourage_csd': False,
@@ -121,7 +121,7 @@ def key_bindings(layout: Layout) -> list[tuple[str, Callable[[], Any]]]:
 
 def rules(view):
   if view.app_id == "Kitty":
-    return {'blur': {'radius': 5, 'passes': 3}}
+    return {'blur': {'radius': 0, 'passes': 3}}
   return None
 
 view = {

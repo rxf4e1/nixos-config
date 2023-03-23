@@ -10,8 +10,6 @@
 
   imports = [
     # ./acme.nix
-    # ./nextcloud.nix
-    # ./scripts
   ];
 
   environment = {
@@ -38,7 +36,7 @@
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_DATA_HOME = "$HOME/.local/share";
       XDG_STATE_HOME = "$HOME/.local/state";
-      DISABLE_QT5_COMPAT = "0";
+      # DISABLE_QT5_COMPAT = "0";
       NIXOS_OZONE_WL = "1";
 
       # Force AMDVLK - (opensource)
@@ -55,18 +53,22 @@
 
   # Install Fonts
   fonts = {
+    enableDefaultFonts = true;
+    fontDir.enable = true;
     fonts = with pkgs; [
-      fira-code
-      inconsolata-nerdfont
-      iosevka-comfy.comfy-duo
-      iosevka-comfy.comfy-motion-duo
-      iosevka-comfy.comfy-wide-duo
+      (nerdfonts.override {
+        fonts = ["FiraCode" "Inconsolata" "Iosevka"];
+      })
+      liberation_ttf
+      joypixels
     ];
-
-    # fontconfig = {
-    #   hinting.autohint = true;
-    #   defaultFonts = {emoji = ["OpenMoji Color"];};
-    # };
+    fontconfig = {
+      hinting.autohint = true;
+      defaultFonts = {
+        emoji = ["joypixels"];
+        monospace = ["Iosevka"];
+      };
+    };
   };
 
   # Wayland stuff: XDG integration, allow sway to use brillo
@@ -82,6 +84,10 @@
   };
 
   # Nix settings, autocleanup and flakes
+  nixpkgs.config = {
+    allowUnfree = true;
+    joypixels.acceptLicense = true;
+  };
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -110,7 +116,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
-    supportedFilesystems = ["btrfs"];
+    supportedFilesystems = ["btrfs" "ntfs"];
 
     tmpOnTmpfs = true;
     cleanTmpDir = true;

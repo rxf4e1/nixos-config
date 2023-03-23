@@ -3,9 +3,9 @@
 # Basics:
 #
 ## Launch // Terminal ##
-# $bindsym $mod+Return exec $term_cwd
-# $bindsym $mod+Shift+Return exec $term
-$bindsym $mod+Return exec kitty -e tmux
+$bindsym $mod+Return exec $term_cwd
+$bindsym $mod+Shift+Return exec $term
+# $bindsym $mod+Return exec kitty -e tmux
 
 ## Action // Kill focused window ##
 $bindsym $mod+Shift+q kill

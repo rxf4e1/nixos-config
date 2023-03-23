@@ -9,7 +9,7 @@
   config.modules = {
     # Browsers
     brave.enable = true;
-    qutebrowser.enable = false;
+    qutebrowser.enable = true;
 
     # Editors
     editor = {
@@ -22,7 +22,7 @@
 
     # Terminal
     bash.enable = true;
-    foot.enable = false;
+    foot.enable = true;
     kitty.enable = true;
     tmux.enable = true;
 
@@ -30,8 +30,8 @@
     desktop = {
       wld = {
         newm.enable = false;
-        hyprland.enable = true;
-        sway.enable = false;
+        hyprland.enable = false;
+        sway.enable = true;
         notify.enable = true;
       };
       gtk.enable = true;

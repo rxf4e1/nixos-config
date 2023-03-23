@@ -35,7 +35,7 @@ set-option global ui_options  terminal_assistant=none \
                               terminal_enable_mouse=false \
                               terminal_set_title=false
 
-add-highlighter global/ wrap -indent -marker ⎁ -width 100
+add-highlighter global/ wrap -indent -word -marker '¬ '  # -width 100
 
 # ────────────────────────────────────────────────────
 # █▀▄ █   █ █ ▄▀ 
@@ -98,7 +98,7 @@ hook global WinCreate .*.nix \
 hook global BufWritePre .*.nix %{ format }
 
 hook global BufCreate .+[rc|\.local|\.conf|\.sh] %{
-  set-option buffer filetype sh
+  set-option buffer filetype conf
 }
 
 hook global BufCreate .+[rs] \

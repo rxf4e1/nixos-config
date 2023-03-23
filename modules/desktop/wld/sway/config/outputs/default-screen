@@ -1,5 +1,7 @@
 ### Output configuration
 ##
+## sway-outputs(5)
+##
 ## Example configuration:
 ##
 ##   output HDMI-A-1 resolution 1920x1080 position 1920,0
@@ -10,6 +12,12 @@
 output * bg $background fill
 
 output {
-  # eDP-1    resolution 1366x768  position 0,0
-  HDMI-A-1 resolution 1920x1080 position 1920,0
+  eDP-1 {
+    resolution 1366x768@60Hz  
+    position 0,0
+    scale 1
+    scale_filter smart
+    adaptive_sync on
+  }
+  # HDMI-A-1 resolution 1920x1080 position 1920,0
 }

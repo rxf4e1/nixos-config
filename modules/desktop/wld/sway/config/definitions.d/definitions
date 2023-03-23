@@ -28,10 +28,10 @@ set $unbindsym unbindsym --to-code
 set $background ../backgrounds/1.jpg
 
 # Your preferred terminal emulator
-# set $term $scripts/foot.sh
-# set $term_cwd $term -D "$(swaycwd 2>/dev/null || echo $HOME)"
-# set $term_float footclient -a floating_shell
-set $term kitty
+set $term $scripts/foot.sh
+set $term_cwd $term -D "$(swaycwd 2>/dev/null || echo $HOME)"
+set $term_float footclient -a floating_shell
+# set $term kitty
 
 # onscreen bar
 set $onscreen_bar $scripts/wob.sh "$accent-color" "$background-color"
@@ -46,17 +46,17 @@ set $scale_up $scripts/scale.sh up
 set $scale_down $scripts/scale.sh down
 
 # audio control
-# set $sink_volume wpctl get-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
-# set $source_volume wpctl get-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
-# set $volume_down $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%- && $sink_volume)
-# set $volume_up $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%+ && $sink_volume)
-# set $volume_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SINK@ toggle && wpctl get-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
-# set $mic_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SOURCE@ toggle && wpctl get-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
+set $sink_volume wpctl get-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $source_volume wpctl get-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $volume_down $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%- && $sink_volume)
+set $volume_up $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%+ && $sink_volume)
+set $volume_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SINK@ toggle && wpctl get-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
+set $mic_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SOURCE@ toggle && wpctl get-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
 
-set $volume $scripts/volume.sh
-set $volume_down $volume down
-set $volume_up $volume up
-set $volume_mute $volume togglemute
+# set $volume $scripts/volume.sh
+# set $volume_down $volume down
+# set $volume_up $volume up
+# set $volume_mute $volume togglemute
 
 # rofi theme
 set $rofi_theme "* {\nlightbg: $background-color;\nbackground: $background-color;\nlightfg: $accent-color;\nforeground: $text-color;\n}"
@@ -88,8 +88,8 @@ set $menu rofi -show combi -combi-modi "drun,run" -terminal $term -ssh-command "
 #    before-sleep 'exec $locking'
 
 # statusbar command
-set $statusbar waybar
-set $waybar_position top
+# set $statusbar waybar
+# set $bar_position top
 
 # pulseaudio command
 set $pulseaudio $term_float pulsemixer
