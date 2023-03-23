@@ -15,7 +15,6 @@ in {
       slurp
       jq
       kanshi
-      inotify-tools
       rofi-wayland
       playerctl
       wl-clipboard

@@ -11,13 +11,17 @@ in {
   options.modules.bash = {enable = mkEnableOption "bash";};
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.bashSnippets pkgs.nix-bash-completions];
+    home.packages = with pkgs; [
+      bashSnippets
+      nix-bash-completions
+      shfmt
+    ];
 
     programs.bash = {
       enable = true;
       enableCompletion = true;
       enableVteIntegration = true;
-      historyFile = "$HOME/.bash_history";
+      historyFile = "\${HOME}/.bash_history";
       historyFileSize = 5000;
       historyIgnore = ["cd" "ls" "ls -la" "la" "ll" "exit"];
       historySize = 5000;
@@ -26,7 +30,7 @@ in {
       sessionVariables = {
         BROWSER = "brave";
         EDITOR = "kcr edit";
-        VISUAL = "$EDITOR";
+        VISUAL = "\${EDITOR}";
         PAGER = "less";
         LC_COLLATE = "C";
       };
@@ -54,13 +58,16 @@ in {
       shellOptions = ["histappend" "checkwinsize" "extglob" "globstar" "checkjobs"];
 
       initExtra = ''
-        export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
         export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1"
         export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
       '';
       bashrcExtra = ''
         export PS1="\e[0;32m\w\e[m\n% "
+
+        source $HOME/.local/share/github.com/fzf-tab-completion/bash/fzf-bash-completion.sh
+        bind -x '"\t": fzf_bash_completion'
+
         # source ~/.bash_prompt
       '';
     };
@@ -81,6 +88,12 @@ in {
         set menu-complete-display-prefix on
       '';
     };
+
+    home.sessionPath = [
+      "$HOME/.local/bin"
+      "$HOME/.cargo/bin"
+      # "$(yarn global bin)"
+    ];
 
     # home.file.".bashrc.local".source = ./bashrc.local;
   };

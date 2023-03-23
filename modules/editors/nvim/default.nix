@@ -11,7 +11,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       neovim
-      gcc
       luajit
       luajitPackages.luarocks
       lua-language-server
@@ -19,9 +18,9 @@ in {
     ];
 
     programs.bash = {
-      initExtra = ''
-        export EDITOR="nvim"
-      '';
+      # initExtra = ''
+      #   export EDITOR="nvim"
+      # '';
       shellAliases = {
         v = "nvim -i NONE";
         nvim = "nvim -i NONE";

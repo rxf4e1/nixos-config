@@ -10,11 +10,7 @@ inputs @ {
     ./desktop
     ./editors
     ./terminals
-    # ./direnv
-    # ./git
     ./secret
-    # ./gpg
-    # ./xdg
     ./packages
   ];
 }

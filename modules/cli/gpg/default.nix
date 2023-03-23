@@ -20,9 +20,12 @@ in {
       sshKeys = ["D10AEDC5AC7B887B3C378C142C221CB77EB8EBDF"];
       pinentryFlavor = "curses";
     };
-    programs.bash.initExtra = ''
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-      gpgconf --launch gpg-agent
-    '';
+    home.sessionVariables = {
+      SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
+    };
+    # programs.bash.initExtra = ''
+    #   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    #   gpgconf --launch gpg-agent
+    # '';
   };
 }

@@ -12,20 +12,37 @@ with lib; let
     wireshark
   ];
 
-  rust-env = with pkgs; [
+  rust-tools = with pkgs; [
+    bat
+    duf
+    fd
+    procs
+    ripgrep
     rustup
     rust-analyzer
   ];
 
   code-tools = with pkgs; [
     pandoc
-    tectonic
-    cmake
+    # tectonic
+    # cmake
     python3
-    perl
-    shfmt
-    nodejs
-    yarn
+    # perl
+    # nodejs
+    # yarn
+  ];
+
+  media-tools = with pkgs; [
+    imagemagick
+    ffmpeg
+    mpv
+    pulsemixer
+  ];
+
+  file-tools = with pkgs; [
+    pcmanfm
+    poppler
+    zathura
   ];
 
   nix-tools = with pkgs; [
@@ -41,38 +58,21 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs;
       [
-        ripgrep
-        ffmpeg
         bc
         btop
-        bat
-        fd
-        procs
         unzip
         zip
-        imagemagick
-        libnotify
-        mpv
         killall
-        pulsemixer
         lolcat
         figlet
-        pcmanfm
-        poppler
-        zathura
-
         w3m
         nb
       ]
       ++ code-tools
-      ++ rust-env
-      ++ inet-tools
+      ++ file-tools
+      # ++ inet-tools
+      ++ media-tools
+      ++ rust-tools
       ++ nix-tools;
-
-    programs.bash = {
-      initExtra = ''
-        export PATH=$(yarn global bin):$PATH
-      '';
-    };
   };
 }

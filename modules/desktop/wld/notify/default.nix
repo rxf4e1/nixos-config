@@ -38,6 +38,7 @@ in {
     # };
     home.packages = with pkgs; [
       dunst
+      inotify-tools
       # fnott
       # mako
     ];

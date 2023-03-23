@@ -17,7 +17,7 @@
       kakoune.enable = true;
       micro.enable = false;
       nano.enable = true;
-      neovim.enable = false;
+      neovim.enable = true;
     };
 
     # Terminal

@@ -1,6 +1,6 @@
 inputs @ {...}: {
   imports = [
-    ./newm
+    ./common
     ./hyprland
     ./sway
     ./notify
