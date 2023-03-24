@@ -26,15 +26,19 @@ in {
         cat = "bat";
         less = "bat --paging=always";
         sudo = "doas";
-        # ".." = "cd ..";
-        # "..." = "cd ../..";
-        # "...." = "cd ../../..";
+        ".." = "cd ..";
+        "..." = "cd ../..";
+        "...." = "cd ../../..";
         du = "du -hs";
         df = "df -h";
         md = "mkdir -pv";
         cp = "cp -iv";
         mv = "mv -iv";
         rm = "rm -Iv";
+
+        v = "nvim -i NONE";
+        vim = "nvim -i NONE";
+        nvim = "nvim -i NONE";
 
         ls = "lsd";
         la = "ls --long --all --no-symlink";
@@ -66,16 +70,16 @@ in {
             sha256 = "0lfl4r44ci0wflfzlzzxncrb3frnwzghll8p365ypfl0n04bkxvl";
           };
         }
-        {
-          name = "powerlevel10k";
-          src = pkgs.zsh-powerlevel10k;
-          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-        }
-        {
-          name = "powerlevel10k-config";
-          src = ./p10k-config;
-          file = "p10k.zsh";
-        }
+        # {
+        #   name = "powerlevel10k";
+        #   src = pkgs.zsh-powerlevel10k;
+        #   file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        # }
+        # {
+        #   name = "powerlevel10k-config";
+        #   src = ./p10k-config;
+        #   file = "p10k.zsh";
+        # }
       ];
     };
   };

@@ -145,6 +145,8 @@
     mutableUsers = true;
     users.rxf4e1 = {
       isNormalUser = true;
+      shell = pkgs.zsh;
+      # shell = pkgs.bash;
       uid = 1000;
       group = "users";
       extraGroups = [
@@ -155,7 +157,6 @@
         "audio"
         "networkmanager"
       ];
-      shell = pkgs.bash;
     };
   };
 

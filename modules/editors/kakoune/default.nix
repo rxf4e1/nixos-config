@@ -10,6 +10,7 @@ in {
   options.modules.editor.kakoune = {enable = mkEnableOption "Kakoune";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
+      gcc
       kakoune
       kakoune-cr
     ];
@@ -17,7 +18,7 @@ in {
     # home.file.".config/kak/kakrc".source = ./config/kakrc;
     # home.file.".config/kak/kakrc.local".source = ./config/kakrc.local;
 
-    programs.bash = {
+    programs.zsh = {
       shellAliases = {
         k = "kcr edit";
         kl = "kcr list";

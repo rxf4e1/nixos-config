@@ -1,11 +1,12 @@
+# kak: filetype=i3
+
 ### Key bindings
 #
 # Basics:
 #
 ## Launch // Terminal ##
-$bindsym $mod+Return exec $term_cwd
+$bindsym $mod+Return exec $kterm
 $bindsym $mod+Shift+Return exec $term
-# $bindsym $mod+Return exec kitty -e tmux
 
 ## Action // Kill focused window ##
 $bindsym $mod+Shift+q kill

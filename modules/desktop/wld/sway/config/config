@@ -1,3 +1,5 @@
+# kak: filetype=i3
+
 # Default config for swayd.
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
@@ -24,3 +26,4 @@ include ./modes/*
 
 # include additional configs e.g. to autostart applications
 include ./config.d/*.conf
+

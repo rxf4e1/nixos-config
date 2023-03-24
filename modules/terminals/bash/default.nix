@@ -63,7 +63,7 @@ in {
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
       '';
       bashrcExtra = ''
-        # export PS1="\e[0;32m\w\e[m\n% "
+        export PS1="\e[0;32m\w\e[m\n% "
 
         # source $HOME/.local/share/github.com/fzf-tab-completion/bash/fzf-bash-completion.sh
         # bind -x '"\t": fzf_bash_completion'

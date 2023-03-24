@@ -3,6 +3,7 @@
     ./bash
     ./foot
     ./kitty
+    ./starship
     ./tmux
     ./zsh
   ];

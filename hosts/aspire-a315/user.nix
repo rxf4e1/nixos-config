@@ -24,6 +24,7 @@
     bash.enable = true;
     foot.enable = true;
     kitty.enable = true;
+    starship.enable = true;
     tmux.enable = true;
     zsh.enable = true;
 
@@ -37,12 +38,12 @@
       };
       gtk.enable = true;
       # qt6.enable = true; # :TODO:
-      widgets.enable = true;
+      widgets.enable = false;
     };
 
     # CLI
     cli = {
-      broot.enable = true;
+      broot.enable = false;
       direnv.enable = true;
       fzf.enable = true;
       ipfs.enable = false;

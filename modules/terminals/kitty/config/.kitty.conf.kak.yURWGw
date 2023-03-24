@@ -20,7 +20,6 @@ bold_italic_font auto
 # Font size (in pts)
 font_size        10
 
-allow_remote_control no
 # Adjust the cell dimensions.
 # You can use either numbers, which are interpreted as pixels or percentages
 # (number followed by %), which are interpreted as percentages of the

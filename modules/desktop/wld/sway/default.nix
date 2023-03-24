@@ -5,6 +5,10 @@
   ...
 }:
 with lib; let
+  wrapped-sway = pkgs.writeShellScriptBin "wrapped-sway" ''
+    cd ~
+    exec sway
+  '';
   cfg = config.modules.desktop.wld.sway;
 in {
   options.modules.desktop.wld.sway = {enable = mkEnableOption "Sway";};
@@ -17,6 +21,7 @@ in {
       glfw-wayland
       sway-contrib.grimshot
       viewnior
+      wrapped-sway
     ];
 
     home.sessionVariables = {
@@ -25,7 +30,7 @@ in {
       XDG_SESSION_TYPE = "wayland";
     };
 
-    programs.bash.shellAliases = {
+    home.shellAliases = {
       x = "wrapped-sway";
     };
   };

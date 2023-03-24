@@ -1,3 +1,4 @@
+# kak: filetype=kak
 
 #  ██ ▄█▀ ▄▄▄      ██ ▄█▀ ██▀███    ▄████▄ 
 #  ██▄█▒ ▒████▄    ██▄█▒ ▓██ ▒ ██▒ ▒██▀ ▀█ 
@@ -16,7 +17,7 @@ set global startup_info_version 999999999
 # ▄▀▀ ▄▀▄ █ █ █▀▄ ▄▀▀ ██▀
 # ▄██ ▀▄▀ ▀▄█ █▀▄ ▀▄▄ █▄▄
 # ────────────────────────────────────────────────────
-source "%val{config}/kakrc.local"
+# source "%val{config}/kakrc.local"
 
 # ────────────────────────────────────────────────────
 # ▄▀▄ █▀▄ ▀█▀ █ ▄▀▄ █▄ █ ▄▀▀
@@ -36,6 +37,7 @@ set-option global ui_options  terminal_assistant=none \
                               terminal_set_title=false
 
 add-highlighter global/ wrap -indent -word -marker '¬ '  # -width 100
+add-highlighter global/ show-matching
 
 # ────────────────────────────────────────────────────
 # █▀▄ █   █ █ ▄▀ 
@@ -48,34 +50,23 @@ evaluate-commands %sh{
         git clone -q https://github.com/andreyorst/plug.kak.git "$plugins/plug.kak"
     printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
 }
+
 plug "andreyorst/plug.kak" noload
-
-plug "kakounedotcom/prelude.kak"
-require-module prelude
-
-plug "lePerdu/kakboard" %{
-    hook global WinCreate .* %{ kakboard-enable }
-}
-
+plug "kakounedotcom/prelude.kak" config %{ require-module prelude }
+plug "lePerdu/kakboard" %{ hook global WinCreate .* %{ kakboard-enable } }
+plug "https://git.sr.ht/~raiguard/kak-one" theme
 plug "andreyorst/fzf.kak"
-
-plug "kakounedotcom/connect.kak" %{
-  require-module connect
-  require-module connect-broot
-}
-
+plug "kakounedotcom/connect.kak" %{ require-module connect }
 plug "alexherbo2/auto-pairs.kak" %{
   set-option global auto_pairs ( ) { } [ ] '"' '"' "'" "'" ` ` “ ” ‘ ’ « » ‹ ›
   hook global WinCreate .* %{ enable-auto-pairs }
 }
-
 plug "basbebe/pandoc.kak" %{
   hook global WinSetOption filetype=(asciidoc|fountain|html|latex|markdown) %{
     require-module pandoc
     set-option global pandoc_options '-d default'
   }
 }
-
 plug "delapouite/kakoune-buffers" %{
   map global normal ^ q
   map global normal <a-^> Q
@@ -92,32 +83,20 @@ plug "delapouite/kakoune-buffers" %{
 # █ █ ▀▄▀ ▀▄▀ █ █ ▄██
 # ────────────────────────────────────────────────────
 
-hook global WinCreate .*.nix \
-  %{ set-option buffer formatcmd alejandra }
-
-hook global BufWritePre .*.nix %{ format }
-
-hook global BufCreate .+[rc|\.local|\.conf|\.sh] %{
-  set-option buffer filetype conf
-}
-
-hook global BufCreate .+[rs] \
-  %{ set-option buffer filetype rust }
-
+hook global BufOpenFile .* %{ modeline-parse }
+hook global WinCreate .*[.](nix) %{ set-option buffer formatcmd alejandra }
+hook global BufWritePre .*[.](nix) %{ format }
 # Tabs to Spaces
 hook global InsertChar \t %{ exec -draft h@ }
-
 ## Better Escape
 hook global InsertChar j %{ try %{
   exec -draft hH <a-k>kj<ret> d
   exec <esc>
 }}
-
 hook global InsertChar j %{ try %{
   exec -draft hH <a-k>jj<ret> d
   exec <esc>
 }}
-
 ## Tab Completion
 hook global InsertCompletionShow .* %{
   try %{
@@ -207,13 +186,14 @@ map global normal '<c-p>' %{: fzf-mode<ret>}
 map global normal '<c-f>' %{: connect terminal kcr fzf files<ret>}
 
 ## User-Mode
-map global user -docstring 'H Split' '|' %{: tmux-terminal-horizontal kak -c %val{session}<ret>}
+map global user -docstring 'H Split' '|' %{: tmux-termial-horizontal kak -c %val{session}<ret>}
 map global user -docstring 'V Split' '_' %{:tmux-terminal-vertical kak -c %val{session}<ret>}
 map global user -docstring 'LSP'     'l' %{: enter-user-mode lsp<ret>}
-map global user -docstring 'Broot'   'b' %{: connect terminal broot<ret>}
+map global user -docstring 'Edit'    'e' %{: edit %sh{ fd --type f --hidden --exclude .git | fzf-tmux -p --reverse }<ret>}
 
 # ────────────────────────────────────────────────────
 # ▄▀▀ ▄▀▄ █   ▄▀▄ █▀▄ ▄▀▀ ▄▀▀ █▄█ ██▀ █▄ ▄█ ██▀
 # ▀▄▄ ▀▄▀ █▄▄ ▀▄▀ █▀▄ ▄██ ▀▄▄ █ █ █▄▄ █ ▀ █ █▄▄
 # ────────────────────────────────────────────────────
 # colorscheme gotham
+colorscheme one-darker
