@@ -27,8 +27,8 @@ with lib; let
     # tectonic
     # cmake
     python3
-    # perl
-    # nodejs
+    perl
+    nodejs
     # yarn
   ];
 

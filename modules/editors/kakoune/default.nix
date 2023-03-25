@@ -14,16 +14,13 @@ in {
       kakoune
       kakoune-cr
     ];
-
     # home.file.".config/kak/kakrc".source = ./config/kakrc;
     # home.file.".config/kak/kakrc.local".source = ./config/kakrc.local;
-
-    programs.zsh = {
-      shellAliases = {
-        k = "kcr edit";
-        kl = "kcr list";
-        a = "kcr attach";
-      };
+    home.sessionVariables.EDITOR = "kcr edit";
+    home.shellAliases = {
+      k = "kcr edit";
+      kl = "kcr list";
+      a = "kcr attach";
     };
   };
 }

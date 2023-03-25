@@ -23,6 +23,7 @@ in {
       defaultKeymap = "emacs";
       enableVteIntegration = true;
       autocd = true;
+      enableSyntaxHighlighting = true;
       shellAliases = {
         cat = "bat";
         less = "bat --paging=always";
@@ -50,16 +51,16 @@ in {
         gc = "nix-collect-garbage --delete-old";
         gcd = "doas nix-collect-garbage --delete-old";
       };
-      shellGlobalAliases = {};
+      # shellGlobalAliases = {};
       sessionVariables = {
         BROWSER = "brave";
-        EDITOR = "kcr edit";
         VISUAL = "$EDITOR";
         PAGER = "less";
         LC_COLLATE = "C";
       };
       initExtra = ''
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+        # export PATH='$HOME/.local/bin:$PATH'
       '';
       plugins = [
         {
