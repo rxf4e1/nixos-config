@@ -58,7 +58,7 @@ in {
       shellOptions = ["histappend" "checkwinsize" "extglob" "globstar" "checkjobs"];
 
       initExtra = ''
-        export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1"
+        # export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1"
         export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
       '';

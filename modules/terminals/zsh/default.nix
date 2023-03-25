@@ -22,6 +22,7 @@ in {
       };
       defaultKeymap = "emacs";
       enableVteIntegration = true;
+      autocd = true;
       shellAliases = {
         cat = "bat";
         less = "bat --paging=always";

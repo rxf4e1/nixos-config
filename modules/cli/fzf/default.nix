@@ -21,5 +21,9 @@ in {
       fileWidgetCommand = "fd --color=auto --type=f";
       fileWidgetOptions = ["--preview 'head -n 100 {}'"];
     };
+    home.sessionVariables = {
+      FZF_COMPLETION_TRIGGER = "~~";
+      FZF_DEFAULT_OPTS = "--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1";
+    };
   };
 }
