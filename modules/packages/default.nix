@@ -24,12 +24,12 @@ with lib; let
 
   code-tools = with pkgs; [
     pandoc
-    # tectonic
-    # cmake
     python3
     perl
     nodejs
-    # yarn
+    lua54Packages.lua
+    lua54Packages.luarocks
+    lua-language-server
   ];
 
   media-tools = with pkgs; [

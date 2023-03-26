@@ -6,6 +6,12 @@
   ...
 }:
 with lib; let
+
+  wrapped-hl = pkgs.writeShellScriptBin "wrapped-hl" ''
+      cd ~
+      exec Hyprland
+    '';
+  
   dbus-hyprland-environment = pkgs.writeTextFile {
     name = "dbus-hyprland-environment";
     destination = "/bin/dbus-hyprland-environment";
@@ -32,6 +38,7 @@ in {
       swaybg
       xwayland
       xorg.xprop
+      wrapped-hl
     ];
     home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "Hyprland";
@@ -39,7 +46,7 @@ in {
       XDG_SESSION_TYPE = "wayland";
     };
 
-    programs.bash.shellAliases = {
+    home.shellAliases = {
       x = "wrapped-hl";
     };
 

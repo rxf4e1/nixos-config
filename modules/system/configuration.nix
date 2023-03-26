@@ -56,9 +56,11 @@
     enableDefaultFonts = true;
     fontDir.enable = true;
     fonts = with pkgs; [
-      (nerdfonts.override {
-        fonts = ["FiraCode" "Inconsolata" "Iosevka"];
-      })
+      # (nerdfonts.override {
+      #   fonts = ["Inconsolata"];
+      # })
+      fira-code
+      fira-code-symbols
       liberation_ttf
       joypixels
     ];
@@ -66,7 +68,7 @@
       hinting.autohint = true;
       defaultFonts = {
         emoji = ["joypixels"];
-        monospace = ["Iosevka"];
+        monospace = ["Fira Code"];
       };
     };
   };
@@ -214,6 +216,7 @@
   programs.adb.enable = true;
   programs.dconf.enable = true;
   programs.light.enable = true;
+  programs.zsh.enable = true;
 
   # DBUS
   services = {

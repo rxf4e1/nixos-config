@@ -6,9 +6,9 @@
 }:
 with lib; let
   machine_id = "aspire-a315";
-  cfg = config.modules.bash;
+  cfg = config.modules.terminal.shell.bash;
 in {
-  options.modules.bash = {enable = mkEnableOption "bash";};
+  options.modules.terminal.shell.bash = {enable = mkEnableOption "bash";};
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -29,7 +29,6 @@ in {
 
       sessionVariables = {
         BROWSER = "brave";
-        EDITOR = "kcr edit";
         VISUAL = "\${EDITOR}";
         PAGER = "less";
         LC_COLLATE = "C";

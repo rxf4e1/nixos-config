@@ -17,24 +17,30 @@
       kakoune.enable = true;
       micro.enable = false;
       nano.enable = true;
-      neovim.enable = true;
+      neovim.enable = false;
     };
 
     # Terminal
-    bash.enable = true;
-    foot.enable = true;
-    kitty.enable = true;
-    starship.enable = true;
-    tmux.enable = true;
-    zsh.enable = true;
-    wezterm.enable = true;
+    terminal = {
+      emu = {
+        foot.enable = true;
+        kitty.enable = false;
+        tmux.enable = true;
+        wezterm.enable = true;
+      };
+      shell = {
+        bash.enable = true;
+        zsh.enable = true;
+      };
+      prompt.starship.enable = true;
+    };
 
     # Gui
     desktop = {
       wld = {
         common.enable = true;
-        hyprland.enable = false;
-        sway.enable = true;
+        hyprland.enable = true;
+        sway.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;

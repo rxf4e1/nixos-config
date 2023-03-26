@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.kitty;
+  cfg = config.modules.terminal.emu.kitty;
 in {
-  options.modules.kitty = {enable = mkEnableOption "kitty";};
+  options.modules.terminal.emu.kitty = {enable = mkEnableOption "kitty";};
   config = mkIf cfg.enable {
     home.packages = [pkgs.kitty];
     # programs.kitty ={

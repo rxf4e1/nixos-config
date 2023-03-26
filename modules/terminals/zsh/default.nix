@@ -6,9 +6,9 @@
 }:
 with lib; let
   machine_id = "aspire-a315";
-  cfg = config.modules.zsh;
+  cfg = config.modules.terminal.shell.zsh;
 in {
-  options.modules.zsh = {enable = mkEnableOption "zsh";};
+  options.modules.terminal.shell.zsh = {enable = mkEnableOption "zsh";};
   config = mkIf cfg.enable {
     programs.zsh = {
       enable = true;
@@ -60,7 +60,7 @@ in {
       };
       initExtra = ''
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
-        # export PATH='$HOME/.local/bin:$PATH'
+        path+=("$HOME/.local/bin" "$HOME/.luarocks/bin" "$HOME/.cargo/bin" "$HOME/.npm/global/bin")
       '';
       plugins = [
         {

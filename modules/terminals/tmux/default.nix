@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.tmux;
+  cfg = config.modules.terminal.emu.tmux;
 in {
-  options.modules.tmux = {enable = mkEnableOption "tmux";};
+  options.modules.terminal.emu.tmux = {enable = mkEnableOption "tmux";};
 
   config = mkIf cfg.enable {
     programs.tmux = {
@@ -20,6 +20,18 @@ in {
       disableConfirmationPrompt = false;
       escapeTime = 5;
       historyLimit = 1000;
+      plugins = with pkgs.tmuxPlugins; [
+        sensible
+        yank
+        {
+          plugin = dracula;
+          extraConfig = ''
+            set -g @dracula-show-battery false
+            set -g @dracula-show-powerline true
+            set -g @dracula-refresh-rate 10
+          '';
+        }
+      ];
       extraConfig = ''
         set -g status off
         set -g visual-activity on

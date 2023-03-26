@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.foot;
+  cfg = config.modules.terminal.emu.foot;
 in {
-  options.modules.foot = {enable = mkEnableOption "foot";};
+  options.modules.terminal.emu.foot = {enable = mkEnableOption "foot";};
   config = mkIf cfg.enable {
     home.packages = [pkgs.foot];
     # programs.foot = {

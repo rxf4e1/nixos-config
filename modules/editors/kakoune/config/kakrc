@@ -186,8 +186,8 @@ map global normal '<c-p>' %{: fzf-mode<ret>}
 map global normal '<c-f>' %{: connect terminal kcr fzf files<ret>}
 
 ## User-Mode
-map global user -docstring 'H Split' '|' %{: tmux-termial-horizontal kak -c %val{session}<ret>}
-map global user -docstring 'V Split' '_' %{:tmux-terminal-vertical kak -c %val{session}<ret>}
+map global user -docstring 'H Split' '|' %{: connect termial-horizontal kak -c %val{session}<ret>}
+map global user -docstring 'V Split' '_' %{: connect terminal-vertical kak -c %val{session}<ret>}
 map global user -docstring 'LSP'     'l' %{: enter-user-mode lsp<ret>}
 map global user -docstring 'Edit'    'e' %{: edit %sh{ fd --type f --hidden --exclude .git | fzf-tmux -p --reverse }<ret>}
 
@@ -196,4 +196,5 @@ map global user -docstring 'Edit'    'e' %{: edit %sh{ fd --type f --hidden --ex
 # ▀▄▄ ▀▄▀ █▄▄ ▀▄▀ █▀▄ ▄██ ▀▄▄ █ █ █▄▄ █ ▀ █ █▄▄
 # ────────────────────────────────────────────────────
 # colorscheme gotham
-colorscheme one-darker
+# colorscheme one-darker
+colorscheme dracula

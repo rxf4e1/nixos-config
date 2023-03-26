@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.starship;
+  cfg = config.modules.terminal.prompt.starship;
 in {
-  options.modules.starship = {enable = mkEnableOption "Starship Prompt";};
+  options.modules.terminal.prompt.starship = {enable = mkEnableOption "Starship Prompt";};
   config = mkIf cfg.enable {
     programs.starship = {
       enable = true;

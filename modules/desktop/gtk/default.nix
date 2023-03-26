@@ -31,7 +31,7 @@ in {
         size = 24;
       };
       font = {
-        name = "Iosevka";
+        name = "FiraCode Nerd Font Mono";
         size = 10;
       };
       iconTheme.name = "candy-icons";
