@@ -6,12 +6,11 @@
   ...
 }:
 with lib; let
-
   wrapped-hl = pkgs.writeShellScriptBin "wrapped-hl" ''
-      cd ~
-      exec Hyprland
-    '';
-  
+    cd ~
+    exec Hyprland
+  '';
+
   dbus-hyprland-environment = pkgs.writeTextFile {
     name = "dbus-hyprland-environment";
     destination = "/bin/dbus-hyprland-environment";
@@ -21,9 +20,9 @@ with lib; let
       dbus-update-activation-environment --systemd \
         WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
       systemctl --user stop pipewire pipewire-media-session \
-        xdg-desktop-portal xdg-desktop-portal-wlr
+        xdg-desktop-portal xdg-desktop-portal-hyprland
       systemctl --user start pipewire pipewire-media-session \
-        xdg-desktop-portal xdg-desktop-portal-wlr
+        xdg-desktop-portal xdg-desktop-portal-hyprland
     '';
   };
 
@@ -49,7 +48,6 @@ in {
     home.shellAliases = {
       x = "wrapped-hl";
     };
-
     # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
     # home.file.".config/tofi/config".source = ./config/tofi.config;
   };

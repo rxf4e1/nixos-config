@@ -10,6 +10,7 @@
 
   imports = [
     # ./acme.nix
+    ./virt.nix
   ];
 
   environment = {
@@ -80,7 +81,8 @@
       wlr.enable = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-wlr
+        # pkgs.xdg-desktop-portal-wlr
+        pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
