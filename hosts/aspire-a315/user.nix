@@ -14,10 +14,11 @@
     # Editors
     editor = {
       emacs.enable = false;
-      kakoune.enable = true;
+      helix.enable = true;
+      kakoune.enable = false;
       micro.enable = false;
       nano.enable = true;
-      neovim.enable = false;
+      neovim.enable = true;
     };
 
     # Terminal

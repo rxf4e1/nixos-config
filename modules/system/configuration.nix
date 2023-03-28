@@ -10,7 +10,7 @@
 
   imports = [
     # ./acme.nix
-    ./virt.nix
+    # ./virt.nix
   ];
 
   environment = {

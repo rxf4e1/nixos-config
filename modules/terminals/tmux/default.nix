@@ -12,26 +12,14 @@ in {
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
-      prefix = "C-s";
-      keyMode = "emacs";
+      prefix = "C-a";
+      keyMode = "vi";
       baseIndex = 1;
       aggressiveResize = true;
       clock24 = true;
       disableConfirmationPrompt = false;
-      escapeTime = 5;
+      escapeTime = 0;
       historyLimit = 1000;
-      plugins = with pkgs.tmuxPlugins; [
-        sensible
-        yank
-        {
-          plugin = dracula;
-          extraConfig = ''
-            set -g @dracula-show-battery false
-            set -g @dracula-show-powerline true
-            set -g @dracula-refresh-rate 10
-          '';
-        }
-      ];
       extraConfig = ''
         set -g status off
         set -g visual-activity on
@@ -40,7 +28,16 @@ in {
         # set-option -sa terminal-features ',xterm-kitty:RGB'
         set-option -g focus-events on
 
-        # source-file ~/.config/tmux/themes/tomorrow_night_bright.tmux
+        bind r source-file ~/.config/tmux/tmux.conf
+
+        bind -T copy-mode-vi v send-keys -X begin-selection
+        bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'wl-copy -po'
+
+        bind -r ^ last-window
+        bind -r k select-pane -U
+        bind -r j select-pane -D
+        bind -r h select-pane -L
+        bind -r l select-pane -R
       '';
     };
   };

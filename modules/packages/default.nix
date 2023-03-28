@@ -20,6 +20,7 @@ with lib; let
     ripgrep
     rustup
     rust-analyzer
+    gcc
   ];
 
   code-tools = with pkgs; [

@@ -2,7 +2,7 @@
   imports = [
     ./emacs
     ./kakoune
-    ./micro
+    ./helix
     ./nano
     ./nvim
   ];

@@ -10,7 +10,6 @@ in {
   options.modules.editor.kakoune = {enable = mkEnableOption "Kakoune";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      gcc
       kakoune
       kakoune-cr
     ];
