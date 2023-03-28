@@ -16,9 +16,8 @@
       emacs.enable = false;
       helix.enable = true;
       kakoune.enable = false;
-      micro.enable = false;
       nano.enable = true;
-      neovim.enable = true;
+      neovim.enable = false;
     };
 
     # Terminal

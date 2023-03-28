@@ -10,5 +10,7 @@ in {
   options.modules.editor.helix = {enable = mkEnableOption "helix";};
   config = mkIf cfg.enable {
     home.packages = [pkgs.helix];
+    home.sessionVariables.EDITOR = "hx";
+    home.shellAliases.e = "hx";
   };
 }

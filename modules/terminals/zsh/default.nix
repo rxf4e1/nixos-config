@@ -60,7 +60,7 @@ in {
       };
       initExtra = ''
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
-        path+=("$HOME/.local/bin" "$HOME/.luarocks/bin" "$HOME/.cargo/bin" "$HOME/.npm/global/bin")
+        path+=("$HOME/.local/bin" "$HOME/.luarocks/bin" "$HOME/.cargo/bin" "$(yarn global bin)")
       '';
       plugins = [
         {

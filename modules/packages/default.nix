@@ -28,6 +28,7 @@ with lib; let
     python3
     perl
     nodejs
+    yarn
     lua54Packages.lua
     lua54Packages.luarocks
     lua-language-server
