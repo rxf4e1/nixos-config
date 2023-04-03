@@ -9,9 +9,11 @@ with lib; let
 in {
   options.modules.cli.broot = {enable = mkEnableOption "Broot";};
   config = mkIf cfg.enable {
+    # home.packages = [pkgs.broot];
     programs.broot = {
       enable = true;
       enableBashIntegration = true;
+      enableZshIntegration = true;
       settings = {
         quit_on_last_cancel = true;
         show_selection_mark = true;
@@ -22,13 +24,6 @@ in {
           {
             invocation = "ok";
             key = "enter";
-            leave_broot = false;
-            external = "$EDITOR +{line} {file}";
-            apply_to = "file";
-          }
-          {
-            invocation = "ok";
-            key = "alt-enter";
             leave_broot = true;
             external = "$EDITOR +{line} {file}";
             apply_to = "file";
@@ -40,7 +35,7 @@ in {
         };
       };
     };
-    programs.bash.shellAliases = {
+    home.shellAliases = {
       d = "br";
     };
   };

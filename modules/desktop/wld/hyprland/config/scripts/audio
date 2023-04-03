@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+#
+#./audio
+
+CMD="$1"
+AUDIO_DEVICE="@DEFAULT_AUDIO_SINK@"
+STATUS_DEVICE=$(wpctl get-volume "$AUDIO_DEVICE")
+ICONS_DIR="$HOME/.icons/custom"
+HINT="String:x-canonical-private-synchronous:vol"
+
+
+if [ "$CMD" == "up" ]; then
+  wpctl set-volume "$AUDIO_DEVICE" 5%+ | notify-send -h "$HINT" -i "$ICONS_DIR/volume-up-1.svg" "$(wpctl get-volume $AUDIO_DEVICE)"
+fi
+if [ "$CMD" == "down" ]; then
+  wpctl set-volume "$AUDIO_DEVICE" 5%- | notify-send -h "$HINT" -i "$ICONS_DIR/volume-down-1.svg" "$(wpctl get-volume $AUDIO_DEVICE)"
+fi
+if [ "$CMD" == "togglemute" ]; then
+  wpctl set-mute "$AUDIO_DEVICE" toggle | notify-send -h "$HINT" -i "$ICONS_DIR/volume-mute.svg" "Volume: " "Muted"
+fi
+
+
+# kak: filetype=sh

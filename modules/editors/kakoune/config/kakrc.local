@@ -1,4 +1,3 @@
-
 #  ██ ▄█▀ ▄▄▄      ██ ▄█▀ ██▀███    ▄████▄      ██▓    ▒█████    ▄████▄  ▄▄▄       ██▓   
 #  ██▄█▒ ▒████▄    ██▄█▒ ▓██ ▒ ██▒ ▒██▀ ▀█     ▓██▒   ▒██▒  ██▒ ▒██▀ ▀█ ▒████▄    ▓██▒   
 # ▓███▄░ ▒██  ▀█▄ ▓███▄░ ▓██ ░▄█ ▒ ▒▓█    ▄    ▒██░   ▒██░  ██▒ ▒▓█    ▄▒██  ▀█▄  ▒██░   
@@ -8,12 +7,33 @@
 # ░ ░▒ ▒░░ ░   ▒▒ ░ ░▒ ▒░  ░▒ ░ ▒    ░  ▒  ░  ░░ ░ ▒    ░ ▒ ▒░    ░  ▒  ░ ░   ▒▒ ░░ ░ ▒  
 # ░ ░░ ░   ░   ▒  ░ ░░ ░   ░░   ░  ░       ░     ░ ░  ░ ░ ░ ▒   ░         ░   ▒     ░ ░  
 # ░  ░         ░  ░  ░      ░      ░ ░      ░ ░    ░      ░ ░   ░ ░           ░  ░    ░
+# ────────────────────────────────────────────────────
+
+define-command run  -params .. %{ info -title "%arg{@}" %sh{${@} 2>&1 } }
+complete-command run shell
+
+define-command -override fzf-files %{
+  connect terminal sh -c %{
+    fd --type f --hidden --exclude .git | fzf-tmux -p -m | xargs kcr edit --
+  }
+}
+
+define-command -override fzf-buffers %{
+  connect terminal sh -c %{
+    kcr get --raw --value buflist | fzf-tmux -p | xargs kcr send buffer --
+  }
+}
+
+define-command -override broot-right %{
+  connect tmux-terminal-horizontal sh -c %{ broot }
+}
 
 
-# ────────────────────────────────────────────────────
-# ▄▀▀ ▄▀▄ █   ▄▀▄ █▀▄ ▄▀▀ ▄▀▀ █▄█ ██▀ █▄ ▄█ ██▀
-# ▀▄▄ ▀▄▀ █▄▄ ▀▄▀ █▀▄ ▄██ ▀▄▄ █ █ █▄▄ █ ▀ █ █▄▄
-# ────────────────────────────────────────────────────
-# colorscheme gotham
-colorscheme one-darker
-# colorscheme selenized-black
+map global normal <c-f> ': fzf-files<ret>'
+map global normal <c-b> ': fzf-buffers<ret>'
+
+map global user -docstring 'find files' f %{': fzf-files<ret>'}
+map global user -docstring 'find buffers' b %{': fzf-buffers<ret>'}
+map global user -docstring 'file tree' e %{': broot-right<ret>'}
+
+# kak: filetype=kak

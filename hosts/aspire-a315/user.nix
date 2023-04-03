@@ -15,7 +15,7 @@
     editor = {
       emacs.enable = false;
       helix.enable = true;
-      kakoune.enable = false;
+      kakoune.enable = true;
       nano.enable = true;
       neovim.enable = false;
     };
@@ -39,8 +39,8 @@
     desktop = {
       wld = {
         common.enable = true;
-        hyprland.enable = true;
-        sway.enable = false;
+        hyprland.enable = false;
+        sway.enable = true;
         notify.enable = true;
       };
       gtk.enable = true;
@@ -50,7 +50,7 @@
 
     # CLI
     cli = {
-      broot.enable = false;
+      broot.enable = true;
       direnv.enable = true;
       fzf.enable = true;
       ipfs.enable = false;

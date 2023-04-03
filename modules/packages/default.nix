@@ -62,6 +62,7 @@ in {
       [
         bc
         btop
+        ed
         unzip
         zip
         killall

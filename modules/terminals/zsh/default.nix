@@ -38,9 +38,9 @@ in {
         mv = "mv -iv";
         rm = "rm -Iv";
 
-        v = "nvim -i NONE";
-        vim = "nvim -i NONE";
-        nvim = "nvim -i NONE";
+        # v = "nvim -i NONE";
+        # vim = "nvim -i NONE";
+        # nvim = "nvim -i NONE";
 
         ls = "lsd";
         la = "ls --long --all --no-symlink";

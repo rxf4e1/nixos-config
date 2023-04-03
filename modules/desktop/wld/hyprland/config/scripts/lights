@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+#
+# ./brightness
+
+CMD="$1"
+SYSFS="sysfs/backlight/amdgpu_bl1"
+CURRENT="$(light -s "${SYSFS}" -G)"
+ICONS_DIR="$HOME/.icons/custom"
+HINT="String:x-canonical-private-synchronous:light"
+
+if [ "$CMD" == "up" ]; then
+  light -s "$SYSFS" -A 10.0 | notify-send -h $HINT -i "${ICONS_DIR}/brightness-plus.svg" "Brightness:" "$CURRENT %"
+  if [ "$CURRENT" ==  "100.00" ]; then
+    notify-send -h $HINT -i "${ICONS_DIR}/brightness-2.svg" "Brightness:" "FULL"
+  fi
+elif [ "$CMD" == "down" ]; then
+  light -s "$SYSFS" -U 10.0 | notify-send -h $HINT -i "${ICONS_DIR}/brightness-minus.svg" "Brightness:" "$CURRENT %"
+  if [ "$CURRENT" == "0.00" ]; then
+    notify-send -h $HINT -i "${ICONS_DIR}/brightness-empty.svg" "Brightness:" "EMPTY"
+  fi
+fi
+
+
+
+# kak: filetype=sh
