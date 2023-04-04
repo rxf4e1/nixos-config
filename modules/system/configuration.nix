@@ -81,8 +81,8 @@
       wlr.enable = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        # pkgs.xdg-desktop-portal-wlr
-        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-wlr
+        # pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
@@ -159,6 +159,7 @@
         "wheel"
         "video"
         "audio"
+        "pipewire"
         "networkmanager"
       ];
     };
@@ -200,6 +201,7 @@
 
   # Security
   security = {
+    rtkit.enable = true;
     sudo.enable = false;
     doas = {
       enable = true;
@@ -230,29 +232,21 @@
       enable = true;
       # packages = with pkgs; [gnome.gnome-settings-daemon];
     };
-    # journald.console = "tty7";
+    journald.console = "/dev/tty12";
     upower.enable = true; # Battery info & stuff
   };
 
-  # kanshi systemd service
-  # systemd.user.services.kanshi = {
-  #   description = "kanshi daemon";
-  #   serviceConfig = {
-  #     Type = "simple";
-  #     ExecStart = ''${pkgs.kanshi}/bin/kanshi -c $HOME/.config/kanshi/config'';
-  #   };
-  # };
-
   # Sound
   sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-  security.rtkit.enable = true;
+  hardware.pulseaudio.enable = true;
+  # services.pipewire = {
+  #   enable = true;
+  #   wireplumber.enable = true;
+  #   audio.enable = true;
+  #   # alsa.enable = true;
+  #   # alsa.support32Bit = true;
+  #   # pulse.enable = true;
+  # };
 
   # Set up hardware stuff: bluetooth opengl etc
   hardware = {
@@ -261,7 +255,7 @@
     opengl = {
       enable = true;
       driSupport = true;
-      driSupport32Bit = false;
+      driSupport32Bit = true;
       extraPackages = with pkgs; [
         libdrm
         libva

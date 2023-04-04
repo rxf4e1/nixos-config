@@ -14,7 +14,7 @@
     # Editors
     editor = {
       emacs.enable = false;
-      helix.enable = true;
+      helix.enable = false;
       kakoune.enable = true;
       nano.enable = true;
       neovim.enable = false;
