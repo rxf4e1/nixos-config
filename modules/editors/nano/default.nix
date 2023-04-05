@@ -10,6 +10,7 @@ in {
   options.modules.editor.nano = {enable = mkEnableOption "Nano";};
   config = mkIf cfg.enable {
     home.packages = [pkgs.nano];
+    # home.packages = [pkgs.micro];
     home.file.".config/nano/nanorc".source = ./nanorc;
   };
 }

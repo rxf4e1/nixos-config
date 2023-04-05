@@ -10,7 +10,7 @@ in {
   options.modules.editor.neovim = {enable = mkEnableOption "Neovim";};
   config = mkIf cfg.enable {
     home.packages = [pkgs.neovim];
-    home.sessionVariables.EDITOR = "nvim";
+    # home.sessionVariables.EDITOR = "nvim";
     home.shellAliases = {
       v = "nvim -i NONE";
       vim = "nvim -i NONE";

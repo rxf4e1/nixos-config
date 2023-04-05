@@ -16,7 +16,8 @@
       emacs.enable = false;
       helix.enable = false;
       kakoune.enable = true;
-      nano.enable = true;
+      micro.enable = true;
+      nano.enable = false;
       neovim.enable = false;
     };
 

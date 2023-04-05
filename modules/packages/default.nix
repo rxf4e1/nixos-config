@@ -9,7 +9,8 @@ with lib; let
     inetutils
     nmap
     speedtest-cli
-    wireshark
+    # wireshark
+    tshark
   ];
 
   rust-tools = with pkgs; [
@@ -29,8 +30,8 @@ with lib; let
     perl
     nodejs
     yarn
-    lua54Packages.lua
-    lua54Packages.luarocks
+    lua53Packages.lua
+    lua53Packages.luarocks
     lua-language-server
   ];
 

@@ -33,28 +33,36 @@ set $background ../backgrounds/1.jpg
 # set $term $scripts/foot.sh
 set $term wezterm start tmux
 set $term_cwd foot -D "$(swaycwd 2>/dev/null || echo $HOME)"
-# set $term_float footclient -a floating_shell
-set $kterm kitty -e tmux
+set $term_float footclient -a floating_shell
+# set $kterm kitty -e tmux
 
 # onscreen bar
 set $onscreen_bar $scripts/wob.sh "$accent-color" "$background-color"
 
 # brightness control
-set $brightness $scripts/brightness.sh
-set $brightness_up $brightness up | $onscreen_bar
-set $brightness_down $brightness down | $onscreen_bar
+set $brightness_up $onscreen_bar $(light -A 10 && light -G | cut -d'.' -f1)
+set $brightness_down $onscreen_bar $(light -U 10 && light -G | cut -d'.' -f1)
 
 # scaling
 set $scale_up $scripts/scale.sh up
 set $scale_down $scripts/scale.sh down
 
 # audio control
-set $sink_volume wpctl get-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
-set $source_volume wpctl get-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
-set $volume_down $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%- && $sink_volume)
-set $volume_up $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%+ && $sink_volume)
-set $volume_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SINK@ toggle && wpctl get-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
-set $mic_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SOURCE@ toggle && wpctl get-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
+# Pulseaudio
+set $sink_volume pactl get-sink-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $source_volume pactl get-source-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $volume_down $onscreen_bar $(pactl set-sink-volume @DEFAULT_SINK@ -5% && $sink_volume)
+set $volume_up $onscreen_bar $(pactl set-sink-volume @DEFAULT_SINK@ +5% && $sink_volume)
+set $volume_mute $onscreen_bar $(pactl set-sink-mute @DEFAULT_SINK@ toggle && pactl get-sink-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
+set $mic_mute $onscreen_bar $(pactl set-source-mute @DEFAULT_SOURCE@ toggle && pactl get-source-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
+
+# Wireplumber
+# set $sink_volume wpctl get-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+# set $source_volume wpctl get-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+# set $volume_down $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%- && $sink_volume)
+# set $volume_up $onscreen_bar $(wpctl set-volume @DEFAULT_SINK@ 5%+ && $sink_volume)
+# set $volume_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SINK@ toggle && wpctl get-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
+# set $mic_mute $onscreen_bar $(wpctl set-mute @DEFAULT_SOURCE@ toggle && wpctl get-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
 
 # set $volume $scripts/volume.sh
 # set $volume_down $volume down
@@ -126,7 +134,6 @@ set $screenshot_selection_upload $pipe_selection | $upload_pipe
 set $wlsunset '[ -x "$(command -v wlsunset)" ] && $scripts/sunset.sh "on"'
 # set $autotiling '[ -x "$(command -v autotiling)" ] && autotiling'
 # set $foot_server '[ -x "$(command -v foot)" ] && foot --server'
-set $foot_server 'foot --server'
 set $mounting_daemon '[ -x "$(command -v pcmanfm)" ] && pcmanfm -d'
 # restart kanshi https://github.com/emersion/kanshi/issues/43#issuecomment-531679213
 set $kanshi '[ -x "$(command -v kanshi)" ] && pkill kanshi; exec kanshi'

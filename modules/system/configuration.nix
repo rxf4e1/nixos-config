@@ -21,6 +21,7 @@
       wget
       acpi
       glib
+      gnumake
       lm_sensors
       tlp
       dnsutils
@@ -112,7 +113,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 1d";
+      options = "--delete-older-than 2d";
     };
   };
 
@@ -145,8 +146,6 @@
   # if warning GID not change:
   # as root -> groupmod -g <NEW-GID> <GROUP-NAME>
   users = {
-    enforceIdUniqueness = true;
-    mutableUsers = true;
     users.rxf4e1 = {
       isNormalUser = true;
       shell = pkgs.zsh;
@@ -228,10 +227,7 @@
       enable = true;
       packages = [pkgs.dconf];
     };
-    udev = {
-      enable = true;
-      # packages = with pkgs; [gnome.gnome-settings-daemon];
-    };
+    udev = {enable = true;};
     journald.console = "/dev/tty12";
     upower.enable = true; # Battery info & stuff
   };
@@ -243,9 +239,10 @@
   #   enable = true;
   #   wireplumber.enable = true;
   #   audio.enable = true;
-  #   # alsa.enable = true;
+  #   alsa.enable = true;
   #   # alsa.support32Bit = true;
-  #   # pulse.enable = true;
+  #   jack.enable = true;
+  #   pulse.enable = true;
   # };
 
   # Set up hardware stuff: bluetooth opengl etc
