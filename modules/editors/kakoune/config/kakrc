@@ -76,6 +76,14 @@ plug "delapouite/kakoune-buffers" %{
   map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
 }
 
+plug "eraserhd/parinfer-rust" do %{
+    cargo install --force --path .
+} config %{
+    hook global WinSetOption filetype=(clojure|lisp|scheme|racket) %{
+        parinfer-enable-window -smart
+    }
+}
+
 # ────────────────────────────────────────────────────
 # █▄█ ▄▀▄ ▄▀▄ █▄▀ ▄▀▀
 # █ █ ▀▄▀ ▀▄▀ █ █ ▄██

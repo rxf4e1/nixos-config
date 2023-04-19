@@ -10,5 +10,8 @@ in {
   options.modules.editor.micro = {enable = mkEnableOption "Micro";};
   config = mkIf cfg.enable {
     home.packages = [pkgs.micro];
+    home.shellAliases = {
+        mc = "micro";
+      };
   };
 }

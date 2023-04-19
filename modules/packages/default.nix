@@ -20,7 +20,9 @@ with lib; let
     procs
     ripgrep
     rustup
-    rust-analyzer
+    # rust-analyzer
+    # cargo
+    # clippy
     gcc
   ];
 
@@ -30,9 +32,9 @@ with lib; let
     perl
     nodejs
     yarn
-    lua53Packages.lua
-    lua53Packages.luarocks
-    lua-language-server
+    # lua54Packages.lua
+    # lua54Packages.luarocks
+    # lua-language-server
   ];
 
   media-tools = with pkgs; [
@@ -63,20 +65,24 @@ in {
       [
         bc
         btop
+        htop
         ed
         unzip
         zip
         killall
         lolcat
-        figlet
-        w3m
+        # figlet
+        # w3m
         nb
       ]
       ++ code-tools
       ++ file-tools
-      # ++ inet-tools
+      ++ inet-tools
       ++ media-tools
       ++ rust-tools
       ++ nix-tools;
+  };
+  home.shellAliases = {
+    ed = "rlwrap ed -p '>> '";
   };
 }

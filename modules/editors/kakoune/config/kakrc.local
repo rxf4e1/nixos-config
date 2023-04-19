@@ -28,12 +28,25 @@ define-command -override broot-right %{
   connect tmux-terminal-horizontal sh -c %{ broot }
 }
 
+hook global ModuleLoaded tmux %{
+  alias global popup tmux-terminal-vertical
+}
 
 map global normal <c-f> ': fzf-files<ret>'
 map global normal <c-b> ': fzf-buffers<ret>'
 
-map global user -docstring 'find files' f %{': fzf-files<ret>'}
+map global user -docstring 'find files'   f %{': fzf-files<ret>'}
 map global user -docstring 'find buffers' b %{': fzf-buffers<ret>'}
-map global user -docstring 'file tree' e %{': broot-right<ret>'}
+map global user -docstring 'file tree'    e %{': broot-right<ret>'}
+
+# FIXME: put inside a toggle command
+# 
+# hook global NormalKey .* %{
+#   add-highlighter -override global/ number-lines -relative -hlcursor
+# }
+
+# hook global InsertKey .* %{
+#   add-highlighter -override global/ number-lines -hlcursor
+# }
 
 # kak: filetype=kak

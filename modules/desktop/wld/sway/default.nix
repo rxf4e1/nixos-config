@@ -7,7 +7,8 @@
 with lib; let
   wrapped-sway = pkgs.writeShellScriptBin "wrapped-sway" ''
     cd ~
-    exec sway
+    # If running from tty1 start sway
+    [ "$(tty)" = "/dev/tty1" ] && exec sway
   '';
   cfg = config.modules.desktop.wld.sway;
 in {
