@@ -18,20 +18,20 @@
       kakoune.enable = true;
       micro.enable = false;
       nano.enable = true;
-      neovim.enable = false;
+      neovim.enable = true;
     };
 
     # Terminal
     terminal = {
       emu = {
-        foot.enable = true;
+        foot.enable = false;
         kitty.enable = false;
         tmux.enable = true;
         wezterm.enable = true;
       };
       shell = {
         bash.enable = true;
-        zsh.enable = true;
+        zsh.enable = false;
       };
       prompt.starship.enable = true;
     };

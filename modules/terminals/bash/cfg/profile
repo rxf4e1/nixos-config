@@ -1,0 +1,8 @@
+. "/etc/profiles/per-user/rxf4e1/etc/profile.d/hm-session-vars.sh"
+
+export BROWSER="brave"
+export LC_COLLATE="C"
+export PAGER="less"
+export VISUAL="${EDITOR}"
+
+

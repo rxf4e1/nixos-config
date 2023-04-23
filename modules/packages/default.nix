@@ -48,6 +48,10 @@ with lib; let
     pcmanfm
     poppler
     zathura
+    zettlr
+    # joplin
+    # logseq
+    # obsidian
   ];
 
   nix-tools = with pkgs; [
@@ -67,6 +71,7 @@ in {
         btop
         htop
         ed
+        rlwrap
         unzip
         zip
         killall
@@ -81,8 +86,8 @@ in {
       ++ media-tools
       ++ rust-tools
       ++ nix-tools;
-  };
-  home.shellAliases = {
-    ed = "rlwrap ed -p '>> '";
+    home.shellAliases = {
+      ed = "rlwrap ed --prompt='>> '";
+    };
   };
 }

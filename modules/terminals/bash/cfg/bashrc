@@ -1,0 +1,83 @@
+# export PS1="\e[0;32m\w\e[m\n% "
+
+# Commands that should be applied only for interactive shells.
+[[ $- == *i* ]] || return
+
+HISTCONTROL=erasedups:ignoredups:ignorespace
+HISTFILE="${HOME}/.bash_history"
+HISTFILESIZE=5000
+HISTIGNORE='cd:ls:ls -la:la:ll:exit'
+HISTSIZE=5000
+
+shopt -s histappend
+shopt -s checkwinsize
+shopt -s extglob
+shopt -s globstar
+shopt -s checkjobs
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias a='kcr attach'
+alias cat='bat'
+alias cd='gd'
+alias cp='cp -iv'
+alias d='br'
+alias df='df -h'
+alias du='du -hs'
+alias ed='rlwrap ed --prompt='\''>> '\'''
+alias gc='nix-collect-garbage --delete-old'
+alias gcd='doas nix-collect-garbage --delete-old'
+alias k='kcr edit'
+alias kl='kcr list'
+alias la='ls --long --all --no-symlink'
+alias less='bat --paging=always'
+alias ls='lsd'
+alias lt='ls --tree --no-symlink'
+alias md='mkdir -pv'
+alias mv='mv -iv'
+alias pandoc='pandoc --pdf-engine tectonic'
+alias rebuild='doas nixos-rebuild switch --flake $NIXOS_CONFIG/'\''#aspire-a315'\'''
+alias rebuild-boot='doas nixos-rebuild boot --flake $NIXOS_CONFIG/'\''#aspire-a315'\'''
+alias rm='rm -Iv'
+alias sudo='doas'
+alias x='wrapped-sway'
+
+if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
+  . "/nix/store/hg566lp6nzwnrj6gddcj27w0c342b28g-bash-completion-2.11/etc/profile.d/bash_completion.sh"
+fi
+
+if [[ :$SHELLOPTS: =~ :(vi|emacs): ]]; then
+  . /nix/store/5i1ipr60vjqhx3z99rzzkbgx1nd5jcbg-fzf-0.39.0/share/fzf/completion.bash
+  . /nix/store/5i1ipr60vjqhx3z99rzzkbgx1nd5jcbg-fzf-0.39.0/share/fzf/key-bindings.bash
+fi
+
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+
+GPG_TTY="$(tty)"
+export GPG_TTY
+/nix/store/pcrcjd12rqnf20ipwl1nnwyxl3blwhhm-gnupg-2.4.0/bin/gpg-connect-agent updatestartuptty /bye > /dev/null
+
+if [[ $TERM != "dumb" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
+  eval "$(/etc/profiles/per-user/rxf4e1/bin/starship init bash --print-full-init)"
+fi
+
+__HM_PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND%;};}__hm_vte_prompt_command"
+. /nix/store/r4fgc3vl6xq6rhzr0dfcps0c5xq6qjbq-vte-0.72.0/etc/profile.d/vte.sh
+if [[ $(type -t __vte_prompt_command) = function ]]; then
+  __hm_vte_prompt_command() {
+    local old_exit_status=$?
+    __vte_prompt_command
+    return $old_exit_status
+  }
+  PROMPT_COMMAND="$__HM_PROMPT_COMMAND"
+fi
+unset __HM_PROMPT_COMMAND
+
+eval "$(/nix/store/lqqjp634fwpzkabvly8kvq45qry9jyc3-direnv-2.32.2/bin/direnv hook bash)"
+
+source /nix/store/yqxkv3sp5749j9f0y10r0khcrliy6m4w-br.bash
+
+source /home/rxf4e1/.bashrc.local
+

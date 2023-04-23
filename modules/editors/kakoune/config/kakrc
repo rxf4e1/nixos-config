@@ -92,6 +92,10 @@ plug "eraserhd/parinfer-rust" do %{
 hook global BufOpenFile .* %{ modeline-parse }
 hook global WinCreate .*[.](nix) %{ set-option buffer formatcmd alejandra }
 hook global BufWritePre .*[.](nix) %{ format }
+hook global WinCreate .*[.|_](local) %{
+  set-option buffer filetype sh
+  set-option buffer formatcmd shfmt
+}
 # Tabs to Spaces
 hook global InsertChar \t %{ exec -draft h@ }
 ## Better Escape

@@ -123,8 +123,8 @@
 
     supportedFilesystems = ["btrfs" "ntfs"];
 
-    tmpOnTmpfs = true;
-    cleanTmpDir = true;
+    tmp.useTmpfs = true;
+    tmp.cleanOnBoot = true;
 
     loader = {
       systemd-boot.enable = true;
@@ -148,8 +148,8 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      shell = pkgs.zsh;
-      # shell = pkgs.bash;
+      # shell = pkgs.zsh;
+      shell = pkgs.bash;
       uid = 1000;
       group = "users";
       extraGroups = [
@@ -158,7 +158,7 @@
         "wheel"
         "video"
         "audio"
-        "pipewire"
+        # "pipewire"
         "networkmanager"
       ];
     };
@@ -219,7 +219,7 @@
   programs.adb.enable = true;
   programs.dconf.enable = true;
   programs.light.enable = true;
-  programs.zsh.enable = true;
+  # programs.zsh.enable = true;
 
   # DBUS
   services = {
@@ -239,10 +239,10 @@
   #   enable = true;
   #   wireplumber.enable = true;
   #   audio.enable = true;
-  #   alsa.enable = true;
-  #   alsa.support32Bit = true;
-  #   jack.enable = true;
-  #   pulse.enable = true;
+  #   # alsa.enable = true;
+  #   # alsa.support32Bit = true;
+  #   # jack.enable = true;
+  #   # pulse.enable = true;
   # };
 
   # Set up hardware stuff: bluetooth opengl etc

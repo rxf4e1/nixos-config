@@ -23,7 +23,7 @@ in {
     };
     home.sessionVariables = {
       FZF_COMPLETION_TRIGGER = "**";
-      FZF_DEFAULT_OPTS = "--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1 \
+      FZF_DEFAULT_OPTS = "--info=inline --border=horizontal --margin=1 --padding=1 \
          --color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 \
          --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 \
          --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 \

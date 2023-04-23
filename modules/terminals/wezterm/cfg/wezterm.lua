@@ -56,7 +56,7 @@ config = {
   enable_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
   use_fancy_tab_bar = false,
-  tab_max_width = 20,
+  tab_max_width = 25,
   show_tab_index_in_tab_bar = false,
 
   --
