@@ -20,9 +20,6 @@ with lib; let
     procs
     ripgrep
     rustup
-    # rust-analyzer
-    # cargo
-    # clippy
     gcc
   ];
 
@@ -30,11 +27,7 @@ with lib; let
     pandoc
     python3
     perl
-    nodejs
-    yarn
-    # lua54Packages.lua
-    # lua54Packages.luarocks
-    # lua-language-server
+    deno
   ];
 
   media-tools = with pkgs; [
@@ -48,7 +41,7 @@ with lib; let
     pcmanfm
     poppler
     zathura
-    zettlr
+    # zettlr
     # joplin
     # logseq
     # obsidian
@@ -76,9 +69,7 @@ in {
         zip
         killall
         lolcat
-        # figlet
-        # w3m
-        nb
+        # nb
       ]
       ++ code-tools
       ++ file-tools

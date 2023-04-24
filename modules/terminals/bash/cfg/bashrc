@@ -64,7 +64,7 @@ if [[ $TERM != "dumb" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
 fi
 
 __HM_PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND%;};}__hm_vte_prompt_command"
-. /nix/store/r4fgc3vl6xq6rhzr0dfcps0c5xq6qjbq-vte-0.72.0/etc/profile.d/vte.sh
+# . /nix/store/r4fgc3vl6xq6rhzr0dfcps0c5xq6qjbq-vte-0.72.0/etc/profile.d/vte.sh
 if [[ $(type -t __vte_prompt_command) = function ]]; then
   __hm_vte_prompt_command() {
     local old_exit_status=$?
@@ -77,7 +77,7 @@ unset __HM_PROMPT_COMMAND
 
 eval "$(/nix/store/lqqjp634fwpzkabvly8kvq45qry9jyc3-direnv-2.32.2/bin/direnv hook bash)"
 
-source /nix/store/yqxkv3sp5749j9f0y10r0khcrliy6m4w-br.bash
+# source /nix/store/yqxkv3sp5749j9f0y10r0khcrliy6m4w-br.bash
 
 source /home/rxf4e1/.bashrc.local
 

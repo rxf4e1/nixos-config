@@ -17,6 +17,12 @@ in {
       shfmt
     ];
 
+    home.sessionPath = [
+      "/home/rxf4e1/.local/bin"
+      "/home/rxf4e1/.cargo/bin"
+      "/home/rxf4e1/.local/share/yarn/global/bin"
+    ];
+
     # programs.bash = {
     #   enable = true;
     #   enableCompletion = true;
@@ -83,11 +89,6 @@ in {
     #   '';
     # };
 
-    # home.sessionPath = [
-    #   "$HOME/.local/bin"
-    #   "$HOME/.cargo/bin"
-    #   # "$(yarn global bin)"
-    # ];
 
     # home.file.".bashrc.local".source = ./bashrc.local;
   };

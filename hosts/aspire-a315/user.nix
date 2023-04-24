@@ -40,8 +40,9 @@
     desktop = {
       wld = {
         common.enable = true;
+        hikari.enable = true;
         hyprland.enable = false;
-        sway.enable = true;
+        sway.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;
