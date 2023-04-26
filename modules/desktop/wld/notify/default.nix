@@ -13,34 +13,40 @@ in {
       enable = false;
       actions = true;
       anchor = "bottom-right";
-      backgroundColor = "#141a1b";
-      borderColor = "#16a085";
-      borderRadius = 2;
-      borderSize = 1;
-      defaultTimeout = 0;
+      borderRadius = 10;
+      borderSize = 3;
+      defaultTimeout = 15000;
       format = "<b>%s</b>\\n%b";
-      font = "Termsyn 10";
+      font = "Fira Code 9";
       # format = "";
       # groupBy = "";
       # height = 200;
       # width = 300;
+      padding = "20";
+      margin = "20";
       icons = true;
       maxIconSize = 32;
       layer = "overlay";
-      textColor = "#FFFFFF";
-      # extraConfig = '' '';
+      backgroundColor = "#282a36";
+      borderColor = "#282a36";
+      textColor = "#44475a";
+      extraConfig = ''
+        [urgency=low]
+        border-color=#282a36
+
+        [urgency=normal]
+        border-color=#f1fa8c
+
+        [urgency=high]
+        border-color=#ff5555
+      '';
     };
 
-    # services.fnott = {
-    #   enable = true;
-    #   package = pkgs.fnott;
-    #   configFile = "$XDG_CONFIG_HOME/fnott/fnott.ini";
-    # };
     home.packages = with pkgs; [
-      dunst
+      # dunst
+      swaynotificationcenter
       libnotify
       inotify-tools
-      # fnott
       # mako
     ];
   };

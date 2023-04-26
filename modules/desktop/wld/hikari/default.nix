@@ -12,7 +12,7 @@ with lib; let
   dbus-hikari-environment = pkgs.writeTextFile {
       name = "dbus-hikari-environment";
       destination = "/bin/dbus-hikari-environment";
-      execultable = true;
+      executable = true;
 
       text = ''
         dbus-update-activation-environment --systemd \
@@ -41,6 +41,8 @@ in {
           XDG_SESSION_DESKTOP = "wlroots";
           XDG_SESSION_TYPE = "wayland";
         };
-      home.shellAliases = {};
+      home.shellAliases = {
+          x = "wrapped-hikari";
+        };
     };
 }

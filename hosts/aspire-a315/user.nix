@@ -15,22 +15,25 @@
     editor = {
       emacs.enable = false;
       helix.enable = false;
-      kakoune.enable = false;
+      kakoune.enable = true;
       micro.enable = false;
       nano.enable = true;
-      neovim.enable = true;
+      neovim.enable = false;
     };
 
     # Terminal
     terminal = {
       emu = {
-        foot.enable = false;
+        foot.enable = true;
         kitty.enable = false;
         tmux.enable = true;
-        wezterm.enable = true;
+        wezterm.enable = false;
       };
       shell = {
         bash.enable = true;
+        # fish.enable = false;
+        ion.enable = true;
+        # nushell.enable = false;
         zsh.enable = false;
       };
       prompt.starship.enable = true;

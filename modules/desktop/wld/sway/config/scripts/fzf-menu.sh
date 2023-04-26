@@ -1,3 +1,8 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+#
+# ./fzf-menu.sh
 
-print -rl -- ${(ko)commands} | fzf-tmux -p --reverse | (nohup ${SHELL:-"/usr/bin/env sh"} &) >/dev/null 2>&1
+fd . /etc/profiles/per-user/rxf4e1/bin | \
+  fzf-tmux -p -- -e -i -m --reverse --delimiter / --with-nth -1 | \
+  $(eval ${SHELL:-"/usr/bin/env sh"} &) >/dev/null 2>&1
+

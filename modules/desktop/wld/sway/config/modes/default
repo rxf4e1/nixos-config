@@ -13,6 +13,10 @@ $bindsym $mod+Shift+q kill
 
 ## Launch // Open launcher ##
 $bindsym $mod+d exec $menu
+$bindsym $mod+Shift+d exec $term_float $fzf_menu
+
+# Launch // Notification Center ##
+bindsym $mod+Shift+n exec swaync-client -t -sw
 
 ## Launch // Open clipboard ##
 $bindsym $mod+Shift+p exec $clipboard

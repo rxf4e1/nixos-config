@@ -148,8 +148,8 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      # shell = pkgs.zsh;
-      shell = pkgs.bash;
+      shell = pkgs.ion;
+      # shell = pkgs.bash;
       uid = 1000;
       group = "users";
       extraGroups = [
@@ -158,7 +158,6 @@
         "wheel"
         "video"
         "audio"
-        # "pipewire"
         "networkmanager"
       ];
     };
@@ -219,6 +218,7 @@
   programs.adb.enable = true;
   programs.dconf.enable = true;
   programs.light.enable = true;
+  programs.ion.enable = true;
   # programs.zsh.enable = true;
 
   # DBUS
