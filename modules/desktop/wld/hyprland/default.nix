@@ -8,6 +8,9 @@
 with lib; let
   wrapped-hl = pkgs.writeShellScriptBin "wrapped-hl" ''
     cd ~
+
+    export LIBSEAT_BACKEND=logind
+
     exec Hyprland
   '';
 

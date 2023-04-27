@@ -22,7 +22,7 @@ in {
       };
       defaultKeymap = "emacs";
       enableVteIntegration = true;
-      autocd = true;
+      autocd = false;
       enableSyntaxHighlighting = true;
       shellAliases = {
         cat = "bat";
@@ -37,10 +37,6 @@ in {
         cp = "cp -iv";
         mv = "mv -iv";
         rm = "rm -Iv";
-
-        # v = "nvim -i NONE";
-        # vim = "nvim -i NONE";
-        # nvim = "nvim -i NONE";
 
         ls = "lsd";
         la = "ls --long --all --no-symlink";
@@ -62,27 +58,27 @@ in {
         export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
         path+=("$HOME/.local/bin" "$HOME/.luarocks/bin" "$HOME/.cargo/bin" "$(yarn global bin)")
       '';
-      plugins = [
-        {
-          name = "fzf-tab";
-          src = pkgs.fetchFromGitHub {
-            owner = "Aloxaf";
-            repo = "fzf-tab";
-            rev = "5a81e13792a1eed4a03d2083771ee6e5b616b9ab";
-            sha256 = "0lfl4r44ci0wflfzlzzxncrb3frnwzghll8p365ypfl0n04bkxvl";
-          };
-        }
-        # {
-        #   name = "powerlevel10k";
-        #   src = pkgs.zsh-powerlevel10k;
-        #   file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-        # }
-        # {
-        #   name = "powerlevel10k-config";
-        #   src = ./p10k-config;
-        #   file = "p10k.zsh";
-        # }
-      ];
+      # plugins = [
+      # {
+      #   name = "fzf-tab";
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "Aloxaf";
+      #     repo = "fzf-tab";
+      #     rev = "5a81e13792a1eed4a03d2083771ee6e5b616b9ab";
+      #     sha256 = "0lfl4r44ci0wflfzlzzxncrb3frnwzghll8p365ypfl0n04bkxvl";
+      #   };
+      # }
+      # {
+      #   name = "powerlevel10k";
+      #   src = pkgs.zsh-powerlevel10k;
+      #   file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      # }
+      # {
+      #   name = "powerlevel10k-config";
+      #   src = ./p10k-config;
+      #   file = "p10k.zsh";
+      # }
+      # ];
     };
   };
 }

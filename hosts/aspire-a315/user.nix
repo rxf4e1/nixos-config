@@ -25,14 +25,14 @@
     terminal = {
       emu = {
         foot.enable = true;
-        kitty.enable = false;
+        kitty.enable = true;
         tmux.enable = true;
         wezterm.enable = false;
       };
       shell = {
         bash.enable = true;
         # fish.enable = false;
-        ion.enable = true;
+        # ion.enable = true;
         # nushell.enable = false;
         zsh.enable = false;
       };
@@ -43,8 +43,8 @@
     desktop = {
       wld = {
         common.enable = true;
-        hikari.enable = true;
-        hyprland.enable = false;
+        hikari.enable = false;
+        hyprland.enable = true;
         sway.enable = false;
         notify.enable = true;
       };

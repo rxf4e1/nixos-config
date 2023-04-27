@@ -82,8 +82,8 @@
       wlr.enable = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-wlr
-        # pkgs.xdg-desktop-portal-hyprland
+        # pkgs.xdg-desktop-portal-wlr
+        pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
@@ -148,7 +148,7 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      shell = pkgs.ion;
+      shell = pkgs.zsh;
       # shell = pkgs.bash;
       uid = 1000;
       group = "users";
@@ -218,8 +218,7 @@
   programs.adb.enable = true;
   programs.dconf.enable = true;
   programs.light.enable = true;
-  programs.ion.enable = true;
-  # programs.zsh.enable = true;
+  programs.zsh.enable = true;
 
   # DBUS
   services = {
