@@ -6,14 +6,14 @@
 }:
 with lib; let
   machine_id = "aspire-a315";
-  cfg = config.modules.terminal.shell.ion;
+  cfg = config.modules.terminal.shell.fish;
 in {
-  options.modules.terminal.shell.ion = {enable = mkEnableOption "ion";};
+  options.modules.terminal.shell.fish = {enable = mkEnableOption "Fish";};
   config = mkIf cfg.enable {
     # home.packages = [pkgs.ion];
-    programs.ion = {
+    programs.fish = {
       enable = true;
-      package = pkgs.ion;
+      package = pkgs.fish;
       shellAliases = {
         cat = "bat";
         less = "bat --paging=always";
@@ -32,7 +32,17 @@ in {
 
         k = "kcr edit";
       };
-      initExtra = '''';
+      plugins = [
+        {
+          name = "fzf";
+          src = pkgs.fetchFromGitHub {
+            owner = "PatrickF1";
+            repo = "fzf.fish";
+            rev = "63c8f8e65761295da51029c5b6c9e601571837a1";
+            sha256 = "036n50zr9kyg6ad408zn7wq2vpfwhmnfwab465km4dk60ywmrlcb";
+          };
+        }
+      ];
     };
   };
 }

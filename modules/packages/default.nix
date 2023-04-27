@@ -20,6 +20,7 @@ with lib; let
     procs
     ripgrep
     rustup
+    rust-analyzer
     gcc
   ];
 

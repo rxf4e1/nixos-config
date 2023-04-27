@@ -148,7 +148,7 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      shell = pkgs.zsh;
+      shell = pkgs.fish;
       # shell = pkgs.bash;
       uid = 1000;
       group = "users";
@@ -218,7 +218,8 @@
   programs.adb.enable = true;
   programs.dconf.enable = true;
   programs.light.enable = true;
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
+  # programs.zsh.enable = true;
 
   # DBUS
   services = {

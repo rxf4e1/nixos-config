@@ -9,7 +9,7 @@ with lib; let
 in {
   options.modules.terminal.emu.foot = {enable = mkEnableOption "foot";};
   config = mkIf cfg.enable {
-    home.packages = [pkgs.foot];
+    home.packages = [pkgs.foot pkgs.fcft];
     # programs.foot = {
     #   enable = true;
     #   settings = {

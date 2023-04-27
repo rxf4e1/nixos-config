@@ -25,16 +25,14 @@
     terminal = {
       emu = {
         foot.enable = true;
-        kitty.enable = true;
+        kitty.enable = false;
         tmux.enable = true;
         wezterm.enable = false;
       };
       shell = {
         bash.enable = true;
-        # fish.enable = false;
-        # ion.enable = true;
-        # nushell.enable = false;
-        zsh.enable = false;
+        ion.enable = true;
+        # zsh.enable = true;
       };
       prompt.starship.enable = true;
     };
