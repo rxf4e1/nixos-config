@@ -148,8 +148,8 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      shell = pkgs.fish;
-      # shell = pkgs.bash;
+      # shell = pkgs.fish;
+      shell = pkgs.bash;
       uid = 1000;
       group = "users";
       extraGroups = [

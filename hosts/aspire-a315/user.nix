@@ -1,7 +1,7 @@
 {
-  config,
-  lib,
-  inputs,
+  # config,
+  # lib,
+  # inputs,
   ...
 }: {
   imports = [../../modules];
@@ -13,9 +13,9 @@
 
     # Editors
     editor = {
-      emacs.enable = false;
-      helix.enable = false;
-      kakoune.enable = true;
+      emacs.enable = true;
+      helix.enable = true;
+      kakoune.enable = false;
       micro.enable = false;
       nano.enable = true;
       neovim.enable = false;
@@ -31,6 +31,7 @@
       };
       shell = {
         bash.enable = true;
+        fish.enable = false;
         ion.enable = true;
         # zsh.enable = true;
       };

@@ -42,7 +42,6 @@ with lib; let
     pcmanfm
     poppler
     zathura
-    # zettlr
     # joplin
     # logseq
     # obsidian
@@ -52,7 +51,7 @@ with lib; let
     alejandra
     nix-prefetch-git
     nix-index
-    rnix-lsp
+    nil
   ];
 
   cfg = config.modules.packages;

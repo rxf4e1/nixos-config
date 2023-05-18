@@ -1,0 +1,73 @@
+theme = "tokyonight"
+
+[editor]
+auto-completion = true
+auto-format = true
+auto-info = true
+auto-save = false
+completion-trigger-len = 2
+completion-replace = false
+cursorline = true
+cursorcolumn = false
+idle-timeout = 0
+line-number = "relative"
+mouse = true
+# rulers = []
+scrolloff = 8
+true-color = true
+
+[editor.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+'<' = '>'
+
+[editor.cursor-shape]
+insert = "underline"
+normal = "block"
+select = "bar"
+
+[editor.gutters]
+layout = ["diff", "diagnostics", "line-numbers", "spacer"]
+# [editor.gutters.diagnostics]
+# [editor.gutters.diff]
+[editor.gutters.line-numbers]
+min-width = 1
+# [editor.gutters.spacer]
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+[editor.lsp]
+
+[editor.soft-wrap]
+enable = true
+max-wrap = 25 # increase value to reduce forced mid-word wrapping
+max-indent-retain = 0
+wrap-indicator = ""  # set wrap-indicator to "" to hide it
+
+[editor.statusline]
+left = ["mode", "position", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "file-encoding", "file-line-ending", "file-type"]
+separator = "|"
+mode.normal = "NOR"
+mode.insert = "INS"
+mode.select = "SEL"
+
+# [editor.line-number]
+# normal = "relative"
+# insert = "absolute"
+
+################################################################
+## Keybindings:
+##
+[keys.normal]
+
+[keys.insert]
+j = { k = "normal_mode" }
+k = { j = "normal_mode" }

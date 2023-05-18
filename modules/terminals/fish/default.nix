@@ -18,6 +18,7 @@ in {
         cat = "bat";
         less = "bat --paging=always";
         sudo = "doas";
+        md = "mkdir -pv";
         cp = "cp -iv";
         mv = "mv -iv";
         rm = "rm -Iv";
@@ -30,7 +31,6 @@ in {
         gc = "nix-collect-garbage --delete-old";
         gcd = "doas nix-collect-garbage --delete-old";
 
-        k = "kcr edit";
       };
       plugins = [
         {

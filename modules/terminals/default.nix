@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./bash
+    ./fish
     ./ion
     ./zsh
 

@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     # nur = {
     #   url = "github:nix-community/NUR";
@@ -20,7 +20,8 @@
 
   outputs = {
     home-manager,
-    nixpkgs,
+      nixpkgs,
+      emacs-overlay,
     # nur,
     ...
   } @ inputs: let
@@ -50,7 +51,7 @@
               users.rxf4e1 = ./. + "/hosts/${hostname}/user.nix";
             };
             nixpkgs.overlays = [
-              # inputs.emacs-overlay.overlay
+              (import inputs.emacs-overlay)
               # nur.overlay
               # (import ./overlays)
             ];
