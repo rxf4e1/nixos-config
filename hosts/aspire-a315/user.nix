@@ -9,8 +9,9 @@
   config.modules = {
     # Browsers
     brave.enable = true;
-    qutebrowser.enable = true;
-
+    nyxt.enable = true;
+    qutebrowser.enable = false;
+    
     # Editors
     editor = {
       emacs.enable = true;
