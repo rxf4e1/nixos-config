@@ -1,108 +1,8 @@
-#+AUTHOR:  rxf4e1
 #+TITLE:   +rx/Emacs-Configuration
+#+AUTHOR:  rxf4e1
 #+EMAIL:   rxf4e1@pm.me
 #+STARTUP: overview
 ---
-* TABLE OF CONTENTS                                                   :TOC@4:
-- [[#intro][INTRO]]
-- [[#configuration][CONFIGURATION]]
-  - [[#header][HEADER]]
-  - [[#core-system][CORE SYSTEM]]
-    - [[#paths][Paths]]
-    - [[#package-manager][Package Manager]]
-      - [[#straight][Straight]]
-      - [[#leaf][Leaf]]
-    - [[#garbage-collector][Garbage Collector]]
-    - [[#saves][Saves]]
-    - [[#async][Async]]
-    - [[#persistent-data][Persistent Data]]
-      - [[#cache][Cache]]
-      - [[#scratch][Scratch]]
-    - [[#default-settings][Default Settings]]
-      - [[#better-customs][Better Customs]]
-      - [[#keybindings][Keybindings]]
-      - [[#daemonserver][Daemon/Server]]
-    - [[#aesthetics][Aesthetics]]
-      - [[#cursor][Cursor]]
-      - [[#fonts][Fonts]]
-      - [[#icons][Icons]]
-      - [[#modeline][Modeline]]
-      - [[#themes][Themes]]
-  - [[#modules][MODULES]]
-    - [[#completions][Completions]]
-      - [[#input-completion][Input Completion:]]
-      - [[#text-completion][Text Completion:]]
-    - [[#editor][Editor]]
-      - [[#anzu][Anzu]]
-      - [[#crux][Crux]]
-      - [[#diff][Diff]]
-      - [[#dired][Dired]]
-      - [[#easy-kill][Easy-Kill]]
-      - [[#editorconfig][EditorConfig]]
-      - [[#environment][Environment]]
-      - [[#expand-region][Expand-Region]]
-      - [[#git][Git]]
-      - [[#ibuffer][ibuffer]]
-      - [[#modal][Modal]]
-      - [[#movetext][MoveText]]
-      - [[#neotree][NeoTree]]
-      - [[#parenthesis][Parenthesis:]]
-      - [[#projects][Projects]]
-      - [[#regexp][RegExp]]
-      - [[#scroll][Scroll]]
-      - [[#sideline][Sideline]]
-      - [[#teminals][Teminals]]
-      - [[#transient][Transient]]
-      - [[#undo][Undo]]
-      - [[#uniquify][uniquify]]
-      - [[#wich-key][Wich-Key]]
-    - [[#window-manager][Window Manager]]
-      - [[#dmenu][Dmenu]]
-      - [[#exwm][Exwm]]
-      - [[#moving-around][Moving Around]]
-      - [[#resizing][Resizing]]
-      - [[#shackle][Shackle]]
-      - [[#splitting][Splitting]]
-  - [[#code][CODE]]
-    - [[#langs][Langs]]
-      - [[#lisp][lisp]]
-      - [[#webdev][webdev]]
-      - [[#lua][lua]]
-      - [[#nix][nix]]
-      - [[#purescript][purescript]]
-      - [[#perl][perl]]
-      - [[#rust][rust]]
-    - [[#modes][Modes]]
-      - [[#sh-script][sh-script]]
-      - [[#csv][csv]]
-      - [[#dhall][dhall]]
-      - [[#json][json]]
-      - [[#markdown][markdown]]
-      - [[#toml][toml]]
-      - [[#yaml][yaml]]
-    - [[#syntax][Syntax]]
-      - [[#flycheck][flycheck]]
-      - [[#flymake][flymake]]
-      - [[#tree-sitter][tree-sitter]]
-  - [[#org][ORG]]
-    - [[#org-mode][org-mode]]
-    - [[#org-capture][org-capture]]
-    - [[#org-superstar][org-superstar]]
-    - [[#org-toc][org-toc]]
-  - [[#others][OTHERS]]
-    - [[#academic][Academic]]
-      - [[#export][Export]]
-      - [[#presentation][Presentation]]
-      - [[#references][References]]
-    - [[#epubpdf][Epub/Pdf]]
-    - [[#denote][Denote]]
-    - [[#gkroam][GkRoam]]
-  - [[#footer][FOOTER]]
-- [[#references-1][REFERENCES]]
-  - [[#literate][LITERATE]]
-  - [[#modular][MODULAR]]
-  - [[#single][SINGLE]]
-
 * INTRO
 After many attempts to create my own emacs configuration, i think now
 i’m really on the right path to find myself into this world. I found
@@ -175,10 +75,7 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'gcmh)
   ;; ------------------
-  (leaf gcmh
-    :doc "Enforce a sneaky Garbage Collection strategy to minimize GC"
-    :url "https://gitlab.com/koral/gcmh"
-    :init (gcmh-mode t))
+  (gcmh-mode 1)
 #+end_src
 
 *** Saves
@@ -229,18 +126,12 @@ adapted it to my workflow.
 #+end_src
 
 *** Async
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'async)
   ;; ------------------
-  (leaf async
-    :doc "Asynchronous processing in Emacs"
-    :url "https://github.com/jwiegley/emacs-async"
-    :commands (async-start
-	       async-start-process
-	       async-get
-	       async-wait
-	       async-inject-variables))
+  (autoload 'dired-async-mode "dired-async.el" nil t)
+  (dired-async-mode 1)
 #+end_src
 
 #+RESULTS:
@@ -250,33 +141,20 @@ adapted it to my workflow.
 **** Cache
 #+begin_src emacs-lisp :tangle no
   ;; ------------------
-  (straight-use-package 'persistent-soft)
   ;; ------------------
-  (leaf persistent-soft
-    :doc "Persistent storage for Emacs, returning nil on failure"
-    :url "https://github.com/rolandwalker/persistent-soft"
-    :require persistent-soft
-    :commands (persistent-soft-store
-               persistent-soft-fetch
-               persistent-soft-exists-p
-               persistent-soft-flush
-               persistent-soft-location-readable
-               persistent-soft-location-destroy)
-    :custom
-    (pcache-directory . rx:cache-d))
 #+end_src
 
 **** Scratch
 #+begin_src emacs-lisp :tangle yes
   ;; Make some buffers immortal
-  (defun +rx/immortal-buffers ()
+  (defun my/immortal-buffers ()
     (if (or (eq (current-buffer) (get-buffer "*scratch*"))
 	    (eq (current-buffer) (get-buffer "*Messages*")))
 	(progn (bury-buffer)
 	       nil)
       t))
 
-  (add-hook 'kill-buffer-query-functions '+rx/immortal-buffers)
+  (add-hook 'kill-buffer-query-functions 'my/immortal-buffers)
 #+end_src
 
 *** Default Settings
@@ -284,7 +162,9 @@ adapted it to my workflow.
 #+begin_src emacs-lisp :tangle yes
   ;; Save all interactive customization to a temp file, which is never loaded.
   ;; This means interactive customization is session-local. Only this init file persists sessions.
-  (setq custom-file (make-temp-file ".custom.el"))
+  (setq custom-file (make-temp-file "custom.el"))
+  ;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  ;; (load-file custom-file)
 
   ;; For my "settings" I prefer to use custom-set-variables, which does a bunch of neat stuff.
   ;; First, it calls a variable's "setter" function, if it has one.
@@ -319,6 +199,7 @@ adapted it to my workflow.
    '(eval-expression-print-length        nil)
    '(eval-expression-print-level         nil)
    '(size-indication-mode                t)
+   '(global-hl-line-mode                 t)
    '(line-number-mode                    t)
    '(column-number-mode                  t)
    ;; UTF-8 please
@@ -337,12 +218,12 @@ adapted it to my workflow.
 
   ;; Allow some things that emacs would otherwise confirm.
   (dolist (cmd
-	   '(eval-expression
-	     downcase-region
-	     upcase-region
-	     narrow-to-region
-	     set-goal-column
-	     dired-find-alternate-file))
+           '(eval-expression
+             downcase-region
+             upcase-region
+             narrow-to-region
+             set-goal-column
+             dired-find-alternate-file))
     (put cmd 'disabled nil))
 #+end_src
 
@@ -378,11 +259,15 @@ adapted it to my workflow.
 **** Cursor
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
-  (custom-set-variables
-   '(cursor-type          'box)
-   '(mouse-avoidance-mode 'banish))
   (blink-cursor-mode -1)
   (set-face-background 'mouse "#777777")
+
+  (custom-set-variables
+   '(cursor-type 'box)
+   '(mouse-avoidance-mode 'banish))
+
+  (custom-set-faces
+      '(cursor ((t (:foreground "dim-gray" :background "gold")))))
 #+end_src
 
 **** Fonts
@@ -390,20 +275,17 @@ adapted it to my workflow.
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; ------------------
-  (leaf font-faces
-    :doc "Fix Font Faces enven in daemon mode."
-    :config
-    (message "Setting faces...")
-    ;; Default Font
-    (set-face-attribute 'default nil :font "Fira Code" :height 80)
-    ;; Fixed Font Pitch
-    (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 80)
-    ;; Variable Font Pitch
-    (set-face-attribute 'variable-pitch nil :font "Fira Code" :height 80 :weight 'regular))
+  (message "Setting faces...")
+  ;; Default Font
+  (set-face-attribute 'default nil :font "Fira Code" :height 80)
+  ;; Fixed Font Pitch
+  (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 80)
+  ;; Variable Font Pitch
+  (set-face-attribute 'variable-pitch nil :font "Fira Code" :height 80 :weight 'regular)
 #+end_src
 
 ***** Emojis
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'emojify)
   ;; ------------------
@@ -419,22 +301,9 @@ adapted it to my workflow.
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'all-the-icons)
-  (straight-use-package 'all-the-icons-ibuffer)
   (straight-use-package 'all-the-icons-dired)
   ;; ------------------
-  (leaf all-the-icons-ibuffer
-    :doc "Display icons for all buffers in ibuffer"
-    :url "https://github.com/seagle0128/all-the-icons-ibuffer"
-    :init (all-the-icons-ibuffer-mode t)
-    :custom
-    (all-the-icons-ibuffer-icon-size           . 1.0)
-    (all-the-icons-ibuffer-icon-v-adjust       . 0.0)
-    (all-the-icons-ibuffer-human-readable-size . t))
-
-  (leaf all-the-icons-dired
-    :doc "This adds dired support to all-the-icon"
-    :url "https://github.com/jtbm37/all-the-icons-dired"
-    :hook (dired-mode-hook . all-the-icons-dired-mode))
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 #+end_src
 
 **** Modeline
@@ -442,65 +311,41 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'keycast)
   ;; ------------------
-  (leaf mode-line
-    :doc ""
-    :tag "built-in"
-    :custom
-    (mode-line-percent-position . '(-3 "%p"))
-    (mode-line-position-column-line-format . '(" [%l , %c] "))
-    (mode-line-compact . t)
-    (mode-line-format
-     . '("%e"
-	 mode-line-front-space
-	 mode-line-mule-info
-	 mode-line-client
-	 mode-line-modified
-	 mode-line-remote
-	 mode-line-frame-identification
-	 mode-line-buffer-identification
-	 "  "
-	 mode-line-position
-	 "  "
-	 (vc-mode vc-mode)
-	 ;; mode-line-modes
-	 mode-line-misc-info
-	 mode-line-end-spaces)))
-
-  (leaf keycast
-    :doc ""
-    :url ""
-    :init (keycast-mode-line-mode)
-    :custom
-    (keycast-separator-width . 2)
-    (keycast-mode-line-remove-tail-elements . nil)
-    (keycast-mode-line-insert-after . 'mode-line-end-spaces))
+  (custom-set-variables
+   '(mode-line-percent-position '(-3 "%p"))
+   '(mode-line-position-column-line-format '(" [%l , %c] "))
+   '(mode-line-compact t)
+   '(mode-line-format
+     '("%e"
+       mode-line-front-space
+       mode-line-mule-info
+       mode-line-client
+       mode-line-modified
+       mode-line-remote
+       mode-line-frame-identification
+       mode-line-buffer-identification
+       "  "
+       mode-line-position
+       "  "
+       (vc-mode vc-mode)
+       ;; mode-line-modes
+       mode-line-misc-info
+       mode-line-end-spaces))
+   ;; Keycast
+   '(keycast-separator-width 2)
+   '(keycast-mode-line-remove-tail-elements nil)
+   '(keycast-mode-line-insert-after 'mode-line-end-spaces))
+  (keycast-mode-line-mode)
 #+end_src
 
 **** Themes
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
-  (straight-use-package 'modus-themes)
-  ;; (straight-use-package 'dracula-theme)
-  (straight-use-package 'spacemacs-theme)
-  (straight-use-package 'zenburn-theme)
+  ;; (straight-use-package 'spacemacs-theme)
+  (straight-use-package 'tao-theme)
   ;; ------------------
-  (leaf my/rx-theme
-    :doc ""
-    :config
-    (progn
-      ;; (load-theme 'modus-operandi t)
-      ;; (load-theme 'dracula-theme t)
-      (load-theme 'spacemacs-dark t)
-      ;; (load-theme 'zenburn t)
-      )
-    ;; :bind ("<f12>" . modus-themes-toggle)
-    )
-
-  ;; In case i want another good theme, easy on my eyes.
-
-  ;; (load-theme 'modus-vivendi t) ;; Dark-Theme
-  ;; (load-theme 'dracula-theme) ;; Dracula- Theme
-  ;; (load-theme 'zenburn t) ;; Zenburn-Theme
+  ;; (load-theme 'spacemacs-dark t)
+  (load-theme 'tao-yin t)
 #+end_src
 
 ** MODULES
@@ -511,40 +356,33 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'orderless)
   ;; ------------------
-  (leaf orderless
-    :doc "divides the pattern into space-separated components."
-    :url "https://github.com/oantolin/orderless"
-    :custom
-    (orderless-component-separator . " +")
-    (completion-styles . '(orderless basic))
-    (completion-category-defaults . nil)
-    (completion-category-overrides . '((file (styles . (partial-completion))))))
+  (custom-set-variables 
+   '(orderless-component-separator " +")
+   '(completion-styles '(orderless basic))
+   '(completion-category-defaults nil)
+   '(completion-category-overrides '((file (styles . (partial-completion))))))
 #+end_src
 
 ***** iComplete
 #+begin_src emacs-lisp :tangle yes
-  (leaf icomplete
-    :doc ""
-    :url ""
-    :tag "builtin"
-    :init (icomplete-mode)
-    :custom
-    (icomplete-separator . " • ")
-    (icomplete-delay-completions-threshold . 0)
-    (icomplete-max-delay-chars . 0)
-    (icomplete-compute-delay . 0)
-    (icomplete-show-matches-on-no-input . t)
-    (icomplete-hide-common-prefix . nil)
-    (icomplete-in-buffer . nil)
-    (icomplete-prospects-height . 1)
-    (icomplete-with-completion-tables . t)
-    (icomplete-tidy-shadowed-file-names . nil)
-    :bind ((:icomplete-minibuffer-map
-            ("<tab>" . icomplete-force-complete)
-            ("<down>" . icomplete-forward-completions)
-            ("C-n" . icomplete-forward-completions)
-            ("<up>" . icomplete-backward-completions)
-            ("C-p" . icomplete-backward-completions))))
+  (icomplete-mode 1)
+  (custom-set-variables
+   '(icomplete-separator " • ")
+   '(icomplete-delay-completions-threshold 0)
+   '(icomplete-max-delay-chars 0)
+   '(icomplete-compute-delay 0)
+   '(icomplete-show-matches-on-no-input t)
+   '(icomplete-hide-common-prefix nil)
+   '(icomplete-in-buffer nil)
+   '(icomplete-prospects-height 1)
+   '(icomplete-with-completion-tables t)
+   '(icomplete-tidy-shadowed-file-names nil))
+
+  (define-key icomplete-minibuffer-map (kbd "<tab>") #'icomplete-force-complete)
+  (define-key icomplete-minibuffer-map (kbd "<down>") #'icomplete-forward-completions)
+  (define-key icomplete-minibuffer-map (kbd "C-n") #'icomplete-forward-completions)
+  (define-key icomplete-minibuffer-map (kbd "<up>") #'icomplete-backward-completions)
+  (define-key icomplete-minibuffer-map (kbd "C-p") #'icomplete-backward-completions)
 #+end_src
 
 ***** helm
@@ -856,63 +694,53 @@ adapted it to my workflow.
 ***** corfu
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
-  (straight-use-package '(corfu
-			  :files (:defaults "extensions/*.el")))
+  (straight-use-package
+   '(corfu :files (:defaults "extensions/*.el")))
   (straight-use-package 'cape)
   ;; ------------------
-  (leaf corfu
-    :doc "Completion Overlay Region FUnction"
-    :url "https://github.com/minad/corfu"
-    :init
-    (progn
-      (global-corfu-mode)
-      (corfu-popupinfo-mode))
-    :custom
-    ;; (completion-style         . '(orderless basic))
-    (corfu-popupinfo-delay      . nil)
-    (corfu-echo-documentation   . nil)
-    (corfu-quit-at-boundary     . t)
-    (corfu-separator            . ?_)
-    (corfu-quit-no-match        . t)
-    (corfu-cycle                . t)
-    (corfu-auto                 . t)
-    (corfu-auto-delay           . 1)
-    (corfu-auto-prefix          . 2)
-    (corfu-scroll-margin        . 5)
-    :bind (:corfu-map
-	   ("C-s" . corfu-quit)
-	   ("M-d" . #'corfu-popupinfo-toggle)
-	   ("M-n" . #'corfu-popupinfo-scroll-up)
-	   ("M-p" . #'corfu-popupinfo-scroll-down)))
+  (custom-set-variables
+   '(completion-style '(orderless basic))
+   '(corfu-popupinfo-delay nil)
+   '(corfu-echo-documentation nil)
+   '(corfu-quit-at-boundary t)
+   '(corfu-separator ?_)
+   '(corfu-quit-no-match t)
+   '(corfu-cycle t)
+   '(corfu-auto t)
+   '(corfu-auto-delay 1)
+   '(corfu-auto-prefix 2)
+   '(corfu-scroll-margin 5))
 
-  (leaf cape
-    :doc ""
-    :url ""
-    :config
+  (with-eval-after-load 'corfu
+    (let ((map corfu-map))
+      (define-key map (kbd "C-s") #'corfu-quit)
+      (define-key map (kbd "M-n") #'corfu-popupinfo-scroll-up)
+      (define-key map (kbd "M-p") #'corfu-popupinfo-scroll-down))
     (add-to-list 'completion-at-point-functions #'cape-file))
+
+  (global-corfu-mode)
+  (corfu-popupinfo-mode)
 #+end_src
 
 ***** hippie-expand
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; ------------------
-  (leaf hippie-exp
-    :doc ""
-    :tag "built-in"
-    :custom
-    (hippie-expand-try-functions-list
-     . '(yas-hippie-try-expand
-         try-expand-all-abbrevs
-         try-expand-dabbrev
-         try-expand-dabbrev-visible
-         try-completion
-         try-expand-line
-         try-expand-list
-         try-complete-file-name
-         try-complete-file-name-partially
-         try-complete-lisp-symbol
-         try-complete-lisp-symbol-partially))
-    :bind ("M-/" . hippie-expand))
+  (custom-set-variables
+   '(hippie-expand-try-functions-list
+     '(yas-hippie-try-expand
+       try-expand-all-abbrevs
+       try-expand-dabbrev
+       try-expand-dabbrev-visible
+       try-completion
+       try-expand-line
+       try-expand-list
+       try-complete-file-name
+       try-complete-file-name-partially
+       try-complete-lisp-symbol
+       try-complete-lisp-symbol-partially)))
+
+  (define-key global-map (kbd "M-/") #'hippie-expand)
 #+end_src
 
 ***** lsp
@@ -921,28 +749,21 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'eglot)
   ;; ------------------
-  (leaf eglot
-    :doc "Emacs LSP client that stays out of your way"
-    :url "https://github.com/joaotavora/eglot"
-    :after project
-    :commands
-    (eglot-ensure)
-    :custom
-    ;; (eglot-stay-out-of                . '(flymake))
-    (eglot-ignored-server-capabilites . '(:documentHighlightProvider))
-    (eglot-sync-connect               . 1)
-    (eglot-connect-timeout            . 10)
-    (eglot-autoshutdown               . nil)
-    (eglot-send-changes-idle-time     . 0.5)
-    (eglot-auto-display-help-buffer   . nil)
-    :config
+  (require 'project)
+  (custom-set-variables
+   '(eglot-ignored-server-capabilites '(:documentHighlightProvider))
+   '(eglot-sync-connect 1)
+   '(eglot-connect-timeout 10)
+   '(eglot-autoshutdown nil)
+   '(eglot-send-changes-idle-time 0.5)
+   '(eglot-auto-display-help-buffer nil))
+
+  (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-    :bind
-    (:eglot-mode-map
-     ("C-c l r" . eglot-rename)
-     ("C-c l o" . eglot-code-action-organize-imports)
-     ("C-c l h" . eldoc)
-     ("M-?"     . xref-find-definitions)))
+    (define-key eglot-mode-map (kbd "C-c l r") #'eglot-rename)
+    (define-key eglot-mode-map (kbd "C-c l o") #'eglot-code-action-organize-imports)
+    (define-key eglot-mode-map (kbd "C-c l h") #'eldoc)
+    (define-key eglot-mode-map (kbd "M-?") #'xref-find-definitions))
 #+end_src
 
 ****** lsp-mode
@@ -1013,7 +834,7 @@ adapted it to my workflow.
     :custom (yas-snippet-dirs . '(rx:snippets-d))
     :config
     (progn
-      ;; (yas-reload-all)
+      (yas-reload-all)
       (add-hook 'prog-mode-hook #'yas-minor-mode)))
 #+end_src
 
@@ -1023,20 +844,18 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'anzu)
   ;; ------------------
-  (leaf anzu
-    :doc "Emacs port of anzu.vim"
-    :url "https://github.com/cedricporter/emacs-anzu"
-    :init (global-anzu-mode t)
-    :custom
-    (anzu-modelighter                 . "")
-    (anzu-deactivate-region           . t)
-    (anzu-search-threshold            . 1000)
-    (anzu-replace-threshold           . 50)
-    (anzu-replace-to-string-separator . " => ")
-    :bind
-    (("C-c a q" . anzu-query-replace)
-     ("C-c a r" . anzu-query-replace-regexp)
-     ("C-c a c" . anzu-query-replace-at-cursor)))
+  (custom-set-variables
+   '(anzu-modelighter "")
+   '(anzu-deactivate-region t)
+   '(anzu-search-threshold 1000)
+   '(anzu-replace-threshold 50)
+   '(anzu-replace-to-string-separator " => "))
+
+  (define-key global-map (kbd "C-c a q") #'anzu-query-replace)
+  (define-key global-map (kbd "C-c a r") #'anzu-query-replace-regexp)
+  (define-key global-map (kbd "C-c a c") #'anzu-query-replace-at-cursor)
+
+  (global-anzu-mode t)
 #+end_src
 
 **** Crux
@@ -1044,30 +863,25 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'crux)
   ;; ------------------
-  (leaf crux
-    :doc "A Collection of Ridiculously Useful eXtensions for Emacs"
-    :url "https://github.com/bbatsov/crux"
-    :config
-    (progn
-      (crux-with-region-or-buffer indent-region)
-      (crux-with-region-or-buffer untabify)
-      (crux-with-region-or-point-to-eol kill-ring-save)
-      (defalias 'rename-file-and-buffer 'crux-rename-file-and-buffer))
-    :bind
-    (("C-a"     . crux-move-beginning-of-line)
-     ("C-x 4 t" . crux-transpose-windows)
-     ("C-k"     . crux-smart-kill-line)
-     ("C-c c ;" . crux-duplicate-and-comment-current-line-or-region)
-     ("C-c c c" . crux-cleanup-buffer-or-region)
-     ("C-c c d" . crux-duplicate-current-line-or-region)
-     ("C-c c f" . crux-recentf-find-file)
-     ("C-c c F" . crux-recentf-find-directory)
-     ("C-c c k" . crux-kill-other-buffers)
-     ("C-c c n" . crux-cleanup-buffer-or-region)
-     ("C-c c r" . crux-reopen-as-root-mode)
-     ("C-c c t" . crux-visit-term-buffer)
-     ("C-c c o" . crux-smart-open-line)
-     ("C-c c a" . crux-smart-open-line-above)))
+  (with-eval-after-load 'crux
+    (crux-with-region-or-buffer indent-region)
+    (crux-with-region-or-buffer untabify)
+    (crux-with-region-or-point-to-eol kill-ring-save)
+    (defalias 'rename-file-and-buffer 'crux-rename-file-and-buffer))
+
+  (let ((map global-map))
+    (define-key map [?\C-a] #'crux-move-beginning-of-line)
+    (define-key map [?\C-x ?4 ?t] #'crux-transpose-windows)
+    (define-key map [?\C-k] #'crux-kill-whole-line)
+    (define-key map [?\C-c ?c ?\;] #'crux-duplicate-and-comment-current-line-or-region)
+    (define-key map [?\C-c ?c ?c] #'crux-cleanup-buffer-or-region)
+    (define-key map [?\C-c ?c ?d] #'crux-duplicate-current-line-or-region)
+    (define-key map [?\C-c ?c ?f] #'crux-recentf-find-file)
+    (define-key map [?\C-c ?c ?F] #'crux-recentf-find-directory)
+    (define-key map [?\C-c ?c ?k] #'crux-kill-other-buffers)
+    (define-key map [?\C-c ?c ?r] #'crux-reopen-as-root-mode)
+    (define-key map [?\C-c ?c ?t] #'crux-visit-term-buffer)
+    (define-key map [?\s-o] #'crux-smart-open-line-above))
 #+end_src
 
 **** Diff
@@ -1078,9 +892,7 @@ adapted it to my workflow.
   (leaf diff-hl
     :doc ""
     :url ""
-    :init (global-diff-hl-mode)
-    :config
-    (setq fringe-mode 'minimal))
+    :init (global-diff-hl-mode))
 #+end_src
 
 **** Dired
@@ -1088,31 +900,30 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'dired-subtree)
   (straight-use-package 'diredfl)
+  (straight-use-package 'dired-sidebar)
   ;; ------------------
-  (leaf dired
-    :doc "Who needs a filemanager"
-    :tag "built-in"
-    :require (dired-subtree diredfl)
-    :hook (dired-mode-hook . dired-hide-details-mode)
-    :custom
-    (dired-listing-switches        . "-lGhA1vDpX --group-directories-first")
-    (dired-recursive-copies        . 'always)
-    (dired-recursive-deletes       . 'always)
-    (delete-by-moving-to-trash     . t)
-    (dired-dwim-target             . t)
-    (dired-subtree-use-backgrounds . nil)
-    :config
-    (progn
-      (define-key dired-mode-map "b" (lambda ()
-                                       (interactive)
-                                       (find-alternate-file ".."))))
-    :bind
-    (:dired-mode-map
-     ("<tab>"   . dired-subtree-toggle)
-     ("<C-tab>" . dired-subtree-cycle)
-     ("w"       . wdired-change-to-wdired-mode)
-     ("<M-RET>" . dired-open-file)))
+  (require 'dired-subtree)
+  (require 'diredfl)
+  (custom-set-variables
+   '(dired-listing-switches "-lGhA1vDpX --group-directories-first")
+   '(dired-recursive-copies 'always)
+   '(dired-recursive-deletes 'always)
+   '(delete-by-moving-to-trash t)
+   '(dired-dwim-target t)
+   '(dired-subtree-use-backgrounds nil))
 
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
+  (global-unset-key (kbd "C-x d"))
+  (define-key global-map (kbd "C-x d d") #'dired)
+  (define-key global-map (kbd "C-x d t") #'dired-sidebar-toggle-sidebar)
+  (define-key dired-mode-map (kbd "<tab>") #'dired-subtree-toggle)
+  (define-key dired-mode-map (kbd "<C-tab>") #'dired-subtree-cycle)
+  ;; (define-key dired-mode-map (kbd "w") #'wdired-change-to-wdired-mode)
+  (define-key dired-mode-map (kbd "<M-RET>") #'dired-open-file)
+  (define-key dired-mode-map "b" (lambda ()
+                                       (interactive)
+                                       (find-alternate-file "..")))
   (defun dired-open-file ()
     "In dired, open the file named on this line."
     (interactive)
@@ -1120,6 +931,11 @@ adapted it to my workflow.
       (message "Opening %s..." file)
       (call-process "xdg-open" nil 0 nil file)
       (message "Opening %s done" file)))
+
+  (defun sidebar-toggle ()
+    "Toggle both `dired-sidebar’ and `ibuffer-sidebar’"
+    (interactive)
+    (dired-sidebar-toggle-sidebar))
 #+end_src
 
 **** Easy-Kill
@@ -1140,6 +956,7 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'editorconfig)
   ;; ------------------
+  (editorconfig-mode 1)
 #+end_src
 
 **** Environment
@@ -1148,23 +965,12 @@ adapted it to my workflow.
   (straight-use-package 'direnv)
   (straight-use-package 'exec-path-from-shell)
   ;; ------------------
-  (leaf direnv
-    :doc "direnv integration for emacs"
-    :url "https://github.com/wbolster/emacs-direnv"
-    :init (direnv-mode t)
-    :custom
-    (direnv-always-show-summary   . nil)
-    (direnv-show-paths-in-summary . nil))
-
-  (leaf exec-path-from-shell
-    :doc "A GNU Emacs library to ensure environment variables inside Emacs"
-    :url "https://github.com/purcell/exec-path-from-shell"
-    :custom
-    (exec-path-from-shell-variables
-     . '("PATH"
-         "MANPATH"
-         "NIX_PATH"
-         "NIX_SSL_CERT_FILE")))
+  (custom-set-variables
+   '(direnv-always-show-summary nil)
+   '(direnv-show-paths-in-summary nil)
+   '(exec-path-from-shell-variables
+     '("PATH" "MANPATH" "NIX_PATH" "NIX_SSL_CERT_FILE")))
+  (direnv-mode t)
 #+end_src
 
 **** Expand-Region
@@ -1172,12 +978,8 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'expand-region)
   ;; ------------------
-  (leaf expand-region
-    :doc "Increases the selected region by semantic units"
-    :url "https://github.com/magnars/expand-region.el"
-    :bind
-    (("C-=" . er/expand-region)
-     ("C-+" . er/contract-region)))
+  (define-key global-map (kbd "C-=") #'er/expand-region)
+  (define-key global-map (kbd "C-+") #'er/expand-region)
 #+end_src
 
 **** Git
@@ -1185,12 +987,7 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'magit)
   ;; ------------------
-  (leaf magit
-    :doc "Magit is an interface to the version control system Git"
-    :url "https://github.com/magit/magit"
-    :custom
-    (tramp-ssh-controlmaster-options . "")
-    :bind ("C-x g s" . magit-status))
+  (define-key global-map (kbd "C-x g s") #'magit-status)
 #+end_src
 
 **** ibuffer
@@ -1244,40 +1041,65 @@ adapted it to my workflow.
   (define-key global-map (kbd "C-x C-b") 'ibuffer)
 #+end_src
 
-**** Modal
+**** iSearch
 #+begin_src emacs-lisp :tangle yes
+  ;; ------------------
+  ;; ------------------
+  (custom-set-variables
+   '(search-highlight t)
+   '(search-whitespace-regexp ".*?")
+   '(isearch-lax-whitespace t)
+   '(isearch-regexp-lax-whitespace nil)
+   '(isearch-lazy-highlight t)
+   '(isearch-lazy-count t)
+   '(lazy-count-prefix-format nil)
+   '(lazy-count-suffix-format " (%s/%s)")
+   '(isearch-yank-on-move 'shift)
+   '(isearch-allow-scroll 'unlimited)
+   '(isearch-repeat-on-direction-change t)
+   '(lazy-highlight-initial-delay 0.5)
+   '(lazy-highlight-no-delay-length 3)
+   '(isearch-wrap-pause t))
+
+  (define-key global-map (kbd "C-s") #'isearch-forward-regexp)
+  (define-key global-map (kbd "C-M-s") #'isearch-forward)
+#+end_src
+
+**** Modal
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'meow)
   (straight-use-package 'key-chord)
   ;; ------------------
-  (leaf meow
-    :doc "Modular Emacs On Wish"
-    :url "https://github.com/DogLooksGood/meow"
-    :require meow qwerty-layout key-chord
-    :custom
-    (meow-visit-sanitize-completion  . nil)
-    (meow-esc-delay                  . 0.001)
-    (meow-select-on-change           . t)
-    (meow-cursor-type-normal         . 'box)
-    (meow-cursor-type-insert         . 'bar)
-    (meow-cursor-type-keypad         . 'hbox)
-    (meow-selection-command-fallback . '((meow-replace . meow-page-up)
-                                         (meow-change  . meow-change-char)
-                                         (meow-save    . meow-save-empty)
-                                         (meow-kill    . meow-C-k)
-                                         (meow-cancel  . keyboard-quit)
-                                         (meow-pop     . meow-pop-grab)
-                                         (meow-delete  . meow-C-d)))
-    :init
-    (meow-global-mode t)
-    :config
-    (progn
-      (setq key-chord-two-keys-delay 0.5)
-      (key-chord-define meow-insert-state-keymap "jj" 'meow-insert-exit)
-      (key-chord-define meow-insert-state-keymap "kj" 'meow-insert-exit)
-      (key-chord-mode 1)
-      (meow-esc-mode 1)
-      (meow-setup)))
+  (require 'meow)
+  (require 'key-chord)
+  (require 'qwerty-layout)
+
+  (custom-set-variables
+   '(meow-visit-sanitize-completion nil)
+   '(meow-esc-delay 0.001)
+   '(meow-select-on-change t)
+   '(meow-cursor-type-normal 'box)
+   '(meow-cursor-type-insert 'bar)
+   '(meow-cursor-type-keypad 'hbox)
+   '(meow-selection-command-fallback
+     '((meow-replace . meow-page-up)
+       (meow-change  . meow-change-char)
+       (meow-save    . meow-save-empty)
+       (meow-kill    . meow-C-k)
+       (meow-cancel  . keyboard-quit)
+       (meow-pop     . meow-pop-grab)
+       (meow-delete  . meow-C-d))))
+
+  (progn
+    (setq key-chord-two-keys-delay 0.5)
+    (key-chord-define meow-insert-state-keymap "jj" 'meow-insert-exit)
+    (key-chord-define meow-insert-state-keymap "kj" 'meow-insert-exit)
+    (key-chord-mode 1)
+    (meow-esc-mode 1)
+    (meow-setup))
+
+  (meow-global-mode t)
 #+end_src
 
 **** MoveText
@@ -1285,15 +1107,11 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'move-text)
   ;; ------------------
-  (leaf move-text
-    :doc "allows you to move the current line, if a region is marked, it will move the region instead"
-    :url "https://github.com/emacsfodder/move-text"
-    :init
-    (move-text-default-bindings))
+  (move-text-default-bindings)
 #+end_src
 
 **** NeoTree
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'neotree)
   ;; ------------------
@@ -1311,67 +1129,45 @@ adapted it to my workflow.
      ("<M-f1>" . neotree-dir)))
 #+end_src
 
-**** Parenthesis:
+**** Parenthesis
 ***** rainbow
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'rainbow-delimiters)
   ;; ------------------
-  (leaf rainbow-delimiters
-    :doc "Highlights delimiters according to their depth"
-    :url "https://github.com/Fanael/rainbow-delimiters"
-    :hook ((prog-mode-hook) . rainbow-delimiters-mode))
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 #+end_src
 
 ***** electric-pair
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; ------------------
-  (leaf electric
-    :doc "Electrify things."
-    :tag "built-in"
-    :init
-    (show-paren-mode      t)
-    (electric-pair-mode   nil)
-    (electric-indent-mode nil)
-    (electric-quote-mode  nil)
-    :hook ((text-mode-hook
-	    prog-mode-hook) . electric-indent-local-mode)
-    :custom
-    (electric-quote-context-sensitive   . t)
-    (electric-quote-paragraph           . t)
-    (electric-quote-string              . nil)
-    (electric-quote-replace-double      . t)
-    (show-paren-style                   . 'parenthesis)
-    (show-paren-when-point-in-periphery . nil)
-    (show-paren-when-point-inside-paren . nil)
-    (show-paren--context-when-offscreen . 'child-frame) ; Emacs 29
-    (electric-pair-preserve-balance     . t)
-    (electric-pair-skip-whitespace      . nil)
-    (electric-pair-skip-self . 'electric-pair-default-skip-self)
-    (electric-pair-skip-whitespace-chars . '(9 10 32))
-    (electric-pair-pairs . '((34   . 34)
-			     (8216 . 8217)
-			     (8220 . 8221)
-			     (171  . 187))))
-#+end_src
+  (custom-set-variables
+   '(electric-quote-context-sensitive t)
+   '(electric-quote-paragraph t)
+   '(electric-quote-string nil)
+   '(electric-quote-replace-double t)
+   '(show-paren-style 'mixed)
+   '(show-paren-when-point-in-periphery nil)
+   '(show-paren-when-point-inside-paren t)
+   '(show-paren-context-when-offscreen 'child-frame) ; Emacs 29
+   ;; '(electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+   '(electric-pair-preserve-balance t)
+   '(electric-pair-skip-whitespace nil)
+   '(electric-pair-skip-self 'electric-pair-default-skip-self)
+   '(electric-pair-skip-whitespace-chars '(9 10 32))
+   '(electric-pair-pairs
+     '((34   . 34)
+       (8216 . 8217)
+       (8220 . 8221)
+       (171  . 187))))
 
-***** lispy
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'lispy)
-  ;; ------------------
-  (leaf lispy
-    :doc "A popular method to navigate and edit LISP code in Emacs"
-    :url "https://github.com/abo-abo/lispy"
-    :hook
-    (emacs-lisp-mode-hook
-     scheme-mode-hook
-     geiser-mode-hook
-     lisp-mode-hook
-     sly-mode-hook
-     clojure-mode-hook
-     cider-mode-hook))
+  (electric-pair-mode nil)
+  (electric-indent-mode nil)
+  (electric-quote-mode nil)
+  (add-hook 'after-init-hook #'show-paren-mode)
+  (add-hook 'prog-mode-hook #'electric-indent-local-mode)
+  (add-hook 'text-mode-hook #'electric-indent-local-mode)
 #+end_src
 
 ***** smartparens
@@ -1379,39 +1175,25 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'smartparens)
   ;; ------------------
-  (leaf smartparens
-    :doc ""
-    :url "https://github.com/Fuco1/smartparens"
-    :require (smartparens-config)
-    ;; :init (smartparens-global-mode)
-    :hook (prog-mode-hook . smartparens-mode)
-    :custom
-    (smartparens-strict-mode . t))
+  (require 'smartparens-config)
+  (custom-set-variables
+   '(smartparens-strict-mode nil))
+  (add-hook 'prog-mode-hook 'smartparens-mode)
 #+end_src
 
 **** Projects
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
-  (straight-use-package 'projectile)
+  ;; (straight-use-package 'projectile)
   ;; ------------------
-  (leaf projectile
-    :doc "Projectile is a project interaction library for Emacs."
-    :url ""
-    :custom
-    (projectile-switch-project-action . 'projectile-dired)
-    :bind (:projectile-mode-map
-           ("C-c p" . projectile-command-map))
-    :init (projectile-mode 1))
-
-  (leaf project
-    :doc "Gnu Emacs project management"
-    :tag "built-in"
-    :custom
-    (project-list-file . rx:projects-d))
+  ;; (custom-set-variables
+  ;;  '(projectile-switch-project-action 'projectile-dired))
+  ;; (define-key global-map (kbd "C-c p") #'projectile-command-map)
+  ;; (projectile-mode nil)
 #+end_src
 
 **** RegExp
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'visual-regexp)
   (straight-use-package 'visual-regexp-steroids)
@@ -1427,24 +1209,13 @@ adapted it to my workflow.
 **** Scroll
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
-  (straight-use-package 'sublimity)
-  ;; (straight-use-package 'yascroll)
   ;; ------------------
-  (leaf sublimity
-    :doc "Smooth-scrolling, minimap and distraction-free mode"
-    :url "https://github.com/zk-phi/sublimity"
-    :custom
-    (hscroll-margin                  . 1)
-    (hscroll-step                    . 1)
-    (scroll-conservatively           . 100000)
-    (scroll-margin                   . 8)
-    (scroll-preserve-screen-position . 1)
-    :init (sublimity-mode t))
-
-  ;; (leaf yascroll
-  ;;   :doc "Yet Another Scroll Bar Mode"
-  ;;   :url "https://github.com/emacsorphanage/yascroll"
-  ;;   :init (global-yascroll-bar-mode t))
+  (custom-set-variables
+   '(hscroll-margin 1)
+   '(hscroll-step 1)
+   '(scroll-conservatively 100000)
+   '(scroll-margin 8)
+   '(scroll-preserve-screen-position 1))
 #+end_src
 
 **** Sideline
@@ -1532,34 +1303,7 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'vterm)
   ;; ------------------
-  (leaf vterm
-    :doc ""
-    :url ""
-    ;; :disabled t
-    :require vterm
-    :bind ("s-<return>" . vterm-other-window))
-#+end_src
-
-***** shell-pop
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'shell-pop)
-  ;; ------------------
-  (leaf shell-pop
-    :doc "Helps you to use shell easily on Emacs"
-    :url "https://github.com/kyagi/shell-pop-el"
-    :custom
-    (shell-pop-cleanup-buffer-at-process-exit . t)
-    (shell-pop-term-shell                     . "/run/current-system/sw/bin/bash")
-    (shell-pop-window-position                . "bottom")
-    (shell-pop-window-size                    . 40)
-    (shell-pop-shell-type                     . '("ansi-term" "*ansi-term*" (lambda ()
-									      (ansi-term shell-pop-term-shell))))
-    :config
-    (progn
-      (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
-    :bind
-    ("<s-return>" . shell-pop))
+  (define-key global-map (kbd "s-<return>") #'vterm-other-window)
 #+end_src
 
 **** Transient
@@ -1582,18 +1326,14 @@ adapted it to my workflow.
   (straight-use-package 'undo-fu)
   (straight-use-package 'vundo)
   ;; ------------------
-  (leaf undo-fu
-    :doc ""
-    :url ""
-    :bind (("C-/"   . undo-fu-only-undo)
-           ("C-S-/" . undo-fu-only-redo)))
-  (leaf vundo
-    :doc ""
-    :url ""
-    :bind (("C-x u" . vundo))
-    :config
+  (with-eval-after-load 'vundo
     (setq vundo-glyph-alist vundo-unicode-symbols)
     (set-face-attribute 'vundo-default nil :family "Symbola"))
+
+  (let ((map global-map))
+    (define-key map (kbd "C-x u") #'vundo)
+    (define-key map (kbd "C-/") #'undo-fu-only-undo)
+    (define-key map (kbd "C-S-/") #'undo-fu-only-redo))
 #+end_src
 
 **** uniquify
@@ -1613,145 +1353,30 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'which-key)
   ;; ------------------
-  (leaf which-key
-    :doc "Displays the keybindings following your currently entered incomplete command in a popup"
-    :url "https://github.com/justbur/emacs-which-key"
-    :custom
-    (which-key-idle-delay           . 0.5)
-    (which-key-show-early-on-C-h    . t)
-    (which-key-show-major-mode      . t)
-    (which-key-popup-type           . 'side-window)
-    (which-key-side-window-location . 'bottom)
-    (which-key-sort-order           . 'which-key-local-then-key-order)
-    :init (which-key-mode))
+  (custom-set-variables
+   '(which-key-idle-delay 0.8)
+   '(which-key-show-early-on-C-h t)
+   '(which-key-show-major-mode t)
+   '(which-key-popup-type 'minibuffer)
+   '(which-key-side-window-location 'bottom)
+   '(which-key-sort-order 'which-key-local-then-key-order))
+  (which-key-mode t)
 #+end_src
 
 *** Window Manager
-**** Dmenu
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'dmenu)
-  ;; ------------------
-  (leaf dmenu
-    :doc ""
-    :url ""
-    :bind ("s-d" . dmenu))
-#+end_src
-
-**** Exwm
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'exwm)
-  ;; ------------------
-  (leaf exwm
-    :doc "EXWM (Emacs X Window Manager)"
-    :url "https://github.com/ch11ng/exwm"
-    ;; :when (display-graphic-p)
-    :require
-    (exwm-config exwm-randr)
-    :custom
-    (exwm-workspace-number                . 3)
-    (exwm-layout-show-all-buffers         . t)
-    (exwm-randr-workspace-monitor-plist   . '(0 "eDP-1" 1 "HDMI-1"))
-
-    ;; meow support
-    (exwm-input-global-keys . `(([?\s-x]  . meow-keypad-start)
-				([?\s-m]  . meow-keypad-start)
-				([?\s-g]  . meow-keypad-start)
-				([?\s-c]  . meow-keypad-start)
-				([?\s-\ ] . ,meow-leader-keymap)))
-
-    ;; mimic keys
-    (exwm-input-simulation-keys . '(
-				    ;; movement
-				    ([?\C-b] . [left])
-				    ([?\M-b] . [C-left])
-				    ([?\C-f] . [right])
-				    ([?\M-f] . [C-right])
-				    ([?\C-p] . [up])
-				    ([?\C-n] . [down])
-				    ([?\C-a] . [home])
-				    ([?\C-e] . [end])
-				    ([?\M-v] . [prior])
-				    ([?\C-v] . [next])
-				    ([?\C-d] . [delete])
-				    ([?\C-k] . [S-end delete])
-				    ;; cut/paste.
-				    ([?\C-w] . [?\C-x])
-				    ([?\M-w] . [?\C-c])
-				    ([?\C-y] . [?\C-v])
-				    ;; search
-				    ([?\C-s] . [?\C-f])))
-    :init
-    (exwm-enable)
-    :hook
-    (exwm-randr-screen-change-hook
-     . (lambda ()
-	 (start-process-shell-command
-	  "xrandr" nil "xrandr --output eDP-1 --right-of HDMI-1 --auto")))
-    :config
-    (progn
-      (exwm-randr-enable)
-      ;; this is a way to declare truly global/always working keybindings
-      (exwm-input-set-key (kbd "s-r") 'exwm-reset)
-      (exwm-input-set-key (kbd "s-k") 'exwm-workspace-delete)
-      (exwm-input-set-key (kbd "s-w") 'exwm-workspace-swap)
-
-      ;; the next loop will bind s-<number> to switch to the corresponding workspace
-      (dotimes (i 4)
-	(exwm-input-set-key (kbd (format "s-%d" i))
-			    `(lambda ()
-			      (interactive)
-			      (exwm-workspace-switch-create ,i))))
-
-      ;; the simplest launcher, I keep it in only if dmenu eventually stopped working or something
-      (exwm-input-set-key (kbd "s-&")
-			  (lambda (command)
-			    (interactive (list (read-shell-command "$ ")))
-			    (start-process-shell-command command nil command)))
-
-      ;; an easy way to make keybindings work *only* in line mode
-      (push ?\C-q exwm-input-prefix-keys)
-      (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-
-
-      ;; this little bit will make sure that XF86 keys work in exwm buffers as well
-      (dolist (k '(XF86AudioLowerVolume
-		   XF86AudioRaiseVolume
-		   XF86PowerOff
-		   XF86AudioMute
-		   XF86AudioPlay
-		   XF86AudioStop
-		   XF86AudioPrev
-		   XF86AudioNext
-		   XF86ScreenSaver
-		   XF68Back
-		   XF86Forward
-		   Scroll_Lock
-		   print))
-	(cl-pushnew k exwm-input-prefix-keys))))
-#+end_src
-
 **** Moving Around
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'ace-window)
   ;; ------------------
-  (leaf ace-window
-    :doc ""
-    :url "https://github.com/abo-abo/ace-window"
-    :bind
-    (("s-w" . ace-window)
-     ([remap other-window] . ace-window)))
 
-  (leaf avy
-    :doc ""
-    :url ""
-    :bind
-    (("C-:" . avy-goto-char)
-     ("s-." . avy-goto-word-or-subword-1)
-     ("C-c v" . avy-goto-word-or-subword-1)))
+  (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
+
+  (let ((map global-map))
+    (define-key map (kbd "s-w") #'ace-window)
+    (define-key map [remap other-window] #'ace-window)
+    (define-key map (kbd "C-;") #'avy-goto-char)
+    (define-key map (kbd "s-.") #'avy-goto-word-or-subword-1))
 #+end_src
 
 **** Resizing
@@ -1768,36 +1393,34 @@ adapted it to my workflow.
 **** Shackle
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
-  (straight-use-package 'shackle)
   ;; ------------------
-  (leaf shackle
-    :doc ""
-    :url ""
-    :custom
-    (shackle-lighter           . "")
-    (shackle-default-alignment . 'below)
-    (shackle-default-size      . 0.4)
-    (shackle-rules
-     . '((compilation-mode        :select t    :size 0.25)
-	 ("*Async Shell Command*" :ignore t)
-	 ("*compilation*"         :select t    :size 0.25)
-	 ("*Flycheck errors*"     :select t    :size 0.25)
-	 ("*Warnings*"            :ignore t)
-	 ("*Error*"               :select t    :size 0.25)
-	 ("*Org Links*"           :select t    :size 0.25)
-	 ("*eshell*"              :align below :size 0.5   :popup t)
-	 ("*vterm*"               :align below :size 0.35  :popup t)
-	 ("*nixos-options-doc*"   :align below :size 0.25)
-	 (help-mode               :align above :size 0.25 :select t)
-	 (helpful-mode            :align above)
-	 (magit-status-mode       :align below :size 0.5   :inhibit-window-quit t)
-	 (magit-log-mode          :same t                  :inhibit-window-quit t)
-	 (magit-commit-mode       :ignore t)
-	 (magit-diff-mode         :select nil  :align left :size 0.5)
-	 (git-commit-mode         :same t)
-	 (vc-annotate-mode        :same t)))
-    :init
-    (shackle-mode t))
+  (customize-set-variable
+   'display-buffer-alist
+   '(("\\*e?shell\\*"
+      (display-buffer-in-side-window)
+      (window-height . 0.3)
+      (side . bottom)
+      (slot . 1))
+     ("\\*vterm\\*"
+      (display-buffer-in-side-window)
+      (window-width . 0.3)
+      (side . right)
+      (slot . 1))
+     ("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|[Hh]elp\\Messages\\)\\*"
+      (display-buffer-in-side-window)
+      (window-height . 0.25)
+      (side . bottom)
+      (slot . 0))
+     ("\\*Faces\\*"
+      (display-buffer-in-side-window)
+      (window-height . 0.25)
+      (side . bottom)
+      (slot . 1))
+     ("\\*cargo-run\\*"
+      (display-buffer-in-side-window)
+      (window-height . 0.25)
+      (side . bottom)
+      (slot . 2))))
 #+end_src
 
 **** Splitting
@@ -1822,6 +1445,13 @@ adapted it to my workflow.
 
 ** CODE
 *** Langs
+**** haskell
+#+begin_src emacs-lisp :tangle yes
+  (straight-use-package 'haskell-mode)
+
+  (add-hook 'haskell-mode-hook 'eglot-ensure)
+#+end_src
+
 **** lisp
 ***** clojure
 #+begin_src emacs-lisp :tangle no
@@ -1848,9 +1478,9 @@ adapted it to my workflow.
 ***** common-lisp
 #+begin_src emacs-lisp :tangle no
   ;; ------------------
-  (straight-use-package 'sly)
+  (straight-use-package 'slime)
   ;; ------------------
-  (leaf sly
+  (leaf slime
     :doc ""
     :url "")
 #+end_src
@@ -1868,30 +1498,80 @@ adapted it to my workflow.
     (geiser-repl-history-filename  . rx:temp-d))
 #+end_src
 
+**** lua
+#+begin_src emacs-lisp :tangle no
+  ;; ------------------
+  (straight-use-package 'lua-mode)
+  ;; ------------------
+  (add-to-list 'auto-mode-alist '("\\.lua\\’" . lua-mode))
+#+end_src
+
+**** nix
+#+begin_src emacs-lisp :tangle yes
+  ;; ------------------
+  (straight-use-package 'nix-mode)
+  ;; ------------------
+  (add-to-list 'auto-mode-alist '("\\.nix\\’" . nix-mode))
+#+end_src
+
+**** perl
+#+begin_src emacs-lisp :tangle yes
+  ;; ------------------
+  (straight-use-package 'cperl-mode)
+  ;; ------------------
+  (leaf cperl-mode
+    :doc ""
+    :url ""
+    :mode
+    ("\\.\\([pP][Llm]\\|al\\)\\'" . cperl-mode)
+    :setq
+    (cperl-indent-level               . 3)
+    (cperl-close-paren-offset         . -3)
+    (cperl-continued-statement-offset . 3)
+    (cperl-indent-parens-as-block     . t)
+    (cperl-tab-always-indent          . t))
+#+end_src
+
+**** purescript
+#+begin_src emacs-lisp :tangle yes
+  ;; ------------------
+  (straight-use-package 'purescript-mode)
+  ;; (straight-use-package 'psc-ide)
+  ;; ------------------
+  (autoload 'purescript-mode "purescript-mode" nil t)
+  (add-to-list 'auto-mode-alist '("\\.purs\\’" . purescript-mode))
+  (add-hook 'purescript-mode-hook '(lambda ()
+                                     ;; (psc-ide-mode)
+                                     (eglot-ensure)
+                                     (flymake-mode)
+                                     (turn-on-purescript-indentation)))
+#+end_src
+
+**** rust
+#+begin_src emacs-lisp :tangle yes
+  ;; ------------------
+  ;; (straight-use-package 'rust-mode)
+  (straight-use-package 'rustic)
+  ;; ------------------
+  (custom-set-variables
+   '(rustic-lsp-client 'eglot)
+   '(rust-format-on-save t))
+  (add-hook 'rustic-mode-hook 'eglot-ensure)
+#+end_src
+
 **** webdev
 ***** emmet
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'emmet-mode)
   ;; ------------------
-  (leaf emmet-mode
-    :doc "Support Emmet's feature set - no longer maintained?"
-    :url "https://github.com/smihica/emmet-mode"
-    :custom
-    (emmet-insert-flash-time         . 0.1)
-    (emmet-move-cursor-between-quote . t)
-    (emmet-insert-flash-time . 0.001) ; effectively disabling it
-    :config
-    (add-hook 'js-jsx-mode-hook (lambda ()
-                                  (setq-local emmet-expand-jsx-className? t)))
-    (add-hook 'web-mode-hook    (lambda ()
-                                  (setq-local emmet-expand-jsx-className? t)))
-    :bind (:emmet-mode-keymap
-           ("M-e" . emmet-expand-line))
-    :hook (css-mode-hook
-           html-mode-hook
-           js-mode-hook js-jsx-mode-hook
-           typescript-mode-hook web-mode-hook))
+  (custom-set-variables
+   '(emmet-insert-flash-time 0.1)
+   '(emmet-move-cursor-between-quote t)
+   '(emmet-insert-flash-time 0.001))
+
+  (with-eval-after-load 'emmet
+    (define-key emmet-mode-keymap (kbd "M-e") #'emmet-expand-line))
 #+end_src
 
 ***** javascript
@@ -1946,128 +1626,40 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'web-mode)
   ;; ------------------
-  (leaf web-mode
-    :doc "An autonomous emacs major-mode for editing web templates."
-    :url "https://web-mode.org/"
-    :custom
-    (skeleton-pair                               . t)
-    (web-mode-code-indent-offset                 . 2)
-    (web-mode-css-indent-offset                  . 2)
-    (web-mode-markup-indent-offset               . 2)
-    (web-mode-enable-auto-indentation            . t)
-    (web-mode-enable-auto-pairing                . t)
-    (web-mode-enable-auto-closing                . t)
-    (web-mode-enable-auto-quoting                . t)
-    (web-mode-enable-current-column-highlight    . t)
-    (web-mode-enable-current-element-highlight   . t)
-    (web-mode-enable-html-entities-fontification . t)
-    ;; (web-mode-content-types-alist . '(("jsx" . "\\.js[x]?\\'")))
-    :mode
-    ("\\.html?\\'"
-     "\\.jsx\\'"
-     "\\.tsx\\'"
-     "\\.ejs\\'"
-     "\\.hbs\\'"
-     "\\.json\\'")
-    ;; :bind
-    ;; (:web-mode-map
-    ;;  ("<" . skeleton-pair-insert-maybe))
-    )
+  (require 'web-mode)
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist
+  '("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
+
+  (custom-set-variables
+   '(web-mode-code-indent-offset 2)
+   '(web-mode-css-indent-offset 2)
+   '(web-mode-markup-indent-offset 2)
+   '(web-mode-enable-auto-indentation t)
+   '(web-mode-enable-auto-pairing t)
+   '(web-mode-enable-auto-closing t)
+   '(web-mode-enable-auto-quoting t)
+   '(web-mode-enable-current-column-highlight t)
+   '(web-mode-enable-current-element-highlight t)
+   '(web-mode-enable-html-entities-fontification t))
 #+end_src
 
-**** lua
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'lua-mode)
-  ;; ------------------
-  (leaf lua-mode
-    :doc ""
-    :url "https://github.com/immerrr/lua-mode"
-    :mode
-    ("\\.lua$\\’")
-    :interpreter lua)
-#+end_src
-
-**** nix
+**** zig
 #+begin_src emacs-lisp :tangle yes
-  ;; ------------------
-  (straight-use-package 'nix-mode)
-  ;; ------------------
-  (leaf nix-mode
-    :doc "An Emacs major mode for editing Nix expressions"
-    :url "https://github.com/NixOS/nix-mode"
-    :mode ("\\.nix\\'" . nix-mode)
-    :hook 
-    (eglot-ensure)
-    ;; (lsp-deferred)
-    )
+  (straight-use-package '(zig-mode :type git :host github :repo "ziglang/zig-mode"))
 
-  (leaf helm-nixos-options
-    :doc "A set of useful Emacs modes and functions for users of Nix and NixOS"
-    :url "https://github.com/travisbhartwell/nix-emacs"
-    :disabled t
-    :config
-    (progn
-      (setq flycheck-command-wrapper-function
-            (lambda (cmd)
-              (apply 'nix-shell-command (nix-current-sandbox) cmd))
-            flycheck-executable-find
-            (lambda (cmd)
-              (nix-executable-find (nix-current-sandbox) cmd))))
-    :bind
-    ("C-c h n" . helm-nixos-options))
-#+end_src
-
-**** purescript
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'purescript-mode)
-  (straight-use-package 'psc-ide)
-  ;; ------------------
-  (leaf purescript-mode
-    :doc "PureScript mode package for Emacs"
-    :url ""
-    :mode ("\\.purs\\'"))
-
-  (leaf psc-ide
-    :doc ""
-    :url ""
-    :hook
-    (purescript-mode-hook . (lambda ()
-                              (psc-ide-mode)
-                              (flymake-mode)
-                              (turn-on-purescript-indentation))))
-#+end_src
-
-**** perl
-#+begin_src emacs-lisp :tangle yes
-  ;; ------------------
-  (straight-use-package 'cperl-mode)
-  ;; ------------------
-  (leaf cperl-mode
-    :doc ""
-    :url ""
-    :mode
-    ("\\.\\([pP][Llm]\\|al\\)\\'" . cperl-mode)
-    :setq
-    (cperl-indent-level               . 3)
-    (cperl-close-paren-offset         . -3)
-    (cperl-continued-statement-offset . 3)
-    (cperl-indent-parens-as-block     . t)
-    (cperl-tab-always-indent          . t))
-#+end_src
-
-**** rust
-#+begin_src emacs-lisp :tangle yes
-  ;; ------------------
-  (straight-use-package 'rust-mode)
-  ;; ------------------
-  (leaf rust-mode
-    :doc "Makes editing Rust code with Emacs enjoyable."
-    :url "https://github.com/rust-lang/rust-mode"
-    :hook (rust-mode-hook . eglot-ensure)
-    :custom
-    (rust-format-on-save . t))
+  (unless (version< emacs-version "24")
+    (autoload 'zig-mode "zig-mode" nil t)
+    (add-to-list 'auto-mode-alist '("\\.zig\\’" . zig-mode)))
+  (add-hook 'zig-mode-hook 'eglot-ensure)
 #+end_src
 
 *** Modes
@@ -2221,19 +1813,6 @@ adapted it to my workflow.
     :bind (("C-c e d" . flymake-show-diagnostic)))
 #+end_src
 
-**** tree-sitter
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'tree-sitter)
-  ;; ------------------
-  (leaf tree-sitter
-    :doc ""
-    :url ""
-    :require tree-sitter-langs
-    :hook (tree-sitter-hl-mode)
-    :init (global-tree-sitter-mode))
-#+end_src
-
 ** ORG
 *** org-mode
 #+begin_src emacs-lisp :tangle yes
@@ -2309,6 +1888,11 @@ adapted it to my workflow.
                      :jump-to-captured t))))
 #+end_src
 
+*** org-speed
+#+begin_src emacs-lisp :tangle yes
+  
+#+end_src
+
 *** org-superstar
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
@@ -2328,7 +1912,7 @@ adapted it to my workflow.
 #+end_src
 
 *** org-toc
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'toc-org)
   ;; ------------------
@@ -2466,7 +2050,7 @@ adapted it to my workflow.
 #+end_src
 
 *** Epub/Pdf
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'nov)
   (straight-use-package 'pdf-tools)
@@ -2479,20 +2063,15 @@ adapted it to my workflow.
     :custom
     (nov-text-width . 72)
     :hook (nov-mode-hook
-	   . (lambda ()
-	       (face-remap-add-relative
-		'variable-pitch :family "Liberation Serif" :height 1.2))))
+           . (lambda ()
+               (face-remap-add-relative
+                'variable-pitch :family "Liberation Serif" :height 1.2))))
 
-  (leaf pdf-tools
-    :doc ""
-    :url ""
-    ;; :disabled t
-    :require pdf-tools
-    :init (pdf-tools-install t t t)
-    :custom
-    (pdf-view-midnight-colors . '("white smoke" . "gray5"))
-    (pdf-misc-print-programm-args . '("-o media=A4" "-o fitplot"))
-    (pdf-view-display-size . 'fit-page))
+  (require 'pdf-tools)
+  (custom-set-variables
+   '(pdf-view-midnight-colors '("white smoke" . "gray5"))
+   '(pdf-misc-print-programm-args '("-o media=A4" "-o fitplot"))
+   '(pdf-view-display-size 'fit-page))
 #+end_src
 
 *** Denote

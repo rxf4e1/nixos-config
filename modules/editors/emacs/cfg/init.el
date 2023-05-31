@@ -12,15 +12,14 @@
 
 ;; Start the initial frame maximized
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-;; (add-hook 'after-init-hook 'toggle-frame-maximized t)
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-hook 'after-init-hook 'toggle-frame-maximized t)
 
 ;; Get rid of screen eaters
 (unless (and  (display-graphic-p) (eq system-type 'gnu/linux))
   (push '(menu-bar-lines . 0) default-frame-alist))
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
-;; (fringe-mode 1)
 
 ;; load config file
 (require 'ob-tangle)

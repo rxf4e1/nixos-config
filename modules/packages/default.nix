@@ -13,6 +13,11 @@ with lib; let
     tshark
   ];
 
+  zig-tools = with pkgs; [
+    # zig
+    zls
+  ];
+  
   rust-tools = with pkgs; [
     bat
     duf
@@ -20,7 +25,6 @@ with lib; let
     procs
     ripgrep
     rustup
-    rust-analyzer
     gcc
   ];
 
@@ -42,9 +46,6 @@ with lib; let
     pcmanfm
     poppler
     zathura
-    # joplin
-    # logseq
-    # obsidian
   ];
 
   nix-tools = with pkgs; [
@@ -76,6 +77,7 @@ in {
       ++ inet-tools
       ++ media-tools
       ++ rust-tools
+      ++ zig-tools
       ++ nix-tools;
     home.shellAliases = {
       ed = "rlwrap ed --prompt='>> '";

@@ -13,6 +13,7 @@ in {
       enable = true;
       settings.fonts.default_size = "7pt";
       searchEngines = {
+        DEFAULT = "https://search.brave.com/search?q={}";
         no = "https://search.nixos.org/options?query={}";
         np = "https://search.nixos.org/packages?query={}";
         nw = "https://nixos.wiki/index.php?search={}";
@@ -27,6 +28,27 @@ in {
         yt = "https://www.youtube.com/results?search_query={}";
       };
       enableDefaultBindings = true;
+      keyBindings = {
+        normal = {
+          "<Ctrl-v>" = "hint links spawn --detach mpv --force-window yes {hint-url}";
+        };
+      };
+      settings = {
+        url.start_pages = ["https://search.brave.com/"];
+        auto_save.session = true;
+        colors.webpage.darkmode.enabled = true;
+        content.blocking = {
+          enabled = true;
+          method = "both";
+        };
+        input = {
+          insert_mode.auto_leave = true;
+          insert_mode.auto_load = true;
+        };
+      };
+      extraConfig = ''
+        config.source("matrix-theme.py")
+      '';
     };
   };
 }

@@ -218,7 +218,7 @@
   programs.adb.enable = true;
   programs.dconf.enable = true;
   programs.light.enable = true;
-  programs.fish.enable = true;
+  # programs.fish.enable = true;
   # programs.zsh.enable = true;
 
   # DBUS

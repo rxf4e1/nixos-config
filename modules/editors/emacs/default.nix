@@ -9,21 +9,12 @@ with lib; let
 in {
   options.modules.editor.emacs = {enable = mkEnableOption "emacs";};
   config = mkIf cfg.enable {
-    # home.packages = with pkgs; [
-    #   libtool
-    #   libvterm
-    #   cmake
-    # ];
+    # home.packages = with pkgs; [];
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs;
-      extraPackages =
-        ( epkgs: [
-          epkgs.vterm
-      #     epkgs.org
-      #     epkgs.spacemacs-theme
-        ]);
+      package = pkgs.emacsPgtk;
+      extraPackages = ( epkgs: [ epkgs.vterm ]);
     };
-    services.emacs.enable = true;
+    services.emacs.enable = false;
   };
 }
