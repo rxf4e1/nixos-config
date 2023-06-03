@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.PROGRAM;
+  cfg = config.modules.nyxt;
 in {
-  options.modules.PROGRAM = {enable = mkEnableOption "PROGRAM";};
+  options.modules.nyxt = {enable = mkEnableOption "nyxt";};
   config =
     mkIf cfg.enable {
       home.packages = with pkgs; [nyxt];

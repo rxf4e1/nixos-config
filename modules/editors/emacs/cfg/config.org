@@ -138,12 +138,6 @@ adapted it to my workflow.
 : async
 
 *** Persistent Data
-**** Cache
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  ;; ------------------
-#+end_src
-
 **** Scratch
 #+begin_src emacs-lisp :tangle yes
   ;; Make some buffers immortal
@@ -163,8 +157,6 @@ adapted it to my workflow.
   ;; Save all interactive customization to a temp file, which is never loaded.
   ;; This means interactive customization is session-local. Only this init file persists sessions.
   (setq custom-file (make-temp-file "custom.el"))
-  ;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  ;; (load-file custom-file)
 
   ;; For my "settings" I prefer to use custom-set-variables, which does a bunch of neat stuff.
   ;; First, it calls a variable's "setter" function, if it has one.
@@ -342,9 +334,11 @@ adapted it to my workflow.
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; (straight-use-package 'spacemacs-theme)
+  (straight-use-package 'gruber-darker-theme)
   (straight-use-package 'tao-theme)
   ;; ------------------
   ;; (load-theme 'spacemacs-dark t)
+  ;; (load-theme 'gruber-darker t)
   (load-theme 'tao-yin t)
 #+end_src
 
@@ -916,7 +910,7 @@ adapted it to my workflow.
 
   (global-unset-key (kbd "C-x d"))
   (define-key global-map (kbd "C-x d d") #'dired)
-  (define-key global-map (kbd "C-x d t") #'dired-sidebar-toggle-sidebar)
+  (define-key global-map (kbd "C-x d s") #'dired-sidebar-toggle-sidebar)
   (define-key dired-mode-map (kbd "<tab>") #'dired-subtree-toggle)
   (define-key dired-mode-map (kbd "<C-tab>") #'dired-subtree-cycle)
   ;; (define-key dired-mode-map (kbd "w") #'wdired-change-to-wdired-mode)
@@ -1348,13 +1342,13 @@ adapted it to my workflow.
    '(uniquify-ignore-buffers-re "^\\*"))
 #+end_src
 
-**** Wich-Key
+**** wich-key
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'which-key)
   ;; ------------------
   (custom-set-variables
-   '(which-key-idle-delay 0.8)
+   '(which-key-idle-delay 2)
    '(which-key-show-early-on-C-h t)
    '(which-key-show-major-mode t)
    '(which-key-popup-type 'minibuffer)
@@ -1416,7 +1410,7 @@ adapted it to my workflow.
       (window-height . 0.25)
       (side . bottom)
       (slot . 1))
-     ("\\*cargo-run\\*"
+     ("\\*contents\\*"
       (display-buffer-in-side-window)
       (window-height . 0.25)
       (side . bottom)
@@ -1441,6 +1435,14 @@ adapted it to my workflow.
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
   (global-set-key (kbd "s-k") 'kill-buffer-and-window)
+#+end_src
+
+**** MemInfo
+#+begin_src emacs-lisp :tangle no
+  (straight-use-package 'symon)
+
+  ;; (custom-set-variables
+  ;;  '(symon-sparkline-type 'gridded))
 #+end_src
 
 ** CODE
@@ -1841,13 +1843,15 @@ adapted it to my workflow.
     (org-src-tab-acts-natively         . t)
     (org-src-fontify-natively          . t)
     (org-src-preserve-indentation      . nil)
-    (org-src-window-setup              . 'current-window)
+    (org-src-window-setup              . 'split-window-below)
     (org-src-strip-leading-and-trailing-blank-lines . t)
+
     ;; modules
-    (org-modules . '(org-crypt
-                     org-habit
-                     org-tempo
-                     org-protocol))
+    ;; (org-modules . '(org-crypt
+    ;;                  org-habit
+    ;;                  org-tempo
+    ;;                  org-protocol))
+
     ;; keywords
     (org-todo-keywords
      . '((sequence "IDEA(i)" "TODO(t)" "STARTED(s)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)")
@@ -2050,7 +2054,7 @@ adapted it to my workflow.
 #+end_src
 
 *** Epub/Pdf
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
   ;; ------------------
   (straight-use-package 'nov)
   (straight-use-package 'pdf-tools)

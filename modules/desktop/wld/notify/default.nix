@@ -43,8 +43,8 @@ in {
     };
 
     home.packages = with pkgs; [
-      # dunst
-      swaynotificationcenter
+      dunst
+      # swaynotificationcenter
       libnotify
       inotify-tools
       # mako
