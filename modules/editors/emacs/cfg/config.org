@@ -258,8 +258,8 @@ adapted it to my workflow.
    '(cursor-type 'box)
    '(mouse-avoidance-mode 'banish))
 
-  (custom-set-faces
-      '(cursor ((t (:foreground "dim-gray" :background "gold")))))
+  ;; (custom-set-faces
+  ;;  '(cursor ((t (:foreground "dim-gray" :background "gold")))))
 #+end_src
 
 **** Fonts
@@ -334,12 +334,18 @@ adapted it to my workflow.
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; (straight-use-package 'spacemacs-theme)
-  (straight-use-package 'gruber-darker-theme)
+  ;; (straight-use-package 'gruber-darker-theme)
   (straight-use-package 'tao-theme)
   ;; ------------------
   ;; (load-theme 'spacemacs-dark t)
-  ;; (load-theme 'gruber-darker t)
-  (load-theme 'tao-yin t)
+
+  (load-theme 'gruber-darker t)
+
+  ;; (load-theme 'tao-yin t)
+
+  ;; MonoDark
+  ;; (require 'monodark-theme)
+  ;; (load-theme 'monodark t)
 #+end_src
 
 ** MODULES
@@ -1141,7 +1147,7 @@ adapted it to my workflow.
    '(electric-quote-paragraph t)
    '(electric-quote-string nil)
    '(electric-quote-replace-double t)
-   '(show-paren-style 'mixed)
+   '(show-paren-style 'parenthesis)
    '(show-paren-when-point-in-periphery nil)
    '(show-paren-when-point-inside-paren t)
    '(show-paren-context-when-offscreen 'child-frame) ; Emacs 29
@@ -1369,7 +1375,7 @@ adapted it to my workflow.
   (let ((map global-map))
     (define-key map (kbd "s-w") #'ace-window)
     (define-key map [remap other-window] #'ace-window)
-    (define-key map (kbd "C-;") #'avy-goto-char)
+    (define-key map (kbd "s-;") #'avy-goto-char)
     (define-key map (kbd "s-.") #'avy-goto-word-or-subword-1))
 #+end_src
 
@@ -2054,7 +2060,7 @@ adapted it to my workflow.
 #+end_src
 
 *** Epub/Pdf
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; ------------------
   (straight-use-package 'nov)
   (straight-use-package 'pdf-tools)
@@ -2114,44 +2120,6 @@ adapted it to my workflow.
     (interactive)
     (denote
      (denote--title-prompt) '("journal")))
-#+end_src
-
-*** GkRoam
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package
-   '(gkroam :type   git
-            :host   github
-            :branch "develop"
-            :repo   "Kinneyzhang/gkroam"))
-  ;; ------------------
-  (leaf gkroam
-    :doc "A lightweight Roam Research replica"
-    :url "https://github.com/Kinneyzhang/gkroam"
-    :require gkroam
-    :custom
-    (gkroam-root-dir             . "~/Nextcloud/org/gkroam")
-    (gkroam-prettify-page-p      . t)
-    (gkroam-show-brackets-p      . t)
-    (gkroam-use-default-filename . t)
-    (gkroam-window-margin        . 0)
-    (gkroam-title-height         . 200)
-    :hook
-    (after-init-hook . gkroam-mode)
-    :bind
-    (:gkroam-mode-map
-     (("C-c r I" . gkroam-index)
-      ("C-c r d" . gkroam-daily)
-      ("C-c r D" . gkroam-delete)
-      ("C-c r f" . gkroam-find)
-      ("C-c r i" . gkroam-insert)
-      ("C-c r n" . gkroam-dwim)
-      ("C-c r e" . gkroam-link-edit)
-      ("C-c r u" . gkroam-show-unlinked)
-      ("C-c r p" . gkroam-toggle-prettify)
-      ("C-c r t" . gkroam-toggle-brackets)
-      ("C-c r R" . gkroam-rebuild-caches)
-      ("C-c r g" . gkroam-update))))
 #+end_src
 
 ** FOOTER
