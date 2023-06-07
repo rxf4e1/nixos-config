@@ -163,8 +163,6 @@
     };
   };
 
-  # systemd.coredump.enable = true;
-
   # Set up networking and secure it
   networking = {
     # Quad-9 DNS
@@ -215,8 +213,8 @@
     protectKernelImage = true;
   };
 
-  programs.adb.enable = true;
   programs.dconf.enable = true;
+  programs.adb.enable = true;
   programs.light.enable = true;
   # programs.fish.enable = true;
   # programs.zsh.enable = true;
@@ -232,6 +230,19 @@
     upower.enable = true; # Battery info & stuff
   };
 
+  systemd.coredump.enable = true;
+  # systemd = {
+  #   services.dconf-update = {
+  #     serviceConfig = { Type="oneshot"; };
+  #     wantedBy = ["multi-user.target"];
+  #     path = [pkgs.dconf];
+  #     script = ''
+  #       dconf update
+  #     '';
+  #   };
+  # };
+
+  
   # Sound
   sound.enable = true;
   # hardware.pulseaudio.enable = true;

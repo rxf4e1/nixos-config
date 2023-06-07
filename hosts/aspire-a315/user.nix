@@ -33,7 +33,7 @@
       shell = {
         bash.enable = true;
         fish.enable = false;
-        ion.enable = true;
+        ion.enable = false;
         # zsh.enable = true;
       };
       prompt.starship.enable = true;
@@ -49,8 +49,8 @@
         sway.enable = false;
         notify.enable = true;
       };
-      gtk.enable = true;
-      # qt6.enable = true; # :TODO:
+      # gtk.enable = true;
+      qt.enable = true; # :TODO:
       widgets.enable = false;
     };
 

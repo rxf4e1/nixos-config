@@ -12,35 +12,25 @@ with lib; let
   #   sha256 = "06h5w71qfb32khfaggqlpi8wzhbw4g18ggs18bwhz9nxnjbdr7lb";
   # });
   # custom-icons = (fetchFromGitHub "");
-  cfg = config.modules.desktop.gtk;
+  cfg = config.modules.desktop.qt;
 in {
-  options.modules.desktop.gtk = {enable = mkEnableOption "Gtk";};
+  options.modules.desktop.qt = {enable = mkEnableOption "Qt";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       # custom-cursor
       hicolor-icon-theme
       sweet
-      lxappearance-gtk2
+      libsForQt5.qtstyleplugins
     ];
 
-    gtk = {
+    qt = {
       enable = true;
-      cursorTheme = {
-        name = "Sweet-cursors";
-        # name = "Nordzy-cursors";
-        # package = pkgs.nordzy-cursor-theme;
-        size = 24;
+      platformTheme = "gtk";
+      style = {
+        # package = pkgs.libsForQt5.breeze-qt5;
+        package = pkgs.lightly-qt;
+        # name = "bb10dark";
       };
-      font = {
-        name = "Fira Code";
-        size = 9;
-      };
-      iconTheme.name = "candy-icons";
-      theme = {
-        name = "Sweet-Dark";
-        package = pkgs.sweet;
-      };
-
     };
   };
 }

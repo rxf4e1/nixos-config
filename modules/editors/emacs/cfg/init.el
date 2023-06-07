@@ -15,7 +15,7 @@
 
 ;; Start the initial frame maximized
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-hook 'after-init-hook 'toggle-frame-maximized t)
 
 ;; Get rid of screen eaters
@@ -23,6 +23,7 @@
   (push '(menu-bar-lines . 0) default-frame-alist))
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
+(tool-bar-mode -1)
 
 ;; load config file
 (require 'ob-tangle)
