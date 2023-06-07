@@ -3,6 +3,7 @@ inputs @ {...}: {
     ./common
     ./hikari
     ./hyprland
+    ./river
     ./sway
     ./notify
   ];

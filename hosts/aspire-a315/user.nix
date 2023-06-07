@@ -44,7 +44,8 @@
       wld = {
         common.enable = true;
         hikari.enable = false;
-        hyprland.enable = true;
+        hyprland.enable = false;
+        river.enable = true;
         sway.enable = false;
         notify.enable = true;
       };

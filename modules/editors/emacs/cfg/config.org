@@ -237,7 +237,7 @@ adapted it to my workflow.
 #+end_src
 
 **** Daemon/Server
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; (leaf server
   ;;   :doc "Emacs server"
   ;;   :tag "built-in"
@@ -257,9 +257,6 @@ adapted it to my workflow.
   (custom-set-variables
    '(cursor-type 'box)
    '(mouse-avoidance-mode 'banish))
-
-  ;; (custom-set-faces
-  ;;  '(cursor ((t (:foreground "dim-gray" :background "gold")))))
 #+end_src
 
 **** Fonts
@@ -298,6 +295,7 @@ adapted it to my workflow.
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 #+end_src
 
+  ;; ------------------
 **** Modeline
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
@@ -334,18 +332,14 @@ adapted it to my workflow.
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; (straight-use-package 'spacemacs-theme)
-  ;; (straight-use-package 'gruber-darker-theme)
+  (straight-use-package 'gruber-darker-theme)
   (straight-use-package 'tao-theme)
-  ;; ------------------
   ;; (load-theme 'spacemacs-dark t)
-
-  (load-theme 'gruber-darker t)
-
+  ;; (load-theme 'gruber-darker t)
   ;; (load-theme 'tao-yin t)
 
   ;; MonoDark
-  ;; (require 'monodark-theme)
-  ;; (load-theme 'monodark t)
+  (load-theme 'monodark t)
 #+end_src
 
 ** MODULES
@@ -464,137 +458,7 @@ adapted it to my workflow.
       ("C-a" . helm-select-action))))
 #+end_src
 
-***** brotherhood
-****** vertico
-#+begin_src emacs-lisp :tangle no
-    ;; ------------------
-    (straight-use-package 'vertico)
-    (straight-use-package 'orderless)
-    ;; ------------------
-    (leaf vertico
-      :doc "vertical completion UI based on the default completion system." 
-      :url "https://github.com/minad/vertico"
-      :init (vertico-mode)
-      :custom
-      (vertico-scroll-margin . 0)
-      (vertico-count         . 10)
-      (vertico-resize        . nil)
-      (vertico-cycle         . t)
-      :bind (:vertico-map
-             ("?" . minibuffer-completion-help)
-             ("M-RET" . minibuffer-force-complete-and-exit)
-             ("M-TAB" . minibuffer-complete)))
-
-    (leaf orderless ;; TO FIX
-      :doc "divides the pattern into space-separated components."
-      :url "https://github.com/oantolin/orderless"
-      :custom
-      (orderless-component-separator . " +")
-      (completion-styles . '(basic orderless))
-      (completion-category-defaults . nil)
-      (completion-category-overrides
-       . '((file (styles . (basic partial-completion)))
-           (project-file (styles . (basic substring partial-completion orderless)))
-           (imenu (styles . (basic substring orderless)))
-           (kill-ring (styles . (basic substring orderless)))
-           (consult-location (styles . (basic substring orderless))))))
-#+end_src
-
-****** marginalia
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'marginalia)
-  ;; ------------------
-  (leaf marginalia
-    :doc "marks or annotations placed at the margin of the minibuffer."
-    :url "https://github.com/minad/marginalia"
-    :init (marginalia-mode)
-    :custom
-    (marginalia-max-relative-age . 0))
-#+end_src
-
-****** consult
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'consult)
-  (straight-use-package 'consult-dir)
-  ;; ------------------
-  (leaf consult
-    :doc "practical commands based on the Emacs completion function."
-    :url "https://github.com/minad/consult"
-    :hook (completion-list-mode-hook . consult-preview-at-point-mode)
-    :custom
-    (register-preview-delay . 0.5)
-    (register-preview-function . #'consult-register-format)
-    (xref-show-xrefs-function . #'consult-xref)
-    (xref-show-definitions-function . #'consult-xref)
-    (consult-narrow-key . "<")
-    :config
-    (consult-customize
-     consult-theme
-     :preview-key '(:debounce 0.2 any)
-     consult-ripgrep consult-git-grep consult-grep
-     consult-bookmark consult-recent-file consult-xref
-     consult--source-bookmark consult--source-recent-file
-     consult--source-project-recent-file
-     :preview-key "M-.")
-    :bind
-    (("C-c h" . consult-history)
-     ("C-c m" . consult-mode-command)
-     ("C-c k" . consult-kmacro)
-     ;; C-x bindings (ctl-x-map)
-     ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-     ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-     ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-     ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-     ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-     ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-     ;; Other custom bindings
-     ([remap yank-pop] . consult-yank-pop)	                               ;; orig. yank-pop
-     ([remap apropos] . consult-apropos)                                   ;; orig. apropos-command
-     ;; M-g bindings (goto-map)
-     ("M-g e" . consult-compile-error)
-     ("M-g f" . consult-flymake)                      	               ;; Alternative: consult-flycheck
-     ([remap goto-line] . consult-goto-line)                               ;; orig. goto-line
-     ("M-g M-g" . consult-goto-line)                                       ;; orig. goto-line
-     ("M-g o" . consult-outline)	                                       ;; Alternative: consult-org-heading
-     ("M-g m" . consult-mark)
-     ("M-g k" . consult-global-mark)
-     ([remap imenu] . consult-imenu)
-     ("M-g I" . consult-imenu-multi)
-     ;; M-s bindings (search-map)
-     ("M-s d" . consult-find)
-     ("M-s D" . consult-locate)
-     ("M-s g" . consult-grep)
-     ("M-s G" . consult-git-grep)
-     ("M-s r" . consult-ripgrep)
-     ("C-s"   . consult-line)
-     ("M-s L" . consult-line-multi)
-     ([remap multi-occur] . consult-multi-occur)
-     ("M-s k" . consult-keep-lines)
-     ("M-s u" . consult-focus-lines)
-     ;; Isearch integration
-     ("M-s e" . consult-isearch-history)
-     (:isearch-mode-map
-      ("M-e" . consult-isearch-history)
-      ("M-s e" . consult-isearch-history)
-      ("M-s l" . consult-line)
-      ("M-s L" . consult-line-multi))
-     (:minibuffer-local-map
-      ("M-s" . consult-history)
-      ("M-r" . consult-history))))
-
-  (leaf consult-dir
-    :doc ""
-    :url ""
-    :after consult
-    :bind (("C-x C-d" . consult-dir)
-           (:minibuffer-local-completion-map
-            ("C-x C-d" . consult-dir)
-            ("C-x C-j" . consult-dir-jump-file))))
-#+end_src
-
-****** embark
+***** embark
 #+begin_src emacs-lisp :tangle yes 
   ;; ------------------
   (straight-use-package 'embark)
@@ -889,10 +753,7 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'diff-hl)
   ;; ------------------
-  (leaf diff-hl
-    :doc ""
-    :url ""
-    :init (global-diff-hl-mode))
+  (global-diff-hl-mode t)
 #+end_src
 
 **** Dired
@@ -901,9 +762,12 @@ adapted it to my workflow.
   (straight-use-package 'dired-subtree)
   (straight-use-package 'diredfl)
   (straight-use-package 'dired-sidebar)
+  ;; (straight-use-package 'dired-plus)
   ;; ------------------
   (require 'dired-subtree)
   (require 'diredfl)
+  (require 'dired-x)
+  ;; (require 'dired+)
   (custom-set-variables
    '(dired-listing-switches "-lGhA1vDpX --group-directories-first")
    '(dired-recursive-copies 'always)
@@ -914,12 +778,12 @@ adapted it to my workflow.
 
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
-  (global-unset-key (kbd "C-x d"))
-  (define-key global-map (kbd "C-x d d") #'dired)
-  (define-key global-map (kbd "C-x d s") #'dired-sidebar-toggle-sidebar)
+  (global-unset-key [?\C-x ?d])
+  (define-key global-map [?\C-x ?d ?d] #'dired)
+  (define-key global-map [?\C-x ?d ?f] #'dired-x-find-file)
+  (define-key global-map [?\C-x ?d ?s] #'dired-sidebar-toggle-sidebar)
   (define-key dired-mode-map (kbd "<tab>") #'dired-subtree-toggle)
   (define-key dired-mode-map (kbd "<C-tab>") #'dired-subtree-cycle)
-  ;; (define-key dired-mode-map (kbd "w") #'wdired-change-to-wdired-mode)
   (define-key dired-mode-map (kbd "<M-RET>") #'dired-open-file)
   (define-key dired-mode-map "b" (lambda ()
                                        (interactive)
@@ -1108,25 +972,6 @@ adapted it to my workflow.
   (straight-use-package 'move-text)
   ;; ------------------
   (move-text-default-bindings)
-#+end_src
-
-**** NeoTree
-#+begin_src emacs-lisp :tangle no
-  ;; ------------------
-  (straight-use-package 'neotree)
-  ;; ------------------
-  (leaf neotree
-    :doc "A Emacs tree plugin like NerdTree for Vim"
-    :url "https://github.com/jaypei/emacs-neotree"
-    :custom
-    (neo-theme . 'arrow)
-    :config
-    (progn
-      (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
-    :hook (neotree-mode-hook . hl-line-mode)
-    :bind
-    (("<f1>"   . neotree-toggle)
-     ("<M-f1>" . neotree-dir)))
 #+end_src
 
 **** Parenthesis
@@ -1370,7 +1215,7 @@ adapted it to my workflow.
   (straight-use-package 'ace-window)
   ;; ------------------
 
-  (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
+  (setq aw-keys '(?q ?e ?r ?t ?1 ?2 ?3 ?4 ?5))
 
   (let ((map global-map))
     (define-key map (kbd "s-w") #'ace-window)
@@ -1390,7 +1235,7 @@ adapted it to my workflow.
     :bind ("C-c w r" . windresize))
 #+end_src
 
-**** Shackle
+**** Buffer
 #+begin_src emacs-lisp :tangle yes
   ;; ------------------
   ;; ------------------
@@ -1441,14 +1286,6 @@ adapted it to my workflow.
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
   (global-set-key (kbd "s-k") 'kill-buffer-and-window)
-#+end_src
-
-**** MemInfo
-#+begin_src emacs-lisp :tangle no
-  (straight-use-package 'symon)
-
-  ;; (custom-set-variables
-  ;;  '(symon-sparkline-type 'gridded))
 #+end_src
 
 ** CODE
@@ -1548,7 +1385,7 @@ adapted it to my workflow.
   ;; ------------------
   (autoload 'purescript-mode "purescript-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.purs\\’" . purescript-mode))
-  (add-hook 'purescript-mode-hook '(lambda ()
+  (add-hook 'purescript-mode-hook (lambda ()
                                      ;; (psc-ide-mode)
                                      (eglot-ensure)
                                      (flymake-mode)

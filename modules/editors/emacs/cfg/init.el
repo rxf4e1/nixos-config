@@ -10,6 +10,9 @@
 ;; add paths to the list
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 
+;; require my theme
+(require 'monodark-theme)
+
 ;; Start the initial frame maximized
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))

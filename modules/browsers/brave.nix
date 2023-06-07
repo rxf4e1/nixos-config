@@ -11,7 +11,10 @@ in {
     enable = mkEnableOption "brave";
   };
   config = mkIf cfg.enable {
-    home.packages = [pkgs.brave];
+    home.packages = [
+      pkgs.brave
+      pkgs.mullvad-browser
+    ];
     # home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
   };
 }
