@@ -44,6 +44,7 @@ in {
 
     home.packages = with pkgs; [
       dunst
+      # fnott
       # swaynotificationcenter
       libnotify
       inotify-tools

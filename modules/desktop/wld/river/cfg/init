@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # This is the example configuration file for river.
 #
@@ -12,7 +12,10 @@
 mod="Mod4"
 
 # $mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
-riverctl map normal $mod+Shift Return spawn foot
+riverctl map normal $mod+Shift Return spawn footclient
+riverctl map normal $mod E spawn emacs
+riverctl map normal $mod B spawn brave
+riverctl map normal $mod M spawn mullvad
 
 # $mod+Q to close the focused view
 riverctl map normal $mod Q close
@@ -167,10 +170,10 @@ riverctl default-layout rivertile
 rivertile -view-padding 6 -outer-padding 6 &
 
 # Start some procs.
-msg=$('notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"')
-exec swaybg -i $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/image.jpg -m fill
-exec dunst >/dev/null 2>&1
-exec kanshi >/dev/null 2>&1
-exec foot --server >/dev/null 2>&1
-exec wlsunset -l -23.6 -L -43.5
-exec $msg
+# msg=$('notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"')
+swaybg -i $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/image.jpg -m fill &
+dunst >/dev/null 2>&1 &
+kanshi >/dev/null 2>&1 &
+foot --server >/dev/null 2>&1 &
+wlsunset -l -23.6 -L -43.5 >/dev/null 2>&1 &
+notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"

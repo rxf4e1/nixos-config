@@ -12,7 +12,7 @@ in {
     # home.packages = with pkgs; [];
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs-pgtk;
+      package = pkgs.emacs29;
       extraPackages = ( epkgs: [ epkgs.vterm ]);
     };
     services.emacs.enable = false;

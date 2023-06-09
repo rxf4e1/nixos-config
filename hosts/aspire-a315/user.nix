@@ -44,13 +44,13 @@
       wld = {
         common.enable = true;
         hikari.enable = false;
-        hyprland.enable = false;
-        river.enable = true;
+        hyprland.enable = true;
+        river.enable = false;
         sway.enable = false;
         notify.enable = true;
       };
-      # gtk.enable = true;
-      qt.enable = true; # :TODO:
+      gtk.enable = true;
+      qt.enable = false;
       widgets.enable = false;
     };
 

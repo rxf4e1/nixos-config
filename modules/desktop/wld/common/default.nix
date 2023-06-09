@@ -16,6 +16,7 @@ in {
       jq
       kanshi
       rofi-wayland
+      # fuzzel
       playerctl
       wl-clipboard
       wlsunset

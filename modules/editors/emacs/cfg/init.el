@@ -11,7 +11,8 @@
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 
 ;; require my theme
-(require 'monodark-theme)
+;; (require 'monodark-theme)
+;; (require 'gsh)
 
 ;; Start the initial frame maximized
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))

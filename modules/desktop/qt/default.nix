@@ -21,15 +21,16 @@ in {
       hicolor-icon-theme
       sweet
       libsForQt5.qtstyleplugins
+      libsForQt5.qt5ct
     ];
 
     qt = {
       enable = true;
-      platformTheme = "gtk";
+      platformTheme = null;
       style = {
-        # package = pkgs.libsForQt5.breeze-qt5;
-        package = pkgs.lightly-qt;
-        # name = "bb10dark";
+        package = pkgs.libsForQt5.breeze-qt5;
+        # package = pkgs.lightly-qt;
+        name = "bb10dark";
       };
     };
   };

@@ -338,8 +338,11 @@ adapted it to my workflow.
   ;; (load-theme 'gruber-darker t)
   ;; (load-theme 'tao-yin t)
 
+  (add-to-list 'custom-theme-load-path "~/.config/emacs/themes")
   ;; MonoDark
   (load-theme 'monodark t)
+
+  ;; (load-theme 'gsh t)
 #+end_src
 
 ** MODULES
@@ -469,7 +472,7 @@ adapted it to my workflow.
     :doc "makes it easy to choose a command to run based on what is near point."
     :url "https://github.com/oantolin/embark"
     :bind (("C-." . embark-act)
-           ("C-;" . embark-dwin)
+           ("C-," . embark-dwin)
            ("C-h b" . embark-bindings))
     :config
     (setq embark-action-indicator
@@ -1148,7 +1151,7 @@ adapted it to my workflow.
   ;; ------------------
   (straight-use-package 'vterm)
   ;; ------------------
-  (define-key global-map (kbd "s-<return>") #'vterm-other-window)
+  (define-key global-map (kbd "C-M-<return>") #'vterm-other-window)
 #+end_src
 
 **** Transient
@@ -1218,10 +1221,10 @@ adapted it to my workflow.
   (setq aw-keys '(?q ?e ?r ?t ?1 ?2 ?3 ?4 ?5))
 
   (let ((map global-map))
-    (define-key map (kbd "s-w") #'ace-window)
+    (define-key map (kbd "M-o") #'ace-window)
     (define-key map [remap other-window] #'ace-window)
-    (define-key map (kbd "s-;") #'avy-goto-char)
-    (define-key map (kbd "s-.") #'avy-goto-word-or-subword-1))
+    (define-key map (kbd "C-;") #'avy-goto-char)
+    (define-key map (kbd "C-:") #'avy-goto-word-or-subword-1))
 #+end_src
 
 **** Resizing
@@ -1246,9 +1249,9 @@ adapted it to my workflow.
       (window-height . 0.3)
       (side . bottom)
       (slot . 1))
-     ("\\*vterm\\*"
+     ("\\*\\(ansi-term\\|vterm\\)\\*"
       (display-buffer-in-side-window)
-      (window-width . 0.3)
+      (window-width . 0.45)
       (side . right)
       (slot . 1))
      ("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|[Hh]elp\\Messages\\)\\*"
@@ -1276,16 +1279,16 @@ adapted it to my workflow.
     (split-window-below)
     (balance-windows)
     (other-window 1))
-  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+  (global-set-key [?\C-x ?2] 'split-and-follow-horizontally)
 
   (defun split-and-follow-vertically ()
     (interactive)
     (split-window-right)
     (balance-windows)
     (other-window 1))
-  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+  (global-set-key [?\C-x ?3] 'split-and-follow-vertically)
 
-  (global-set-key (kbd "s-k") 'kill-buffer-and-window)
+  (global-set-key [?\C-x ?K] 'kill-buffer-and-window)
 #+end_src
 
 ** CODE
