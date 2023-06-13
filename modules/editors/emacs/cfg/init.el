@@ -9,6 +9,7 @@
 
 ;; add paths to the list
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+(add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 
 ;; require my theme
 ;; (require 'monodark-theme)

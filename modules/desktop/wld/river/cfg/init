@@ -44,7 +44,8 @@ riverctl map normal $mod+Shift Comma send-to-output previous
 riverctl map normal $mod Return zoom
 
 # Show Rofi menu
-riverctl map normal $mod D spawn "rofi -show drun"
+# riverctl map normal $mod D spawn "rofi -show drun"
+riverctl map normal $mod D spawn fuzzel.sh
 
 # $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
 riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
@@ -159,7 +160,8 @@ riverctl border-color-unfocused 0x586e75
 riverctl set-repeat 50 300
 
 # Make all views with an app-id that starts with "float" and title "foo" start floating.
-riverctl rule-add float -app-id 'float*' -title 'foo'
+# riverctl rule-add float -app-id 'float*' -title 'foo'
+riverctl float-filter-add app-id float
 
 # Make all views with app-id "bar" and any title use client-side decorations
 riverctl rule-add csd -app-id "bar"
@@ -167,7 +169,17 @@ riverctl rule-add csd -app-id "bar"
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout rivertile
-rivertile -view-padding 6 -outer-padding 6 &
+rivertile -view-padding 4 -outer-padding 4 &
+
+# Devices
+for pad in $(riverctl list-inputs | grep -i touchpad)
+do
+    riverctl input $pad events enabled
+    riverctl input $pad tap enabled
+    riverctl input $pad natural-scroll disabled
+    riverctl input $pad disable-while-typing enabled
+    riverctl input $pad middle-emulation disabled
+done
 
 # Start some procs.
 # msg=$('notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"')

@@ -61,6 +61,7 @@
       # (nerdfonts.override {
       #   fonts = ["Inconsolata"];
       # })
+      cozette
       fira-code
       fira-code-symbols
       liberation_ttf

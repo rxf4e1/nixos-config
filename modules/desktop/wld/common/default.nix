@@ -15,8 +15,8 @@ in {
       slurp
       jq
       kanshi
-      rofi-wayland
-      # fuzzel
+      # rofi-wayland
+      fuzzel
       playerctl
       wl-clipboard
       wlsunset

@@ -44,13 +44,13 @@
       wld = {
         common.enable = true;
         hikari.enable = false;
-        hyprland.enable = true;
-        river.enable = false;
+        hyprland.enable = false;
+        river.enable = true;
         sway.enable = false;
         notify.enable = true;
       };
-      gtk.enable = true;
-      qt.enable = false;
+      gtk.enable = false;
+      qt.enable = true;
       widgets.enable = false;
     };
 
