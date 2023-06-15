@@ -323,16 +323,6 @@ adapted it to my workflow.
     (add-hook modes (lambda ()
                       (xah-syntax-color-hex)
                       (xah-syntax-color-hsl))))
-
-  ;; (add-hook 'css-mode-hook 'xah-syntax-color-hex)
-  ;; (add-hook 'emacs-lisp-mode-hook 'xah-syntax-color-hex)
-  ;; (add-hook 'php-mode-hook 'xah-syntax-color-hex)
-  ;; (add-hook 'html-mode-hook 'xah-syntax-color-hex)
-
-  ;; (add-hook 'css-mode-hook 'xah-syntax-color-hsl)
-  ;; (add-hook 'emacs-lisp-mode-hook 'xah-syntax-color-hsl)
-  ;; (add-hook 'php-mode-hook 'xah-syntax-color-hsl)
-  ;; (add-hook 'html-mode-hook 'xah-syntax-color-hsl)
 #+end_src
 
 **** Fonts

@@ -13,9 +13,8 @@ in {
     programs.password-store = {
       enable = true;
       settings = {
-        PASSWORD_STORE_DIR = "/persist/.secret/password-store";
-        # PASSWORD_STORE_KEY = "";
-        PASSWORD_STORE_CLIP_TIME = "45";
+        PASSWORD_STORE_DIR = "$HOME/.dotfiles/.sensitive/password-store";
+        PASSWORD_STORE_CLIP_TIME = "60";
       };
     };
   };

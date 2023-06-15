@@ -15,7 +15,7 @@
     # Editors
     editor = {
       emacs.enable = true;
-      helix.enable = true;
+      helix.enable = false;
       kakoune.enable = false;
       micro.enable = false;
       nano.enable = true;
@@ -34,7 +34,7 @@
         bash.enable = true;
         fish.enable = false;
         ion.enable = false;
-        # zsh.enable = true;
+        zsh.enable = false;
       };
       prompt.starship.enable = true;
     };
@@ -44,13 +44,13 @@
       wld = {
         common.enable = true;
         hikari.enable = false;
-        hyprland.enable = false;
-        river.enable = true;
+        hyprland.enable = true;
+        river.enable = false;
         sway.enable = false;
         notify.enable = true;
       };
-      gtk.enable = false;
-      qt.enable = true;
+      gtk.enable = true;
+      qt.enable = false;
       widgets.enable = false;
     };
 
@@ -69,7 +69,7 @@
     # Security
     secret = {
       keepassxc.enable = true;
-      pass.enable = false;
+      pass.enable = true;
     };
 
     # System
