@@ -17,7 +17,7 @@ in {
       enable = true;
       enableBashIntegration = true;
       enableSshSupport = true;
-      sshKeys = ["D10AEDC5AC7B887B3C378C142C221CB77EB8EBDF"];
+      # sshKeys = [];
       pinentryFlavor = "curses";
     };
     home.sessionVariables = {

@@ -9,13 +9,17 @@ with lib; let
 in {
   options.modules.secret.pass = {enable = mkEnableOption "pass";};
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [passExtensions.pass-otp];
-    programs.password-store = {
-      enable = true;
-      settings = {
-        PASSWORD_STORE_DIR = "$HOME/.dotfiles/.sensitive/password-store";
-        PASSWORD_STORE_CLIP_TIME = "60";
-      };
+    home.packages = with pkgs; [
+      (pass.withExtensions (exts: [exts.pass-otp]))
+      oath-toolkit
+      qrencode
+      zbar
+      # dmenu-wayland
+    ];
+    home.sessionVariables = {
+      PASSWORD_STORE_DIR = "\$HOME/.password-store";
+      PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
+      PASSWORD_STORE_CLIP_TIME = "60";
     };
   };
 }
