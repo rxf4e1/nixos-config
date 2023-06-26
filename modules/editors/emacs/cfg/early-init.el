@@ -1,42 +1,78 @@
 ;;; Package: --- early-init.el -*- lexical-binding: t -*-
 ;;; Commentary:
-;; This file is loaded before package.el is initialized, and before
-;; the first graphical frame is initialized, by Emacs 27 (but not by
-;; any previous version of Emacs). Trivia: I was the person to
-;; implement support for early-init.el, after a protracted argument
-;; between me and most of the rest of the Emacs mailing list.
-;;
-;; If the early init-file is available, we actually execute our entire
-;; init process within it, by just loading the regular init-file.
-;; (That file takes care of making sure it is only loaded once.)
-
 ;;; Code:
 
 (setq package-enable-at-startup nil)
-(setq load-prefer-newer t)
+(setq inhibit-default-init nil)
 
-;; Byte Compile
-(eval-when-compile (require 'cl-lib nil t))
-(setq auto-save-list-file-prefix nil
-      byte-compile-warnings '(not cl-functions obsolete))
+(setq native-comp-async-report-warnings-errors nil)
 
-(cl-letf* ((gc-cons-threshold most-positive-fixnum)
-           (file-name-handler-alist nil)
-           (load-source-file-function nil)
-           (site-run-file nil)
-           ;; Also override load to hide  superfluous loading messages
-           (old-load (symbol-function 'load))
-           ((symbol-function 'load)
-            (lambda (file &optional noerror _nomessage &rest args)
-              (apply old-load
-                     file
-                     noerror
-                     (not (eq debug-on-error 'startup))
-                     args)))))
+;; (unless (string-empty-p file)
+;;   (eval-after-load file
+;;     '(debug)))
 
-;; Load the regular init file
-(load
- (expand-file-name "init.el" user-emacs-directory) nil 'nomessage 'nosuffix)
+;; (setq debug-on-message "")
+;; (add-variable-watcher 'org-capture-after-finalize-hook
+;;                       (lambda (symbol newval operation where)
+;;                         (debug)
+;;                         (message "%s set to %s" symbol newval)))
+;; (setq debug-on-error t)
+
+
+(defvar default-file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 1)
+
+(defun +gc-after-focus-change ()
+  "Run GC when frame loses focus."
+  (run-with-idle-timer
+   5 nil
+   (lambda () (unless (frame-focus-state) (garbage-collect)))))
+
+(defun +reset-init-values ()
+  (run-with-idle-timer
+   1 nil
+   (lambda ()
+     (setq file-name-handler-alist default-file-name-handler-alist
+           gc-cons-percentage 0.1
+           gc-cons-threshold 100000000)
+     (message "gc-cons-threshold & file-name-handler-alist restored")
+     (when (boundp 'after-focus-change-function)
+       (add-function :after after-focus-change-function #'+gc-after-focus-change)))))
+
+(with-eval-after-load 'elpaca
+  (add-hook 'elpaca-after-init-hook '+reset-init-values))
+
+(setq frame-resize-pixelwise t
+      frame-inhibit-implied-resize t
+      use-dialog-box t ; only for mouse events, which I seldom use
+      use-file-dialog nil
+      inhibit-splash-screen t
+      inhibit-startup-screen t
+      inhibit-x-resources t
+      inhibit-startup-echo-area-message user-login-name ; read the docstring
+      inhibit-startup-buffer-menu t)
+
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+
+;; (push '(font . "Source Code Pro") default-frame-alist)
+;; (set-face-font 'default "Source Code Pro")
+;; (set-face-font 'variable-pitch "DejaVu Sans")
+;; (copy-face 'default 'fixed-pitch)
+
+(setq server-client-instructions nil)
+(setq frame-inhibit-implied-resize t)
+
+(advice-add #'x-apply-session-resources :override #'ignore)
+
+(setq desktop-restore-forces-onscreen nil)
+
+(setq ring-bell-function #'ignore
+      inhibit-startup-screen t)
 
 (provide 'early-init)
 ;;; early-init.el ends here

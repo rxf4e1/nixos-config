@@ -34,6 +34,7 @@ with lib; let
     python3
     perl
     deno
+    nodePackages.bash-language-server
   ];
 
   media-tools = with pkgs; [

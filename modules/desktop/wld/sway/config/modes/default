@@ -16,7 +16,7 @@ $bindsym $mod+d exec $menu
 $bindsym $mod+Shift+d exec $term_float $fzf_menu
 
 # Launch // Notification Center ##
-bindsym $mod+Shift+n exec swaync-client -t -sw
+# bindsym $mod+Shift+n exec swaync-client -t -sw
 
 ## Launch // Open clipboard ##
 $bindsym $mod+Shift+p exec $clipboard
@@ -172,6 +172,9 @@ $bindsym $mod+a focus parent
 
 default_border pixel 1
 hide_edge_borders smart
+titlebar_border_thickness 0
+titlebar_padding 0 0
+
 
 # allow to kill focused floating shell windows using Esc
 $bindsym --release Escape [app_id="floating_shell" con_id=__focused__] kill

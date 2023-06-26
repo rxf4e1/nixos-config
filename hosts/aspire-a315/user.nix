@@ -9,6 +9,7 @@
   config.modules = {
     # Browsers
     brave.enable = true;
+    # firefox.enable = true;
     nyxt.enable = false;
     qutebrowser.enable = true;
     
@@ -44,8 +45,8 @@
       wld = {
         common.enable = true;
         hikari.enable = false;
-        hyprland.enable = true;
-        river.enable = false;
+        hyprland.enable = false;
+        river.enable = true;
         sway.enable = false;
         notify.enable = true;
       };
@@ -56,7 +57,7 @@
 
     # CLI
     cli = {
-      broot.enable = true;
+      broot.enable = false;
       direnv.enable = true;
       fzf.enable = true;
       ipfs.enable = false;

@@ -13,15 +13,21 @@ mod="Mod4"
 
 # $mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal $mod+Shift Return spawn footclient
-riverctl map normal $mod E spawn emacs
+
+# riverctl map normal $mod none  V spawn 'footclient -a float -w 450x100  -e pulsemixer'
+
+riverctl map normal $mod E spawn emw
 riverctl map normal $mod B spawn brave
-riverctl map normal $mod M spawn mullvad
+# riverctl map normal $mod M spawn mullvad
 
 # $mod+Q to close the focused view
-riverctl map normal $mod Q close
+riverctl map normal $mod+Shift Q close
+
+# $mod+Shift+R to reload river config
+riverctl map normal $mod+Shift R spawn $HOME/.config/river/init 
 
 # $mod+Shift+E to exit river
-riverctl map normal $mod+Shift E exit
+riverctl map normal $mod Escape exit
 
 # $mod+J and $mod+K to focus the next/previous view in the layout stack
 riverctl map normal $mod J focus-view next
@@ -46,6 +52,7 @@ riverctl map normal $mod Return zoom
 # Show Rofi menu
 # riverctl map normal $mod D spawn "rofi -show drun"
 riverctl map normal $mod D spawn fuzzel.sh
+riverctl map normal $mod+Shift D spawn 'footclient -a float -w 300x300 -e fzf-menu.sh'
 
 # $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
 riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
@@ -86,7 +93,7 @@ for i in $(seq 1 6)
 do
     tags=$((1 << ($i - 1)))
 
-    # $mod+[1-6] to focus tag [0-5]
+    # $mod+[1-9] to focus tag [0-8]
     riverctl map normal $mod $i set-focused-tags $tags
 
     # $mod+Shift+[1-9] to tag focused view with tag [0-8]
@@ -127,6 +134,21 @@ riverctl map normal $mod F11 enter-mode passthrough
 # $mod+F11 to return to normal mode
 riverctl map passthrough $mod F11 enter-mode normal
 
+# The scratchpad will live on an unused tag. Which tags are used depends on your
+# config, but rivers default uses the first 9 tags.
+scratch_tag=$((1 << 20 ))
+
+# Toggle the scratchpad with Super+P
+riverctl map normal Mod4 P toggle-focused-tags ${scratch_tag}
+
+# Send windows to the scratchpad with Super+Shift+P
+riverctl map normal Mod4+Shift P set-view-tags ${scratch_tag}
+
+# Set spawn tagmask to ensure new windows don't have the scratchpad tag unless
+# explicitly set.
+all_but_scratch_tag=$(( ((1 << 32) - 1) ^ $scratch_tag ))
+riverctl spawn-tagmask ${all_but_scratch_tag}
+
 # Various media key mapping examples for both normal and locked mode which do
 # not have a modifier
 for mode in normal locked
@@ -135,11 +157,13 @@ do
     riverctl map $mode None XF86Eject spawn 'eject -T'
 
     # Control pulse audio volume with pamixer (https://github.com/cdemoulins/pamixer)
-    riverctl map $mode None XF86AudioRaiseVolume  spawn 'wpctl set-volume @DEFAULT_SINK@ 5%+'
-    riverctl map $mode None XF86AudioLowerVolume  spawn 'wpctl set-volume @DEFAULT_SINK@ 5%-'
-    riverctl map $mode None XF86AudioMute         spawn 'exec, wpctl set-mute @DEFAULT_SINK@ toggle'
-    riverctl map $mode None XF86AudioMicMute      spawn 'exec, wpctl set-mute @DEFAULT_SINK@ toggle'
-    
+    # riverctl map $mode None XF86AudioRaiseVolume  spawn 'wpctl set-volume @DEFAULT_SINK@ 5%+'
+    riverctl map $mode None XF86AudioRaiseVolume  spawn 'vol up'
+    # riverctl map $mode None XF86AudioLowerVolume  spawn 'wpctl set-volume @DEFAULT_SINK@ 5%-'
+    riverctl map $mode None XF86AudioLowerVolume  spawn 'vol down'
+    # riverctl map $mode None XF86AudioMute         spawn 'exec, wpctl set-mute @DEFAULT_SINK@ toggle'
+    riverctl map $mode None XF86AudioMute         spawn 'vol mute'
+        
     # Control MPRIS aware media players with playerctl (https://github.com/altdesktop/playerctl)
     riverctl map $mode None XF86AudioMedia spawn 'playerctl play-pause'
     riverctl map $mode None XF86AudioPlay  spawn 'playerctl play-pause'
@@ -147,8 +171,10 @@ do
     riverctl map $mode None XF86AudioNext  spawn 'playerctl next'
 
     # Control screen backlight brightness with light (https://github.com/haikarainen/light)
-    riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 10.0'
-    riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 10.0'
+    # riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 10.0'
+    riverctl map $mode None XF86MonBrightnessUp   spawn 'bright up'
+    # riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 10.0'
+    riverctl map $mode None XF86MonBrightnessDown spawn 'bright down'
 done
 
 # Set background and border color
@@ -157,14 +183,19 @@ riverctl border-color-focused 0x93a1a1
 riverctl border-color-unfocused 0x586e75
 
 # Set keyboard repeat rate
-riverctl set-repeat 50 300
+riverctl set-repeat 40 300
 
 # Make all views with an app-id that starts with "float" and title "foo" start floating.
 # riverctl rule-add float -app-id 'float*' -title 'foo'
 riverctl float-filter-add app-id float
+riverctl float-filter-add app-id popup
+riverctl float-filter-add title "Picture in picture"
+riverctl float-filter-add title "Picture-in-Picture"
+riverctl float-filter-add title "Save File"
 
 # Make all views with app-id "bar" and any title use client-side decorations
-riverctl rule-add csd -app-id "bar"
+riverctl csd-filter-add "brave"
+riverctl csd-filter-add "emacs"
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
@@ -183,9 +214,15 @@ done
 
 # Start some procs.
 # msg=$('notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"')
-swaybg -i $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/image.jpg -m fill &
-dunst >/dev/null 2>&1 &
-kanshi >/dev/null 2>&1 &
-foot --server >/dev/null 2>&1 &
-wlsunset -l -23.6 -L -43.5 >/dev/null 2>&1 &
+# swaybg -i $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/image.jpg -m fill &
+# dunst >/dev/null 2>&1 &
+# kanshi >/dev/null 2>&1 &
+# foot --server >/dev/null 2>&1 &
+# wlsunset -l -23.6 -L -43.5 >/dev/null 2>&1 &
+
+riverctl spawn "swaybg -i $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/image.jpg -m fill"
+riverctl spawn "dunst"
+riverctl spawn "kanshi"
+riverctl spawn "foot --server"
+riverctl spawn "wlsunset -l -23.6 -L -43.5"
 notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"

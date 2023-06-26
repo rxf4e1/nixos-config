@@ -63,7 +63,8 @@
     nixosConfigurations = {
       # Now, defining a new system can be done in one line
       #                                     Architecture   Hostname
-      aspire-a315 = mkSystem inputs.nixpkgs "x86_64-linux" "aspire-a315";
+      # aspire-a315 = mkSystem inputs.nixpkgs "x86_64-linux" "aspire-a315";
+      aspire-a315 = mkSystem inputs.nixpkgs system "aspire-a315";
       # home-server = mkSystem inputs.nixpkgs "x86_64-linux" "home-server";
     };
   };
