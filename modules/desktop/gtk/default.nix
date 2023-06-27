@@ -20,7 +20,7 @@ in {
       # custom-cursor
       hicolor-icon-theme
       sweet
-      lxappearance-gtk2
+      # lxappearance-gtk2
     ];
 
     gtk = {

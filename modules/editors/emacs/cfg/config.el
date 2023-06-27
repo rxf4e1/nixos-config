@@ -11,8 +11,9 @@
  '(savehist-save-minibuffer-history t)
  '(savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
  '(recentf-max-menu-items 10)
- '(recentf-max-saved-items 100)
- '(recentf-auto-cleanup 300)
+ '(recentf-max-saved-items 20)
+ '(recentf-auto-cleanup 100)
+ '(history-length 25)
  '(savehist-mode t)
  '(save-place nil)
  '(recentf-mode t))
@@ -20,11 +21,11 @@
 ;; text properties severely bloat the history so delete them (courtesy of PythonNut)
 (defun unpropertize-savehist ()
   (mapc (lambda (list)
-	  (with-demoted-errors
-	      (when (boundp list)
-		(set list (mapcar #'substring-no-properties (eval list))))))
-	'(kill-ring minibuffer-history helm-grep-history helm-ff-history file-name-history
-		    read-expression-history extended-command-history)))
+          (with-demoted-errors
+              (when (boundp list)
+                (set list (mapcar #'substring-no-properties (eval list))))))
+        '(kill-ring minibuffer-history helm-grep-history helm-ff-history file-name-history
+                    read-expression-history extended-command-history)))
 (add-hook 'kill-emacs-hook    #'unpropertize-savehist)
 (add-hook 'savehist-save-hook #'unpropertize-savehist)
 
@@ -37,18 +38,29 @@
 (custom-set-variables
  '(apropos-do-all t)
  '(echo-keystrokes 0.02)
+ '(global-auto-revert-mode t)
+ '(global-auto-revert-non-file-buffers t)
  '(mouse-yank-at-point t)
  '(track-eol t))
 
 ;; Allow some things that emacs would otherwise confirm.
 (dolist (cmd
-	 '(eval-expression
-	   downcase-region
-	   upcase-region
-	   narrow-to-region
-	   set-goal-column
-	   dired-find-alternate-file))
+         '(eval-expression
+           downcase-region
+           upcase-region
+           narrow-to-region
+           set-goal-column
+           dired-find-alternate-file))
   (put cmd 'disabled nil))
+
+;; Make some buffers immortal
+(defun my/immortal-buffers ()
+  (if (or (eq (current-buffer) (get-buffer "*scratch*"))
+          (eq (current-buffer) (get-buffer "*Messages*")))
+      (progn (bury-buffer)
+             nil)
+    t))
+(add-hook 'kill-buffer-query-functions 'my/immortal-buffers)
 
 (elpaca general
   (require 'general)
@@ -136,6 +148,7 @@
 (custom-set-variables
  ;; Cursor
  '(cursor-type 'box)
+ '(hl-line-mode t)
  ;; Mouse
  '(blink-cursor-mode nil)
  '(mouse-avoidance-mode 'banish)
@@ -212,9 +225,9 @@
 
 (custom-set-variables
  '(orderless-component-separator " +")
- '(completion-styles '(initials orderless basic))
  '(completion-category-defaults nil)
- '(completion-category-overrides '((file (styles . (partial-completion))))))
+ '(completion-styles '(orderless flex initials partial-completion substring basic))
+ '(completion-category-overrides '((file (styles basic substring)))))
 
 (icomplete-mode 1)
 (custom-set-variables
@@ -229,20 +242,21 @@
  '(icomplete-prospects-height 1)
  '(icomplete-with-completion-tables t)
  '(icomplete-tidy-shadowed-file-names nil)
- '(completion-styles '(orderless partial-completion substring flex))
- '(completion-category-overrides '((file (styles basic substring))
-                                   (buffer (styles initials flex)
-                                           (cycle . 3)))))
+ '(completions-format 'one-column)
+ ;; '(completion-styles '(orderless partial-completion substring flex))
+ ;; '(completion-category-overrides '((file (styles basic substring))
+ ;;                                   (buffer (styles partial-completion initials flex)
+ ;;                                           (cycle . 3))))
+ )
 (custom-set-faces
  `(icomplete-first-match ((t (:foreground "Green" :weight bold)))))
 
-;; (general-define-key
-;;  :keymaps 'icomplete-minibuffer-map
-;;  "C-p" #'icomplete-backward-completions
-;;  "C-n" #'icomplete-forward-completions
-;;  "<up>" #'icomplete-backward-completions
-;;  "<down>" #'icomplete-forward-completions
-;;  "<tab>" #'icomplete-force-complete)
+(general-define-key
+ :keymaps 'icomplete-minibuffer-map
+ "C-v" 'icomplete-vertical-mode
+ "C-p" 'icomplete-backward-completions
+ "C-n" 'icomplete-forward-completions
+ "<tab>" 'icomplete-force-complete)
 
 (elpaca (marginalia
 	 :repo      "minad/marginalia"
@@ -261,10 +275,11 @@
          :files    
          (:defaults)))
 
-(setq register-preview-delay 0.5
-      register-preview-function #'consult-register-format
-      xref-show-xrefs-function #'consult-xref
-      xref-show-definitions-function #'consult-xref)
+(custom-set-variables
+ '(register-preview-delay 0.5)
+ '(register-preview-function #'consult-register-format)
+ '(xref-show-xrefs-function #'consult-xref)
+ '(xref-show-definitions-function #'consult-xref))
 
 (with-eval-after-load 'consult
   (consult-customize
@@ -280,7 +295,8 @@
   (setq consult-narrow-key "<") ;; "C-+"
 
   (add-to-list 'consult-preview-allowed-hooks 'global-org-modern-mode-check-buffers)
-  (add-to-list 'consult-preview-allowed-hooks 'global-hl-todo-mode-check-buffers))
+  (add-to-list 'consult-preview-allowed-hooks 'global-hl-todo-mode-check-buffers)
+  (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode))
 
 ;; Optionally tweak the register preview window.
 ;; This adds thin lines, sorting and hides the mode line of the window.
@@ -378,14 +394,16 @@
 (custom-set-variables
  '(completion-cycle-threshold 2)
  '(tab-always-indent 'complete)
- '(completion-styles '(orderless flex partial-completion basic))
+ ;; '(completion-styles '(orderless flex partial-completion basic))
  '(corfu-auto t)
  '(corfu-auto-delay 1)
  '(corfu-auto-prefix 3)
+ '(corfu-cycle t)
+ '(corfu-echo-documentation t)
+ '(corfu-popupinfo-delay 1)
  '(corfu-quit-at-boundary t)
  '(corfu-quit-no-match t)
- '(corfu-separator ?_)
- '(corfu-cycle t))
+ '(corfu-separator ?_))
 
 (with-eval-after-load 'corfu
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
@@ -463,24 +481,6 @@
 (general-define-key
  :keymaps 'global-map
  "C-x C-b" #'ibuffer)
-
-(elpaca mct
-  (mct-mode 1))
-
-(custom-set-variables
- '(completions-format 'one-column)
- '(mct-hide-completion-mode-line t)
- '(mct-completion-passlist
-   '(consult-buffer
-     embark-keybinding
-     imenu
-     kill-ring))
- '(mct-remove-shadowed-file-names t)
- '(mct-completion-window-size (cons #'mct-frame-height-third 1))
- '(mct-persist-dynamic-completion nil)
- '(mct-live-completion 'visible))
-
-(add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
 
 (elpaca crux)
 
@@ -597,6 +597,32 @@
   "C-r" #'isearch-backward-regexp
   "C-M-r" #'isearch-backward)
 
+(elpaca god-mode
+  (god-mode))
+
+;; (custom-set-variables
+;;  '(god-exempt-major-modes nil)
+;;  '(god-exempt-predicates nil))
+
+(defun my/update-cursor-type ()
+  "Change cursor type and color according to minor mode."
+  (cond
+   (god-local-mode
+    (set-cursor-color "red")
+    (setq cursor-type 'box))
+   (buffer-read-only
+    (set-cursor-color "gray")
+    (setq cursor-type 'box))
+   (t
+    (set-cursor-color "green")
+    (setq cursor-type '(hbar . 2)))))
+(add-hook 'post-command-hook #'my/update-cursor-type)
+
+(general-def global-map "<escape>" #'god-local-mode)
+(general-def god-local-mode-map
+  "." #'repeat
+  "i" #'god-local-mode)
+
 (elpaca rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
@@ -704,8 +730,8 @@
     (other-window 1))
 
 (general-def global-map
-  "C-x 2" #'split-and-follow-horizontally
-  "C-x 3" #'split-and-follow-vertically
+  "C-x C-2" #'split-and-follow-horizontally
+  "C-x C-3" #'split-and-follow-vertically
   "C-x K" #'kill-buffer-and-window)
 
 (customize-set-variable
@@ -739,7 +765,13 @@
     (display-buffer-in-side-window)
     (window-height . 0.25)
     (side . bottom)
-    (slot . 2))))
+    (slot . 2))
+   ;; ("\\*\\(Org Src.*\\)\\*"
+   ;; (display-buffer-in-side-window)
+   ;; (window-height . 0.65)
+   ;; (side . bottom)
+   ;; (slot . 0))
+   ))
 
 (elpaca rustic)
 (custom-set-variables
@@ -760,7 +792,9 @@
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 (add-hook 'nix-mode-hook 'eglot-ensure)
 
+(elpaca markdown-mode)
 
+(add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\)\\'" . markdown-mode))
 
 
 
@@ -783,16 +817,16 @@
  '(org-src-tab-acts-natively t)
  '(org-src-fontify-natively t)
  '(org-src-preserve-indentation nil)
- ;; '(org-src-window-setup 'split-window-below)
+ '(org-src-window-setup 'current-window)
  '(org-src-strip-leading-and-trailing-blank-lines t)
  '(org-todo-keywords
    '((sequence "IDEA(i)" "TODO(t)" "STARTED(s)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)")
      (sequence "|" "CANCELED(c)" "DELEGATED(l)" "SOMEDAY(f)"))))
 
 (add-hook 'org-mode-hook (lambda ()
-			   (org-indent-mode)
-			   (auto-fill-mode)
-			   (org-superstar-mode)))
+                           (org-indent-mode)
+                           (auto-fill-mode)
+                           (org-superstar-mode)))
 
 (elpaca org-superstar)
 (custom-set-variables
