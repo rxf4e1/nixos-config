@@ -394,7 +394,6 @@
 (custom-set-variables
  '(completion-cycle-threshold 2)
  '(tab-always-indent 'complete)
- ;; '(completion-styles '(orderless flex partial-completion basic))
  '(corfu-auto t)
  '(corfu-auto-delay 1)
  '(corfu-auto-prefix 3)
@@ -414,7 +413,6 @@
 
 (general-define-key
  :keymaps 'corfu-map
- ;; "SPC" #'corfu-separator
  "C-s" #'corfu-quit
  "M-t" #'corfu-popupinfo-toggle
  "M-p" #'corfu-popupinfo-scroll-up
@@ -476,7 +474,47 @@
  '(uniquify-after-kill-buffer-p t)
  '(uniquify-ignore-buffers-re "^\\*")
  '(ibuffer-show-empty-filter-groups nil)
- '(ibuffer-expert t))
+ '(ibuffer-expert t)
+ '(ibuffer-saved-filter-groups
+   '(("default"
+      ("EMACS CONFIG"
+       (filename . ".emacs.d/config"))
+      ("EMACS LISP"
+       (mode . emacs-lisp-mode))
+      ("DIRED"
+       (mode . dired-mode))
+      ("ORG"
+       (mode . org-mode))
+      ("WEBDEV"
+       (or
+        (mode . html-mode)
+        (mode . css-mode)
+        (mode . js-mode)
+        (mode . ts-mode)))
+      ("EPUB/PDF"
+       (or
+        (mode . pdf-view-mode)
+        (mode . nov-mode)))
+      ("EWW"
+       (mode . eww-mode))
+      ("HELM"
+       (mode . helm-major-mode))
+      ("HELP"
+       (or
+        (name . "\*Help\*")
+        (name . "\*Apropos\*")
+        (name . "\*info\*")
+        (name . "\*Warnings\*")))
+      ("SPECIAL BUFFERS"
+       (or
+        (name . "\*scratch\*")
+        (name . "\*Messages\*")
+        (name . "\*straight-process\*")
+        (name . "\*direnv\*")))))))
+
+(add-hook 'ibuffer-mode-hook (lambda ()
+                                (ibuffer-auto-mode t)
+                                (ibuffer-switch-to-saved-filter-groups "default")))
 
 (general-define-key
  :keymaps 'global-map
@@ -521,17 +559,21 @@
  '(dired-dwim-target t)
  '(dired-subtree-use-backgrounds nil))
 
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(add-hook 'dired-mode-hook #'hl-line-mode)
 
 (global-unset-key (kbd "C-x d"))
-(general-def global-map
+(general-def
+  :keymaps 'global-map
  "C-x d d" #'dired
  "C-x d f" #'dired-x-find-file
  "C-x d s" #'dired-sidebar-toggle-sidebar)
-(general-def dired-mode-map
- "TAB" #'dired-subtree-toggle
- "C-TAB" #'dired-subtree-cycle
- "M-RET" #'dired-open-file)
+(general-def
+  :keymaps 'dired-mode-map
+  "<tab>" #'dired-subtree-toggle
+  "<backtab>" #'dired-subtree-remove
+  "C-TAB" #'dired-subtree-cycle
+  "M-RET" #'dired-open-file)
 
 (defun dired-open-file ()
   "In dired, open the file named on this line."
@@ -631,8 +673,6 @@
   (smartparens-global-mode 1))
 (custom-set-variables
  '(smartparens-strict-mode nil))
-
-
 
 (setenv "PAGER" "cat")
 
@@ -765,13 +805,7 @@
     (display-buffer-in-side-window)
     (window-height . 0.25)
     (side . bottom)
-    (slot . 2))
-   ;; ("\\*\\(Org Src.*\\)\\*"
-   ;; (display-buffer-in-side-window)
-   ;; (window-height . 0.65)
-   ;; (side . bottom)
-   ;; (slot . 0))
-   ))
+    (slot . 2))))
 
 (elpaca rustic)
 (custom-set-variables
@@ -786,19 +820,24 @@
 (add-to-list 'auto-mode-alist '("\\.sh\\’" . sh-mode))
 (add-hook 'sh-mode-hook 'eglot-ensure)
 
+(elpaca json-mode)
+(add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode))
+
+(elpaca markdown-mode)
+
+(add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\)\\'" . markdown-mode))
+
 (elpaca nix-mode)
 (add-to-list 'auto-mode-alist '("\\.nix\\’" . nix-mode))
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
 (add-hook 'nix-mode-hook 'eglot-ensure)
 
-(elpaca markdown-mode)
+(elpaca toml-mode)
+(add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-mode))
 
-(add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\)\\'" . markdown-mode))
-
-
-
-
+(elpaca yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 
 (elpaca org-contrib)
 (custom-set-variables
@@ -834,6 +873,55 @@
    ;; '("☰" "☷" "☵" "☲"  "☳" "☴"  "☶"  "☱")
    '("◉" "●" "○" "○" "○" "○" "○"))
  '(org-superstar-leading-bullet " "))
+
+(elpaca denote)
+
+(custom-set-variables
+ '(denote-directory "~/doc/denote")
+ '(denote-rename-buffer-mode t)
+ '(denote-infer-keywords t)
+ '(denote-sort-keywords t)
+ '(denote-backlinks-show-context t)
+ '(denote-known-keywords '("nixos" "code" "work"))
+ '(denote-file-type nil))
+
+(add-hook 'find-file-hook 'denote-link-buttonize-buffer)
+(add-hook 'dired-mode-hook 'denote-dired-mode)
+
+(my-leader-def
+  :keymaps 'global-map
+  "n j" #'my-denote-journal
+  "n n" #'denote
+  "n z" #'denote-signature 		;zettelkasten mnemonic
+  "n t" #'denote-template
+  "n N" #'denote-type
+  "n d" #'denote-date
+  "n s" #'denote-subdirectory
+  "n i" #'denote-link
+  "n I" #'denote-link-add-links
+  "n f f" #'denote-link-find-file
+  "n f b" #'denote-link-find-backlink
+  "n r" #'denote-rename-file
+  "n R" #'denote-rename-file-using-front-matter)
+
+(defun my-denote-journal ()
+  "Create an entry tagged 'journal' with the date as its title.
+If a journal for the current day exists, visit it.  If multiple
+entries exist, prompt with completion for a choice between them.
+Else create a new file."
+  (interactive)
+  (let* ((today (format-time-string "%A %e %B %Y"))
+         (string (denote-sluggify today))
+         (files (denote-directory-files-matching-regexp string)))
+    (cond
+     ((> (length files) 1)
+      (find-file (completing-read "Select file: " files nil :require-match)))
+     (files
+      (find-file (car files)))
+     (t
+      (denote
+       today
+       '("journal"))))))
 
 (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
 ;; (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))

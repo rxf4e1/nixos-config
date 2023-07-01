@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  inputs,
   ...
 }: {
   # Remove unecessary preinstalled packages
@@ -83,8 +81,8 @@
       wlr.enable = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        # pkgs.xdg-desktop-portal-wlr
-        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-wlr
+        # pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
@@ -253,7 +251,7 @@
     audio.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    jack.enable = true;
+    # jack.enable = true;
     pulse.enable = true;
   };
 

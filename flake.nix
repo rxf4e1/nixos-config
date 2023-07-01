@@ -26,8 +26,8 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-    lib = nixpkgs.lib;
+    # pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+    # lib = nixpkgs.lib;
 
     # This let us reuse the code to "create" a system
     # Credits go to sioodmy on this one!
