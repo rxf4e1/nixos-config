@@ -18,9 +18,9 @@ with lib; let
         dbus-update-activation-environment --systemd \
         WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
         systemctl --user pipewire pipewire-media-session \
-        xdg-desktop-portal xdg-desktop-portal-hyprland
+        xdg-desktop-portal xdg-desktop-portal-wlr
         systemctl --user start pipewire pipewire-media-session \
-        xdg-desktop-portal xdg-desktop-portal-hyprland
+        xdg-desktop-portal xdg-desktop-portal-wlr
       '';
     };
   
@@ -32,8 +32,6 @@ in {
       home.packages = with pkgs; [
         dbus-hikari-environment
         hikari
-        swayimg
-        swaybg
         wrapped-hikari
       ];
       home.sessionVariables = {

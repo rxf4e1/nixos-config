@@ -218,8 +218,32 @@
   (dolist (input '(self-insert-command org-self-insert-command))
     (add-to-list 'keycast-substitute-alist `(,input "." "Typing…"))))
 
-(elpaca gruber-darker-theme
-  (load-theme 'gruber-darker t))
+(elpaca gruber-darker-theme)
+;;   (load-theme 'gruber-darker t))
+(elpaca (tao-theme
+         :repo     "11111000000/tao-theme-emacs"
+         :fetcher  github))
+;;   (load-theme 'tao-yin t))
+
+
+(defun my-modus-themes-invisible-dividers (_theme)
+  "Make window dividers for THEME invisible."
+  (let ((bg (face-background 'default)))
+    (custom-set-faces
+     `(fringe ((t :background ,bg :foreground ,bg)))
+     `(window-divider ((t :background ,bg :foreground ,bg)))
+     `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
+     `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
+
+(add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+
+(custom-set-variables
+ '(modus-themes-to-toggle '(modus-operandi modus-vivendi)))
+
+(load-theme 'modus-vivendi t nil)
+(my-leader-def
+  "t s" #'consult-theme
+  "t t" #'modus-themes-toggle)
 
 (elpaca orderless)
 
@@ -374,20 +398,16 @@
  "C-h b" #'embark-bindings)
 
 (elpaca (corfu
-         :protocol  https
-         :inherit   t
-         :depth     1
-         :host      github
-         :repo      "minad/corfu"
-         :files     "extensions/*")
-  (global-corfu-mode))
+         :host github
+         :repo "minad/corfu"
+         ;; :files (:defaults "extensions/*")
+         )
+  ;; (global-corfu-mode)
+  (corfu-popupinfo-mode))
 
 (elpaca (cape
          :repo      "minad/cape"
          :fetcher   github
-         :files    
-         (:defaults)
-         :protocol  https
          :inherit   t
          :depth     1))
 
@@ -399,12 +419,16 @@
  '(corfu-auto-prefix 3)
  '(corfu-cycle t)
  '(corfu-echo-documentation t)
- '(corfu-popupinfo-delay 1)
+ ;; '(corfu-popupinfo-delay 1)
  '(corfu-quit-at-boundary t)
- '(corfu-quit-no-match t)
- '(corfu-separator ?_))
+ ;; '(corfu-separator ?_)
+ '(corfu-quit-no-match 't))
+
+(add-hook 'prog-mode-hook 'corfu-mode)
 
 (with-eval-after-load 'corfu
+  ;; (load-file (expand-file-name "elpaca/builds/corfu/extensions/corfu-popupinfo.el" user-emacs-directory))
+  (add-to-list 'savehist-additional-variables #'corfu-history)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
@@ -414,9 +438,10 @@
 (general-define-key
  :keymaps 'corfu-map
  "C-s" #'corfu-quit
+ "SPC" #'corfu-insert-separator
  "M-t" #'corfu-popupinfo-toggle
- "M-p" #'corfu-popupinfo-scroll-up
- "M-n" #'corfu-popupinfo-scroll-down)
+ "M-n" #'corfu-popupinfo-scroll-up
+ "M-p" #'corfu-popupinfo-scroll-down)
 
 (custom-set-variables
  '(hippie-expand-try-functions-list
@@ -485,6 +510,10 @@
        (mode . dired-mode))
       ("ORG"
        (mode . org-mode))
+      ("CODE"
+       (mode . prog-mode)
+       (mode . rustic-mode)
+       (mode . zig-mode))
       ("WEBDEV"
        (or
         (mode . html-mode)
@@ -639,32 +668,6 @@
   "C-r" #'isearch-backward-regexp
   "C-M-r" #'isearch-backward)
 
-(elpaca god-mode
-  (god-mode))
-
-;; (custom-set-variables
-;;  '(god-exempt-major-modes nil)
-;;  '(god-exempt-predicates nil))
-
-(defun my/update-cursor-type ()
-  "Change cursor type and color according to minor mode."
-  (cond
-   (god-local-mode
-    (set-cursor-color "red")
-    (setq cursor-type 'box))
-   (buffer-read-only
-    (set-cursor-color "gray")
-    (setq cursor-type 'box))
-   (t
-    (set-cursor-color "green")
-    (setq cursor-type '(hbar . 2)))))
-(add-hook 'post-command-hook #'my/update-cursor-type)
-
-(general-def global-map "<escape>" #'god-local-mode)
-(general-def god-local-mode-map
-  "." #'repeat
-  "i" #'god-local-mode)
-
 (elpaca rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
@@ -817,6 +820,11 @@
 (add-to-list 'auto-mode-alist '("\\.zig\\’" . zig-mode))
 (add-hook 'zig-mode-hook 'eglot-ensure)
 
+(elpaca typescript-mode)
+
+(with-eval-after-load 'typescript-mode
+  (add-hook 'typescript-mode-hook #'eglot-ensure))
+
 (add-to-list 'auto-mode-alist '("\\.sh\\’" . sh-mode))
 (add-hook 'sh-mode-hook 'eglot-ensure)
 
@@ -924,6 +932,6 @@ Else create a new file."
        '("journal"))))))
 
 (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
-;; (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
+(add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
 
 ;;; config.el ends here.

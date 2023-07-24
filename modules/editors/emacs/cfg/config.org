@@ -259,8 +259,32 @@
 
 *** Theme
 #+begin_src emacs-lisp :tangle yes
-  (elpaca gruber-darker-theme
-    (load-theme 'gruber-darker t))
+  (elpaca gruber-darker-theme)
+  ;;   (load-theme 'gruber-darker t))
+  (elpaca (tao-theme
+           :repo     "11111000000/tao-theme-emacs"
+           :fetcher  github))
+  ;;   (load-theme 'tao-yin t))
+
+
+  (defun my-modus-themes-invisible-dividers (_theme)
+    "Make window dividers for THEME invisible."
+    (let ((bg (face-background 'default)))
+      (custom-set-faces
+       `(fringe ((t :background ,bg :foreground ,bg)))
+       `(window-divider ((t :background ,bg :foreground ,bg)))
+       `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
+       `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
+
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+
+  (custom-set-variables
+   '(modus-themes-to-toggle '(modus-operandi modus-vivendi)))
+
+  (load-theme 'modus-vivendi t nil)
+  (my-leader-def
+    "t s" #'consult-theme
+    "t t" #'modus-themes-toggle)
 #+end_src
 
 * Modules
@@ -460,20 +484,16 @@
 **** Corfu
 #+begin_src emacs-lisp :tangle yes
   (elpaca (corfu
-           :protocol  https
-           :inherit   t
-           :depth     1
-           :host      github
-           :repo      "minad/corfu"
-           :files     "extensions/*")
-    (global-corfu-mode))
+           :host github
+           :repo "minad/corfu"
+           ;; :files (:defaults "extensions/*")
+           )
+    ;; (global-corfu-mode)
+    (corfu-popupinfo-mode))
 
   (elpaca (cape
            :repo      "minad/cape"
            :fetcher   github
-           :files    
-           (:defaults)
-           :protocol  https
            :inherit   t
            :depth     1))
 
@@ -485,12 +505,16 @@
    '(corfu-auto-prefix 3)
    '(corfu-cycle t)
    '(corfu-echo-documentation t)
-   '(corfu-popupinfo-delay 1)
+   ;; '(corfu-popupinfo-delay 1)
    '(corfu-quit-at-boundary t)
-   '(corfu-quit-no-match t)
-   '(corfu-separator ?_))
+   ;; '(corfu-separator ?_)
+   '(corfu-quit-no-match 't))
+
+  (add-hook 'prog-mode-hook 'corfu-mode)
 
   (with-eval-after-load 'corfu
+    ;; (load-file (expand-file-name "elpaca/builds/corfu/extensions/corfu-popupinfo.el" user-emacs-directory))
+    (add-to-list 'savehist-additional-variables #'corfu-history)
     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     (add-to-list 'completion-at-point-functions #'cape-file)
     (add-to-list 'completion-at-point-functions #'cape-elisp-block)
@@ -500,9 +524,10 @@
   (general-define-key
    :keymaps 'corfu-map
    "C-s" #'corfu-quit
+   "SPC" #'corfu-insert-separator
    "M-t" #'corfu-popupinfo-toggle
-   "M-p" #'corfu-popupinfo-scroll-up
-   "M-n" #'corfu-popupinfo-scroll-down)
+   "M-n" #'corfu-popupinfo-scroll-up
+   "M-p" #'corfu-popupinfo-scroll-down)
 #+end_src
 
 **** Hippie Expand
@@ -601,6 +626,10 @@
          (mode . dired-mode))
         ("ORG"
          (mode . org-mode))
+        ("CODE"
+         (mode . prog-mode)
+         (mode . rustic-mode)
+         (mode . zig-mode))
         ("WEBDEV"
          (or
           (mode . html-mode)
@@ -798,7 +827,7 @@
 
 *** Modal
 **** God-mode
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (elpaca god-mode
     (god-mode))
 
@@ -1036,8 +1065,11 @@
 #+end_src
 
 ***** Js/Ts
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
+  (elpaca typescript-mode)
 
+  (with-eval-after-load 'typescript-mode
+    (add-hook 'typescript-mode-hook #'eglot-ensure))
 #+end_src
 
 ***** Web-mode
@@ -1202,7 +1234,7 @@
 * Custom
 #+begin_src emacs-lisp :tangle yes
   (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
-  ;; (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
+  (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
 #+end_src
 
 * Footer

@@ -17,7 +17,12 @@ with lib; let
     # export XKB_DEFAULT_OPTIONS=ctrl:nocaps
 
     timestamp=$(date +%F-%R)
-    exec dbus-run-session river -log-level debug > /tmp/river-$timestamp.log 2>&1
+
+    if [ -z $DISPLAY ]; then
+      exec dbus-run-session river -log-level debug > /tmp/river-$timestamp.log 2>&1
+    else
+      echo "RiverWM is running."
+    fi
   '';
   dbus-river-environment = pkgs.writeTextFile {
       name = "dbus-river-environment";

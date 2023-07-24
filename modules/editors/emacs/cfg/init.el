@@ -67,18 +67,8 @@
 (require 'ob-tangle)
 (org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
 
-;; (dolist (path '("elisp" "modules"))
-;;   (add-to-list 'load-path (locate-user-emacs-file path)))
-
-;; (require 'rx-packages)
-;; (require 'rx-core)
-;; (require 'rx-ui)
-;; (require 'rx-dired)
-;; (require 'rx-completions)
-
 ;;END OF INIT FILE
-(setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
-;; (elpaca-wait)
+;; (setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
 
 (provide 'init)
 ;;; init.el ends here.

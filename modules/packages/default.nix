@@ -11,10 +11,11 @@ with lib; let
     speedtest-cli
     # wireshark
     tshark
+    # searxng
   ];
 
   zig-tools = with pkgs; [
-    # zig
+    zig
     zls
   ];
 
@@ -33,8 +34,8 @@ with lib; let
     pandoc
     python3
     perl
-    deno
-    nodePackages.bash-language-server
+    # deno
+    bun
   ];
 
   media-tools = with pkgs; [

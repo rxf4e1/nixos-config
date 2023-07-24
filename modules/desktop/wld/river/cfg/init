@@ -51,8 +51,8 @@ riverctl map normal $mod Return zoom
 
 # Show Rofi menu
 # riverctl map normal $mod D spawn "rofi -show drun"
-riverctl map normal $mod D spawn fuzzel.sh
-riverctl map normal $mod+Shift D spawn 'footclient -a float -w 300x300 -e fzf-menu.sh'
+riverctl map normal $mod x spawn fuzzel.sh
+riverctl map normal $mod+Shift x spawn 'footclient -a float -w 300x300 -e fzf-menu.sh'
 
 # $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
 riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"

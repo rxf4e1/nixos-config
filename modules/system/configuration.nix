@@ -17,6 +17,7 @@
       git
       curl
       wget
+      cachix
       acpi
       glib
       gnumake
@@ -47,7 +48,7 @@
       # AMD_VULKAN_ICD = "RADV";
       # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
       # FIX:
-      __GL_SHADER_DISK_CACHE_PATH = "$XDG_CACHE_HOME/amd";
+      __GL_SHADER_DISK_CACHE_PATH = "$XDG_CACHE_HOME/AMD";
     };
   };
 
@@ -106,6 +107,7 @@
         # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
       allowed-users = ["rxf4e1"];
+      trusted-users = ["root" "rxf4e1"];
       keep-outputs = true;
       keep-derivations = true;
     };
@@ -147,7 +149,6 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      # shell = pkgs.fish;
       shell = pkgs.bash;
       uid = 1000;
       group = "users";
@@ -158,6 +159,8 @@
         "video"
         "audio"
         "networkmanager"
+        "kvm"
+        # "libvirtd"
       ];
     };
   };
@@ -230,17 +233,6 @@
   };
 
   systemd.coredump.enable = true;
-  # systemd = {
-  #   services.dconf-update = {
-  #     serviceConfig = { Type="oneshot"; };
-  #     wantedBy = ["multi-user.target"];
-  #     path = [pkgs.dconf];
-  #     script = ''
-  #       dconf update
-  #     '';
-  #   };
-  # };
-
   
   # Sound
   sound.enable = true;
@@ -251,7 +243,6 @@
     audio.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    # jack.enable = true;
     pulse.enable = true;
   };
 

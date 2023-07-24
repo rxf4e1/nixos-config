@@ -57,7 +57,7 @@
 
     # CLI
     cli = {
-      broot.enable = false;
+      broot.enable = true;
       direnv.enable = true;
       fzf.enable = true;
       ipfs.enable = false;

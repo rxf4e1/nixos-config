@@ -19,5 +19,5 @@
     libguestfs
   ];
 
-  users.users.rxf4e1.extraGroups = ["libvirtd"];
+  # users.users.rxf4e1.extraGroups = ["libvirtd" "kvm"];
 }

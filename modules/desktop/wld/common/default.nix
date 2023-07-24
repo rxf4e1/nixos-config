@@ -73,6 +73,9 @@ in {
       wl-clipboard
       wlsunset
       # wob
+      libinput
+      swaybg
+      swayimg
       
       vol
       bright
