@@ -1,6 +1,4 @@
 {
-  config,
-  pkgs,
   ...
 }: let
   myEmail = "rxf4el@duck.com";

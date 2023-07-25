@@ -9,6 +9,7 @@
   imports = [
     # ./acme.nix
     # ./virt.nix
+    ./searx.nix
   ];
 
   environment = {
