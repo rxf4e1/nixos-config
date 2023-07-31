@@ -55,15 +55,16 @@
 
   # Install Fonts
   fonts = {
-    enableDefaultFonts = true;
+    enableDefaultPackages = true;
     fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       # (nerdfonts.override {
       #   fonts = ["Inconsolata"];
       # })
       cozette
       fira-code
       fira-code-symbols
+      inconsolata
       liberation_ttf
       joypixels
     ];

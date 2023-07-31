@@ -190,6 +190,7 @@
 
 (custom-set-variables
  '(column-number-mode t)
+ '(size-indication-mode t)
  '(mode-line-percent-position '(-3 "%p"))
  '(mode-line-position-column-line-format '(" [%l , %c] "))
  '(mode-line-compact t)

@@ -15,7 +15,7 @@ with lib; let
   ];
 
   zig-tools = with pkgs; [
-    zig
+    # zig
     zls
   ];
 
@@ -34,6 +34,7 @@ with lib; let
     pandoc
     python3
     perl
+    go
     # deno
     bun
   ];
