@@ -10,7 +10,7 @@
     # ./acme.nix
     # ./virt.nix
     # ./searx.nix
-    ./opencl.nix
+    # ./opencl.nix
   ];
 
   environment = {
@@ -20,6 +20,7 @@
       curl
       wget
       cachix
+      clinfo
       acpi
       glib
       gnumake
@@ -30,6 +31,8 @@
       vulkan-headers
       vulkan-loader
       vulkan-tools
+      rocm-opencl-icd
+      rocm-opencl-runtime
       gnome.adwaita-icon-theme
     ];
     # Set environment variables
@@ -235,7 +238,7 @@
     upower.enable = true; # Battery info & stuff
     xserver = {
       desktopManager.xterm.enable = false;
-      videoDrivers = lib.mkDefault ["amdgpu"];
+      # videoDrivers = lib.mkDefault ["amdgpu"];
     };
   };
 
@@ -261,13 +264,9 @@
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        libdrm
-        libva
-        # amdvlk
-        clinfo
-        rocm-opencl-icd
-        rocm-opencl-runtime
+      extraPackages = [
+        pkgs.libdrm
+        pkgs.libva
       ];
     };
   };
