@@ -1,10 +1,10 @@
 {
+  lib,
   pkgs,
   ...
 }: {
   # Remove unecessary preinstalled packages
   environment.defaultPackages = [];
-  services.xserver.desktopManager.xterm.enable = false;
 
   imports = [
     # ./acme.nix
@@ -42,12 +42,12 @@
       NIXOS_OZONE_WL = "1";
 
       # Force AMDVLK - (opensource)
-      AMD_VULKAN_ICD = "AMDVLK";
-      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
+      # AMD_VULKAN_ICD = "AMDVLK";
+      # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
 
       # Force RADV - (proprietary)
-      # AMD_VULKAN_ICD = "RADV";
-      # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+      AMD_VULKAN_ICD = "RADV";
+      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
       # FIX:
       __GL_SHADER_DISK_CACHE_PATH = "$XDG_CACHE_HOME/AMD";
     };
@@ -232,6 +232,10 @@
     udev = {enable = true;};
     journald.console = "/dev/tty12";
     upower.enable = true; # Battery info & stuff
+    xserver = {
+      desktopManager.xterm.enable = false;
+      videoDrivers = lib.mkDefault ["modesetting" "fbdev" "amdgpu-pro"];
+    };
   };
 
   systemd.coredump.enable = true;
@@ -259,9 +263,9 @@
       extraPackages = with pkgs; [
         libdrm
         libva
-        amdvlk
-        # rocm-opencl-icd
-        # rocm-opencl-runtime
+        # amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
       ];
     };
   };
