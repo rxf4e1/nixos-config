@@ -10,6 +10,7 @@
     # ./acme.nix
     # ./virt.nix
     # ./searx.nix
+    ./opencl.nix
   ];
 
   environment = {
@@ -234,7 +235,7 @@
     upower.enable = true; # Battery info & stuff
     xserver = {
       desktopManager.xterm.enable = false;
-      videoDrivers = lib.mkDefault ["modesetting" "fbdev" "amdgpu-pro"];
+      videoDrivers = lib.mkDefault ["amdgpu"];
     };
   };
 
@@ -264,6 +265,7 @@
         libdrm
         libva
         # amdvlk
+        clinfo
         rocm-opencl-icd
         rocm-opencl-runtime
       ];

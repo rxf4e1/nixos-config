@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }: {
@@ -14,6 +13,7 @@
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = ["dm-snapshot"];
+  boot.kernelParams = ["amd_iommu=pt" "iommu=soft"];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
