@@ -19,7 +19,7 @@ in {
     home.sessionPath = [
       "/home/rxf4e1/.local/bin"
       "/home/rxf4e1/.cargo/bin"
-      "/home/rxf4e1/.local/share/yarn/global/bin"
+      # "/home/rxf4e1/.local/share/yarn/global/bin"
     ];
 
     programs.bash = {
@@ -55,6 +55,8 @@ in {
         mv = "mv -iv";
         rm = "rm -Iv";
 
+        v = "nano -v";
+
         rebuild = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";
         rebuild-boot = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";
         gc = "nix-collect-garbage --delete-old";
@@ -69,7 +71,7 @@ in {
       bashrcExtra = ''
         export PS1="\e[0;32m\w\e[m\n% "
         source ~/.bashrc.local
-        source ~/.LESS_TERMCAP
+        # source ~/.LESS_TERMCAP
       '';
     };
 
@@ -90,6 +92,6 @@ in {
       '';
     };
 
-    # home.file.".bashrc.local".source = ./bashrc.local;
+    home.file.".bashrc.local".source = ./cfg/bashrc.local;
   };
 }

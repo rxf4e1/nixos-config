@@ -15,6 +15,6 @@ in {
       pkgs.brave
       pkgs.mullvad-browser
     ];
-    # home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
+    home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
   };
 }

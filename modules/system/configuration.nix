@@ -87,7 +87,7 @@
       enable = true;
       wlr.enable = true;
       extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
+        # pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-wlr
         # pkgs.xdg-desktop-portal-hyprland
       ];
@@ -126,10 +126,10 @@
 
   # Boot settings: clean /tmp/, latest kernel and bootloader
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_latest;
 
-    supportedFilesystems = ["btrfs" "ntfs"];
-
+    supportedFilesystems = ["bcachefs" "ntfs"];
+    
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
 
