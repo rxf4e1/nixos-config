@@ -70,7 +70,7 @@
     # Security
     secret = {
       keepassxc.enable = true;
-      pass.enable = true;
+      pass.enable = false;
     };
 
     # System

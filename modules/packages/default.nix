@@ -37,6 +37,7 @@ with lib; let
     go
     # deno
     bun
+    nodejs
   ];
 
   media-tools = with pkgs; [
@@ -90,7 +91,7 @@ in {
     ++ irc-tools
     ++ nix-tools;
     home.shellAliases = {
-      ed = "rlwrap ed --prompt='>> '";
+      ed = "rlwrap ed --extended-regexp --prompt=': '";
     };
   };
 }

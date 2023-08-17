@@ -9,6 +9,10 @@ with lib; let
 in {
   options.modules.secret.keepassxc = {enable = mkEnableOption "keepassxc";};
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [keepassxc];
+    home.packages = with pkgs; [
+      keepassxc
+      # spectre-cli # wait for android app
+      lesspass-cli
+    ];
   };
 }

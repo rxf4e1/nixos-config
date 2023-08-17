@@ -8,7 +8,7 @@
 
   imports = [
     # ./acme.nix
-    # ./virt.nix
+    ./virt.nix
     # ./searx.nix
     # ./opencl.nix
   ];
@@ -31,8 +31,6 @@
       vulkan-headers
       vulkan-loader
       vulkan-tools
-      rocm-opencl-icd
-      rocm-opencl-runtime
       gnome.adwaita-icon-theme
     ];
     # Set environment variables
@@ -46,12 +44,13 @@
       NIXOS_OZONE_WL = "1";
 
       # Force AMDVLK - (opensource)
-      # AMD_VULKAN_ICD = "AMDVLK";
-      # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
+      AMD_VULKAN_ICD = "AMDVLK";
+      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
 
       # Force RADV - (proprietary)
-      AMD_VULKAN_ICD = "RADV";
-      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+      # AMD_VULKAN_ICD = "RADV";
+      # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+
       # FIX:
       __GL_SHADER_DISK_CACHE_PATH = "$XDG_CACHE_HOME/AMD";
     };
@@ -62,13 +61,13 @@
     enableDefaultPackages = true;
     fontDir.enable = true;
     packages = with pkgs; [
-      # (nerdfonts.override {
-      #   fonts = ["Inconsolata"];
-      # })
+      (nerdfonts.override {
+        fonts = ["Inconsolata"];
+      })
       cozette
       fira-code
       fira-code-symbols
-      inconsolata
+      # inconsolata
       liberation_ttf
       joypixels
     ];
@@ -128,6 +127,13 @@
   boot = {
     # kernelPackages = pkgs.linuxPackages_latest;
 
+    readOnlyNixStore = true;
+
+    plymouth = {
+      enable = false;
+      theme = "breeze";
+    };
+    
     supportedFilesystems = ["bcachefs" "ntfs"];
     
     tmp.useTmpfs = true;
@@ -136,8 +142,15 @@
     loader = {
       systemd-boot.enable = true;
       systemd-boot.editor = false;
+      systemd-boot.consoleMode = "auto";
       efi.canTouchEfiVariables = true;
       timeout = 2;
+    };
+
+    kernel.sysctl = {
+      "vm.swappiness"=10;
+      "vm.vfs_cache_pressure"=50;
+      "vm.dirty_background_ratio"=1;
     };
   };
 
@@ -233,6 +246,10 @@
       enable = true;
       packages = [pkgs.dconf];
     };
+    fwupd = { # Bios Update.
+      enable = true;
+      package = pkgs.fwupd;
+    };
     udev = {enable = true;};
     journald.console = "/dev/tty12";
     upower.enable = true; # Battery info & stuff
@@ -267,6 +284,8 @@
       extraPackages = [
         pkgs.libdrm
         pkgs.libva
+        # pkgs.rocm-opencl-icd
+        # pkgs.rocm-opencl-runtime
       ];
     };
   };

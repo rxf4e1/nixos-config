@@ -173,13 +173,13 @@
 
 ;; Default Font
 (set-face-attribute 'default nil :font "Fira Code" :height 80)
-;; (set-face-attribute 'default nil :font "Cozette" :height 100)
+;; (set-face-attribute 'default nil :font "cozette" :height 100)
 ;; Fixed Font Pitch
 (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 80)
-;; (set-face-attribute 'fixed-pitch nil :font "Cozette" :height 100)
+;; (set-face-attribute 'fixed-pitch nil :font "cozette" :height 100)
 ;; Variable Font Pitch
 (set-face-attribute 'variable-pitch nil :font "Fira Code" :height 80 :weight 'regular)
-;; (set-face-attribute 'variable-pitch nil :font "Cozette" :height 100 :weight 'regular)
+;; (set-face-attribute 'variable-pitch nil :font "cozette" :height 100 :weight 'regular)
 
 (elpaca all-the-icons)
 (elpaca all-the-icons-dired)

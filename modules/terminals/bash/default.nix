@@ -19,7 +19,7 @@ in {
     home.sessionPath = [
       "/home/rxf4e1/.local/bin"
       "/home/rxf4e1/.cargo/bin"
-      # "/home/rxf4e1/.local/share/yarn/global/bin"
+      "/home/rxf4e1/.cache/.bun/bin"
     ];
 
     programs.bash = {

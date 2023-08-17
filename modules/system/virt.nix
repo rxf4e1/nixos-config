@@ -8,16 +8,17 @@
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemu = {
+        package = pkgs.qemu_kvm;
         ovmf.enable = true;
         runAsRoot = false;
       };
     };
     waydroid.enable = false;
   };
-  environment.systemPackages = with pkgs; [
-    virt-manager
-    libguestfs
+  environment.systemPackages = [
+    # virt-manager
+    # libguestfs
   ];
 
-  # users.users.rxf4e1.extraGroups = ["libvirtd" "kvm"];
+  users.users.rxf4e1.extraGroups = ["libvirtd" "kvm"];
 }
