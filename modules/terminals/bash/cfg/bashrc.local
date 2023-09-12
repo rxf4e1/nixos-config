@@ -4,11 +4,14 @@ gd() {
 
 	# Invocação e opções do fuzzy finder...
 	fzf=(
-		fzf
-		--reverse -e -i -1
-		--prompt=': '
-		--height=15%
-		--border=horizontal
+	  zf
+	  --lines 10
+	  --keep-order
+		# fzf
+		# --reverse -e -i -1
+		# --prompt=': '
+		# --height=15%
+		# --border=horizontal
 	)
 
 	# Testar a quantidade de argumentos: se houver mais de um,

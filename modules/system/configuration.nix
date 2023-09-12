@@ -1,14 +1,10 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # Remove unecessary preinstalled packages
   environment.defaultPackages = [];
 
   imports = [
     # ./acme.nix
-    ./virt.nix
+    # ./virt.nix
     # ./searx.nix
     # ./opencl.nix
   ];
@@ -62,20 +58,21 @@
     fontDir.enable = true;
     packages = with pkgs; [
       (nerdfonts.override {
-        fonts = ["Inconsolata"];
+        fonts = ["NerdFontsSymbolsOnly"];
       })
       cozette
-      fira-code
-      fira-code-symbols
-      # inconsolata
+      # fira-code
+      # fira-code-symbols
+      inconsolata
       liberation_ttf
+      jetbrains-mono
       joypixels
     ];
     fontconfig = {
       hinting.autohint = true;
       defaultFonts = {
         emoji = ["joypixels"];
-        monospace = ["Fira Code"];
+        monospace = ["Jetbrains Mono"];
       };
     };
   };
@@ -119,7 +116,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 2d";
+      options = "--delete-older-than 7d";
     };
   };
 
@@ -133,9 +130,9 @@
       enable = false;
       theme = "breeze";
     };
-    
+
     supportedFilesystems = ["bcachefs" "ntfs"];
-    
+
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
 
@@ -148,9 +145,9 @@
     };
 
     kernel.sysctl = {
-      "vm.swappiness"=10;
-      "vm.vfs_cache_pressure"=50;
-      "vm.dirty_background_ratio"=1;
+      "vm.swappiness" = 10;
+      "vm.vfs_cache_pressure" = 50;
+      "vm.dirty_background_ratio" = 1;
     };
   };
 
@@ -179,7 +176,6 @@
         "audio"
         "networkmanager"
         "kvm"
-        # "libvirtd"
       ];
     };
   };
@@ -246,7 +242,8 @@
       enable = true;
       packages = [pkgs.dconf];
     };
-    fwupd = { # Bios Update.
+    fwupd = {
+      # Bios Update.
       enable = true;
       package = pkgs.fwupd;
     };
@@ -260,7 +257,7 @@
   };
 
   systemd.coredump.enable = true;
-  
+
   # Sound
   sound.enable = true;
   # hardware.pulseaudio.enable = true;
