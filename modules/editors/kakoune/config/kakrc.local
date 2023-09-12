@@ -14,7 +14,7 @@ complete-command run shell
 
 define-command -override fzf-files %{
   connect terminal sh -c %{
-    fd --type f --hidden --exclude .git | zf -l 1024 | xargs kcr edit --
+    fd --type file --type symlink --hidden --exclude .git | zf -l 1024 | xargs kcr edit --
   }
 }
 

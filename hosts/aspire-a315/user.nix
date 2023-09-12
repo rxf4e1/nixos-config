@@ -12,12 +12,12 @@
     # firefox.enable = true;
     nyxt.enable = false;
     qutebrowser.enable = true;
-    
+
     # Editors
     editor = {
-      emacs.enable = true;
+      emacs.enable = false;
       helix.enable = false;
-      kakoune.enable = false;
+      kakoune.enable = true;
       micro.enable = false;
       nano.enable = true;
       neovim.enable = false;
@@ -28,7 +28,7 @@
       emu = {
         foot.enable = true;
         kitty.enable = false;
-        tmux.enable = true;
+        tmux.enable = false;
         wezterm.enable = false;
       };
       shell = {

@@ -9,8 +9,9 @@ with lib; let
 in {
   options.modules.cli.fzf = {enable = mkEnableOption "FzF";};
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [zf];
     programs.fzf = {
-      enable = true;
+      enable = false;
       enableBashIntegration = true;
       # enableFishIntegration = true;
       # enableZshIntegration = true;
@@ -22,9 +23,9 @@ in {
       fileWidgetCommand = "fd --color=auto --type=f";
       fileWidgetOptions = ["--preview 'head -n 100 {}'"];
     };
-    home.sessionVariables = {
-      FZF_COMPLETION_TRIGGER = ",,";
-      FZF_DEFAULT_OPTS = "--info=inline --border --margin=1 --padding=1";
-    };
+    # home.sessionVariables = {
+    #   FZF_COMPLETION_TRIGGER = ",,";
+    #   FZF_DEFAULT_OPTS = "--info=inline --border --margin=1 --padding=1";
+    # };
   };
 }
