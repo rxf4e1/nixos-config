@@ -14,18 +14,18 @@ complete-command run shell
 
 define-command -override fzf-files %{
   connect terminal sh -c %{
-    fd --type f --hidden --exclude .git | fzf-tmux -p -m | xargs kcr edit --
+    fd --type f --hidden --exclude .git | zf -l 1024 | xargs kcr edit --
   }
 }
 
 define-command -override fzf-buffers %{
   connect terminal sh -c %{
-    kcr get --raw --value buflist | fzf-tmux -p | xargs kcr send buffer --
+    kcr get --raw --value buflist | zf -l 1024 | xargs kcr send buffer --
   }
 }
 
 define-command -override broot-right %{
-  connect tmux-terminal-horizontal sh -c %{ broot }
+  connect terminal sh -c %{ broot }
 }
 
 hook global ModuleLoaded tmux %{

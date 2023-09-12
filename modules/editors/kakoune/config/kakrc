@@ -205,8 +205,8 @@ map global user -docstring 'LSP'     'l' %{: enter-user-mode lsp<ret>}
 # ▀▄▄ ▀▄▀ █▄▄ ▀▄▀ █▀▄ ▄██ ▀▄▄ █ █ █▄▄ █ ▀ █ █▄▄
 # ────────────────────────────────────────────────────
 # colorscheme gotham
-# colorscheme one-darker
-colorscheme dracula
+colorscheme one-darker-16
+# colorscheme dracula
 
 # kak: filetype=kak
 
