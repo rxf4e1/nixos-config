@@ -15,9 +15,12 @@ in {
       userDirs = {
         enable = true;
         createDirectories = false;
-        documents = "$HOME/doc/";
-        download = "$HOME/dl";
-        pictures = "$HOME/pic/";
+        desktop = "$HOME/desktop";
+        documents = "$HOME/documents";
+        download = "$HOME/downloads";
+        pictures = "$HOME/pictures";
+        publicShare = "$HOME/public";
+        templates = "$HOME/templates";
       };
       # mimeApps = {
       #   enable = true;

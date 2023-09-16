@@ -5,12 +5,15 @@
   ...
 }:
 with lib; let
-  machine_id = "aspire-a315";
   cfg = config.modules.terminal.shell.ion;
 in {
   options.modules.terminal.shell.ion = {enable = mkEnableOption "ion";};
   config = mkIf cfg.enable {
-    home.packages = [pkgs.ion];
+    home.packages = [
+      # pkgs.ion
+      pkgs.nushellFull
+    ];
+
     # programs.ion = {
     #   enable = true;
     #   package = pkgs.ion;

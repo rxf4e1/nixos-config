@@ -15,7 +15,7 @@ with lib; let
   ];
 
   zig-tools = with pkgs; [
-    # zig
+    zig
     zls
   ];
 
@@ -26,6 +26,10 @@ with lib; let
     procs
     ripgrep
     rustup
+  ];
+
+  c-tools = with pkgs; [
+    cmake
     gcc
   ];
 
@@ -34,10 +38,10 @@ with lib; let
     pandoc
     python3
     perl
-    go
-    # deno
+    # go
     bun
-    nodejs
+    # deno
+    # nodejs
   ];
 
   media-tools = with pkgs; [
@@ -62,8 +66,9 @@ with lib; let
 
   irc-tools = with pkgs; [
     openssl
-    bashInteractive
+    # irssi
     weechat
+    ncurses
   ];
 
   cfg = config.modules.packages;
@@ -88,6 +93,7 @@ in {
     ++ media-tools
     ++ rust-tools
     ++ zig-tools
+    ++ c-tools
     ++ irc-tools
     ++ nix-tools;
     home.shellAliases = {

@@ -11,7 +11,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [zf];
     programs.fzf = {
-      enable = false;
+      enable = true;
       enableBashIntegration = true;
       # enableFishIntegration = true;
       # enableZshIntegration = true;

@@ -28,13 +28,14 @@
       emu = {
         foot.enable = true;
         kitty.enable = false;
-        tmux.enable = false;
+        tmux.enable = true;
         wezterm.enable = false;
       };
       shell = {
         bash.enable = true;
         fish.enable = false;
         ion.enable = false;
+        nu.enable = true;
         zsh.enable = false;
       };
       prompt.starship.enable = true;

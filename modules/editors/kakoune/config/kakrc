@@ -127,8 +127,7 @@ hook global InsertCompletionShow .* %{
 
 ## LSP
 plug "kak-lsp/kak-lsp" do %{
-  cargo build --release --locked
-  cargo install --force --path .
+  cargo install --locked --force --path .
 } config %{
 
   # uncomment to enable debugging

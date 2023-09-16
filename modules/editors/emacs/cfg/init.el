@@ -68,7 +68,7 @@
 (org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
 
 ;;END OF INIT FILE
-;; (setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
+(setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
 
 (provide 'init)
 ;;; init.el ends here.

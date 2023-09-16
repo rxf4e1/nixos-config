@@ -3,6 +3,7 @@
     ./bash
     ./fish
     ./ion
+    ./nu
     ./zsh
 
     ./foot
