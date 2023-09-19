@@ -48,5 +48,6 @@ in {
         rebuild-boot = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";
         gc = "nix-collect-garbage --delete-old";
         gcd = "doas nix-collect-garbage --delete-old";
+  	};
   };
 }

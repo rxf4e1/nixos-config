@@ -1,9 +1,9 @@
 # ────────────────────────────────────────────────────
 ## Load full default library (Uncomment only on first time).
-# nop %sh{
-#     mkdir -p "$kak_config/autoload"
-#     ln -s "$kak_runtime/rc" "$kak_config/autoload/standard-library"
-# }
+#nop %sh{
+#    mkdir -p "$kak_config/autoload"
+#    ln -s "$kak_runtime/rc" "$kak_config/autoload/standard-library"
+#}
  
 # ────────────────────────────────────────────────────
 ## Return shell command inside kakoune
@@ -70,3 +70,5 @@ evaluate-commands %sh{
 # ────────────────────────────────────────────────────
 ## Utilities
 define-command mkdir %{ nop %sh{ mkdir -p $(dirname $kak_buffile) } }
+
+# plug "alexherbo2/auto-pairs.kak"

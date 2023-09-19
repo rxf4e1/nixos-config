@@ -4,9 +4,11 @@
 
   imports = [
     # ./acme.nix
+    ./lighttpd.nix
     # ./virt.nix
     # ./searx.nix
     # ./opencl.nix
+    # ./nginx.nix
   ];
 
   environment = {
@@ -23,6 +25,7 @@
       lm_sensors
       tlp
       dnsutils
+      openssl
       pciutils
       vulkan-headers
       vulkan-loader
@@ -165,6 +168,7 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
+      # shell = pkgs.nushell;
       shell = pkgs.bash;
       uid = 1000;
       group = "users";
@@ -183,12 +187,12 @@
   # Set up networking and secure it
   networking = {
     # Quad-9 DNS
-    nameservers = ["9.9.9.9" "149.112.112.112"];
+    # nameservers = ["9.9.9.9" "149.112.112.112"];
     networkmanager = {
       enable = true;
       wifi = {
         backend = "wpa_supplicant"; # or iwd
-        macAddress = "random";
+        # macAddress = "random";
       };
       # dns = "none";
     };
@@ -205,10 +209,10 @@
     # };
 
     firewall = {
-      enable = false;
-      #    allowedTCPPorts = [ 80 443 ];
-      #    allowedUDPPorts = [ 80 443 ];
-      #    allowPing = false;
+      enable = true;
+         allowedTCPPorts = [ 80 443 55555];
+         allowedUDPPorts = [ 80 443 55555];
+         allowPing = true;
     };
   };
 
