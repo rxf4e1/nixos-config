@@ -8,7 +8,6 @@ STATUS_DEVICE=$(wpctl get-volume "$AUDIO_DEVICE")
 ICONS_DIR="$HOME/.icons/custom"
 HINT="String:x-canonical-private-synchronous:vol"
 
-
 if [ "$CMD" == "up" ]; then
   wpctl set-volume "$AUDIO_DEVICE" 5%+ | notify-send -h "$HINT" -i "$ICONS_DIR/volume-up-1.svg" "$(wpctl get-volume $AUDIO_DEVICE)"
 fi

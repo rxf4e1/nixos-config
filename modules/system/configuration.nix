@@ -4,7 +4,7 @@
 
   imports = [
     # ./acme.nix
-    ./lighttpd.nix
+    # ./lighttpd.nix
     # ./virt.nix
     # ./searx.nix
     # ./opencl.nix
@@ -264,15 +264,15 @@
 
   # Sound
   sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-  services.pipewire = {
-    enable = true;
-    wireplumber.enable = true;
-    audio.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
+  hardware.pulseaudio.enable = true;
+  # services.pipewire = {
+  #   enable = true;
+  #   wireplumber.enable = true;
+  #   audio.enable = true;
+  #   alsa.enable = true;
+  #   alsa.support32Bit = true;
+  #   pulse.enable = true;
+  # };
 
   # Set up hardware stuff: bluetooth opengl etc
   hardware = {

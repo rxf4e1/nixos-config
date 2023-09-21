@@ -1,8 +1,6 @@
-# custom zig settings, basic syntax highlighting is handled by the zig.kak
-# shipped with kakoune
+# custom zig settings
 hook global WinSetOption filetype=zig %{
     set-option window formatcmd 'zig fmt --stdin'
-
     expandtab
 
     # Enable lsp support with semantic highlighting
@@ -15,3 +13,8 @@ hook global WinSetOption filetype=zig %{
     # }
 }
 
+# custom nix settings
+hook global WinSetOption filetype=nix %{
+  set-option window formatcmd 'alejandra'
+  smarttab
+}

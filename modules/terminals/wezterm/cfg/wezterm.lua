@@ -12,7 +12,7 @@ config = {
   term = 'wezterm',
   automatically_reload_config = true,
 
-  font = wezterm.font({
+  --[[font = wezterm.font({
     family = "Fira Code",
     harfbuzz_features = {
       -- "zero", -- alternative 0
@@ -27,12 +27,15 @@ config = {
       "ss07", -- =~ !~ ligatures
       "ss09", -- >>= <<= ||= |= ligatures
     },
-  }),
-  font_size = 9.0,
+  }),]]
+  font = wezterm.font('Jetbrains Mono'),
+  
+  font_size = 8.0,
   bold_brightens_ansi_colors = false,
 
   -- color = custom,
-  color_scheme = 'Dracula (Official)',
+  color_scheme = 'Modus-Vivendi',
+  --[[color_scheme = 'Dracula (Official)',]]
 
   -- cursor
   default_cursor_style = "BlinkingUnderline",

@@ -65,9 +65,8 @@ with lib; let
   ];
 
   irc-tools = with pkgs; [
-    openssl
-    # irssi
-    weechat
+    irssi
+    # weechat
     ncurses
   ];
 
@@ -76,26 +75,26 @@ in {
   options.modules.packages = {enable = mkEnableOption "Packages";};
   config = mkIf cfg.enable {
     home.packages = with pkgs;
-    [
-      bc
-      btop
-      htop
-      ed
-      rlwrap
-      unzip
-      zip
-      killall
-      lolcat
-    ]
-    ++ code-tools
-    ++ file-tools
-    ++ inet-tools
-    ++ media-tools
-    ++ rust-tools
-    ++ zig-tools
-    ++ c-tools
-    ++ irc-tools
-    ++ nix-tools;
+      [
+        bc
+        btop
+        htop
+        ed
+        rlwrap
+        unzip
+        zip
+        killall
+        lolcat
+      ]
+      ++ code-tools
+      ++ file-tools
+      ++ inet-tools
+      ++ media-tools
+      ++ rust-tools
+      # ++ zig-tools
+      ++ c-tools
+      ++ irc-tools
+      ++ nix-tools;
     home.shellAliases = {
       ed = "rlwrap ed --extended-regexp --prompt=': '";
     };

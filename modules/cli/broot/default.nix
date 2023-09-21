@@ -10,8 +10,10 @@ in {
   options.modules.cli.broot = {enable = mkEnableOption "Broot";};
   config = mkIf cfg.enable {
     # home.packages = [pkgs.broot];
+
     programs.broot = {
       enable = true;
+      package = pkgs.broot;
       enableBashIntegration = true;
       enableZshIntegration = true;
       settings = {
@@ -33,10 +35,12 @@ in {
           "**/.direnv" = "no-enter";
           "**/.git" = "no-enter";
         };
+        # skin = {};
       };
     };
     home.shellAliases = {
-      d = "br";
+      d = "br -s";
+      br = "br -s";
     };
   };
 }

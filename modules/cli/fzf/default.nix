@@ -10,8 +10,9 @@ in {
   options.modules.cli.fzf = {enable = mkEnableOption "FzF";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [zf];
+
     programs.fzf = {
-      enable = true;
+      enable = false;
       enableBashIntegration = true;
       # enableFishIntegration = true;
       # enableZshIntegration = true;

@@ -1,17 +1,20 @@
 # ────────────────────────────────────────────────────
 ## Normal-Mode
-map global normal '<c-f>' %{: fzf-files<ret> }
-map global normal '<c-b>' %{: fzf-buffers<ret> }
 map global normal '#'     %{: comment<ret>}
 map global normal '='     %{: format<ret>}
-map global normal '<c-p>' %{: fzf-mode<ret>}
+map global normal '<c-f>' %{: fuzzy-open-file<ret> }
 
 # ────────────────────────────────────────────────────
 ## User-Mode
-map global user 'f' %{: fzf-files<ret> } -docstring 'find files' 
-map global user 'b' %{: fzf-buffers<ret> } -docstring 'find buffers'
-map global user 'e' %{: broot-right<ret> } -docstring 'file tree'
-map global user 'l' %{: enter-user-mode lsp<ret>} -docstring 'LSP'
+# map global user e %{: br<ret> } -docstring 'edit'
+map global user e %{: broot<ret> } -docstring 'edit file'
+map global user l %{: enter-user-mode lsp<ret> } -docstring 'lsp'
+
+declare-user-mode kill
+map global kill b ': delete-buffer<ret>' -docstring 'kill'
+map global user d ': enter-user-mode kill<ret>' -docstring 'delete'
+declare-user-mode clip
+map global user c ': enter-user-mode clip<ret>' -docstring 'clipboard'
 
 # ────────────────────────────────────────────────────
 ## Better Escape
