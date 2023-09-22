@@ -1,0 +1,211 @@
+#  ██ ▄█▀ ▄▄▄      ██ ▄█▀ ██▀███    ▄████▄ 
+#  ██▄█▒ ▒████▄    ██▄█▒ ▓██ ▒ ██▒ ▒██▀ ▀█ 
+# ▓███▄░ ▒██  ▀█▄ ▓███▄░ ▓██ ░▄█ ▒ ▒▓█    ▄
+# ▓██ █▄ ░██▄▄▄▄██▓██ █▄ ▒██▀▀█▄  ▒▒▓▓▄ ▄██
+# ▒██▒ █▄▒▓█   ▓██▒██▒ █▄░██▓ ▒██▒░▒ ▓███▀ 
+# ▒ ▒▒ ▓▒░▒▒   ▓▒█▒ ▒▒ ▓▒░ ▒▓ ░▒▓░░░ ░▒ ▒  
+# ░ ░▒ ▒░░ ░   ▒▒ ░ ░▒ ▒░  ░▒ ░ ▒    ░  ▒  
+# ░ ░░ ░   ░   ▒  ░ ░░ ░   ░░   ░  ░       
+# ░  ░         ░  ░  ░      ░      ░ ░     
+
+
+set global startup_info_version 999999999
+
+# ────────────────────────────────────────────────────
+# ▄▀▀ ▄▀▄ █ █ █▀▄ ▄▀▀ ██▀
+# ▄██ ▀▄▀ ▀▄█ █▀▄ ▀▄▄ █▄▄
+# ────────────────────────────────────────────────────
+source "%val{config}/kakrc.local"
+
+# ────────────────────────────────────────────────────
+# ▄▀▄ █▀▄ ▀█▀ █ ▄▀▄ █▄ █ ▄▀▀
+# ▀▄▀ █▀   █  █ ▀▄▀ █ ▀█ ▄██
+# ────────────────────────────────────────────────────
+
+set-option global tabstop     2
+set-option global indentwidth 2
+set-option global autoreload  ask
+set-option global scrolloff   8,3
+set-option global makecmd     'make -j 8'
+set-option global grepcmd     'rg --column' 
+set-option global eolformat   lf
+set-option global autoinfo    command|onkey
+set-option global ui_options  terminal_assistant=none \
+                              terminal_enable_mouse=false \
+                              terminal_set_title=false
+
+add-highlighter global/ wrap -indent -word -marker '¬ '  # -width 100
+add-highlighter global/ show-matching
+
+# ────────────────────────────────────────────────────
+# █▀▄ █   █ █ ▄▀ 
+# █▀  █▄▄ ▀▄█ ▀▄█
+# ────────────────────────────────────────────────────
+evaluate-commands %sh{
+    plugins="$kak_config/plugins"
+    mkdir -p "$plugins"
+    [ ! -e "$plugins/plug.kak" ] && \
+        git clone -q https://github.com/andreyorst/plug.kak.git "$plugins/plug.kak"
+    printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
+}
+
+plug "andreyorst/plug.kak" noload
+plug "kakounedotcom/prelude.kak" config %{ require-module prelude }
+plug "lePerdu/kakboard" %{ hook global WinCreate .* %{ kakboard-enable } }
+plug "https://git.sr.ht/~raiguard/kak-one" theme
+plug "andreyorst/fzf.kak"
+plug "kakounedotcom/connect.kak" %{ require-module connect }
+plug "alexherbo2/auto-pairs.kak" %{
+  set-option global auto_pairs ( ) { } [ ] '"' '"' "'" "'" ` ` “ ” ‘ ’ « » ‹ ›
+  hook global WinCreate .* %{ enable-auto-pairs }
+}
+plug "basbebe/pandoc.kak" %{
+  hook global WinSetOption filetype=(asciidoc|fountain|html|latex|markdown) %{
+    require-module pandoc
+    set-option global pandoc_options '-d default'
+  }
+}
+plug "delapouite/kakoune-buffers" %{
+  map global normal ^ q
+  map global normal <a-^> Q
+  map global normal q b
+  map global normal Q B
+  map global normal <a-q> <a-b>
+  map global normal <a-Q> <a-B>
+  map global normal b ': enter-buffers-mode<ret>' -docstring 'buffers'
+  map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+}
+
+plug "eraserhd/parinfer-rust" do %{
+    cargo install --force --path .
+} config %{
+    hook global WinSetOption filetype=(clojure|lisp|scheme|racket) %{
+        parinfer-enable-window -smart
+    }
+}
+
+# ────────────────────────────────────────────────────
+# █▄█ ▄▀▄ ▄▀▄ █▄▀ ▄▀▀
+# █ █ ▀▄▀ ▀▄▀ █ █ ▄██
+# ────────────────────────────────────────────────────
+
+hook global BufOpenFile .* %{ modeline-parse }
+hook global WinCreate .*[.](nix) %{ set-option buffer formatcmd alejandra }
+hook global BufWritePre .*[.](nix) %{ format }
+hook global WinCreate .*[.|_](local) %{
+  set-option buffer filetype sh
+  set-option buffer formatcmd shfmt
+}
+# Tabs to Spaces
+hook global InsertChar \t %{ exec -draft h@ }
+## Better Escape
+hook global InsertChar j %{ try %{
+  exec -draft hH <a-k>kj<ret> d
+  exec <esc>
+}}
+hook global InsertChar j %{ try %{
+  exec -draft hH <a-k>jj<ret> d
+  exec <esc>
+}}
+## Tab Completion
+hook global InsertCompletionShow .* %{
+  try %{
+    execute-keys -draft 'h<a-K>\h<ret>'
+    map window insert <tab> <c-n>
+    map window insert <s-tab> <c-p>
+    hook -once -always window InsertCompetionHide .* %{
+      map window insert <tab> <tab>
+      map window insert <s-tab> <s-tab>
+    }
+  }
+}
+
+# ────────────────────────────────────────────────────
+# ▄▀  ██▀ █▄ █ ██▀ █▀▄ ▄▀▄ █  
+# ▀▄█ █▄▄ █ ▀█ █▄▄ █▀▄ █▀█ █▄▄
+# ────────────────────────────────────────────────────
+
+## LSP
+plug "kak-lsp/kak-lsp" do %{
+  cargo install --locked --force --path .
+} config %{
+
+  # uncomment to enable debugging
+  # eval %sh{echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log}
+  # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+
+  # this is not necessary; the `lsp-enable-window` will take care of it
+  # eval %sh{${kak_opt_lsp_cmd} --kakoune -s $kak_session}
+
+  set global lsp_diagnostic_line_error_sign '║'
+  set global lsp_diagnostic_line_warning_sign '┊'
+
+  define-command ne -docstring 'go to next error/warning from lsp' \
+    %{ lsp-find-error --include-warnings }
+  define-command pe -docstring 'go to previous error/warning from lsp' \
+    %{ lsp-find-error --previous --include-warnings }
+  define-command ee -docstring 'go to current error/warning from lsp' \
+    %{ lsp-find-error --include-warnings; lsp-find-error --previous --include-warnings }
+
+  define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+  hook global WinSetOption filetype=(c|cpp|cc|nix|sh|rust|javascript|purescript|typescript) %{
+      set-option window lsp_auto_highlight_references true
+      set-option window lsp_hover_anchor false
+      lsp-auto-hover-enable
+      echo -debug "Enabling LSP for filtetype %opt{filetype}"
+      lsp-enable-window
+  }
+
+  hook global WinSetOption filetype=(rust) %{
+      set window lsp_server_configuration rust.clippy_preference="on"
+  }
+
+  hook global WinSetOption filetype=rust %{
+    hook window BufWritePre .* %{
+      evaluate-commands %sh{
+          test -f rustfmt.toml && printf lsp-formatting-sync
+      }
+    }
+  }
+
+  hook global KakEnd .* lsp-exit
+}
+
+# Better Comment
+define-command comment %{
+  try %{
+    execute-keys _
+    comment-block
+  } catch comment-line
+}
+
+# ────────────────────────────────────────────────────
+# █▄ ▄█ ▄▀▄ █▀▄ ▄▀▀
+# █ ▀ █ █▀█ █▀  ▄██
+# ────────────────────────────────────────────────────
+
+# For debug any key issue do:
+# first get into *debug* buffer and
+# :set-option buffer debug keys
+
+## Normal-Mode
+map global normal '#'     %{: comment<ret>}
+map global normal '='     %{: format<ret>}
+map global normal '<c-p>' %{: fzf-mode<ret>}
+# map global normal '<c-f>' %{: connect terminal kcr fzf files<ret>}
+
+## User-Mode
+map global user -docstring 'H Split' '|' %{: connect tmux-termial-horizontal kak -c %val{session}<ret>}
+map global user -docstring 'V Split' '_' %{: connect tmux-terminal-vertical kak -c %val{session}<ret>}
+map global user -docstring 'LSP'     'l' %{: enter-user-mode lsp<ret>}
+
+# ────────────────────────────────────────────────────
+# ▄▀▀ ▄▀▄ █   ▄▀▄ █▀▄ ▄▀▀ ▄▀▀ █▄█ ██▀ █▄ ▄█ ██▀
+# ▀▄▄ ▀▄▀ █▄▄ ▀▄▀ █▀▄ ▄██ ▀▄▄ █ █ █▄▄ █ ▀ █ █▄▄
+# ────────────────────────────────────────────────────
+# colorscheme gotham
+colorscheme one-darker-16
+# colorscheme dracula
+
+# kak: filetype=kak
+

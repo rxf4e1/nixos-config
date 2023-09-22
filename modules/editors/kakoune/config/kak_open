@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# $# = if one parameter, $1 == file name
+[ $# = 1 ] && echo "evaluate-commands -client $KAK_CLIENT edit $1" | kak -p "$KAK_SESSION"
+
+# $# = 2 parameters, $1 == +line number and $2 == file name
+if [ $# = 2 ]
+then
+  [ "$1" = '+0' ] && LINE=1 || LINE=$1
+  echo "evaluate-commands -client $KAK_CLIENT edit $2" | kak -p "$KAK_SESSION" && \
+  echo "execute-keys -client $KAK_CLIENT ${LINE}g" | kak -p "$KAK_SESSION"
+fi
+
