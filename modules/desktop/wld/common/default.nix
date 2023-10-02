@@ -29,33 +29,33 @@ with lib; let
     notify-send -u low -a control -t 1000 -h int:value:$(light -G) -i $ICON "Brightness"
   '';
   
-  vol = pkgs.writeShellScriptBin "vol" ''
-    ARG="$@"
-    # PID=$(pidof -x pulsemixer)
-    VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2)
-    ICON="$HOME/.icons/candy-icons/apps/scalable/ocenaudio.svg"
+  # vol = pkgs.writeShellScriptBin "vol" ''
+  #   ARG="$@"
+  #   # PID=$(pidof -x pulsemixer)
+  #   VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2)
+  #   ICON="$HOME/.icons/candy-icons/apps/scalable/ocenaudio.svg"
 
 
-    # if [[ ! $PID ]]; then
-    #     footclient -a float -w 600x100 -e pulsemixer
-    # fi
+  #   # if [[ ! $PID ]]; then
+  #   #     footclient -a float -w 600x100 -e pulsemixer
+  #   # fi
 
-    case $ARG in
-       up)
-	       wpctl set-volume @DEFAULT_SINK@ 5%+;
-         notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" -i $ICON "Vol (+/-)" -t 1000
-	       ;;
-       down)
-	       wpctl set-volume @DEFAULT_SINK@ 5%-;
-         notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" -i $ICON "Vol (+/-)" -t 1000
-	       ;;
-       mute)
-         wpctl set-mute @DEFAULT_SINK@ toggle;
-         notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" -i $ICON "(Un)MUTED" -t 1000
-	       ;;
-    esac
-    # notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" Volume󰋌 -t 1000
-  '';
+  #   case $ARG in
+  #      up)
+	#        wpctl set-volume @DEFAULT_SINK@ 5%+;
+  #        notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" -i $ICON "Vol (+/-)" -t 1000
+	#        ;;
+  #      down)
+	#        wpctl set-volume @DEFAULT_SINK@ 5%-;
+  #        notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" -i $ICON "Vol (+/-)" -t 1000
+	#        ;;
+  #      mute)
+  #        wpctl set-mute @DEFAULT_SINK@ toggle;
+  #        notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" -i $ICON "(Un)MUTED" -t 1000
+	#        ;;
+  #   esac
+  #   # notify-send -u low -h int:value:"$(echo "$VOL * 100" | bc)" Volume󰋌 -t 1000
+  # '';
   
   cfg = config.modules.desktop.wld.common;
 in {
@@ -77,7 +77,7 @@ in {
       swaybg
       swayimg
       
-      vol
+      # vol
       bright
     ];
 

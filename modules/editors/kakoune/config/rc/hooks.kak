@@ -1,7 +1,7 @@
 # custom zig settings
 hook global WinSetOption filetype=zig %{
     set-option window formatcmd 'zig fmt --stdin'
-    expandtab
+    # expandtab
 
     # Enable lsp support with semantic highlighting
     # lsp-enable-window
@@ -16,5 +16,5 @@ hook global WinSetOption filetype=zig %{
 # custom nix settings
 hook global WinSetOption filetype=nix %{
   set-option window formatcmd 'alejandra'
-  smarttab
+  # smarttab
 }

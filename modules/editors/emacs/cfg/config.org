@@ -1,6 +1,7 @@
 #+TITLE:   Emacs Literate Configuration
 #+AUTHOR:  rxf4e1
 #+EMAIL:   rxf4e1@pm.me
+#+PROPERTY: header-args :mkdirp yes :tangle yes :tangle-mode: #o444 :results silent :noweb yes
 #+STARTUP: overview
 ---
 * Header
@@ -12,6 +13,10 @@
 ** Paths
 #+begin_src emacs-lisp :tangle yes
   (elpaca no-littering
+    (setq no-littering-etc-directory
+        (expand-file-name ".local/etc" user-emacs-directory))
+    (setq no-littering-var-directory
+        (expand-file-name ".local/var" user-emacs-directory))
     (require 'no-littering))
 #+end_src
 
@@ -29,19 +34,30 @@
    '(recentf-auto-cleanup 100)
    '(history-length 25)
    '(savehist-mode t)
-   '(save-place nil)
+   '(savehist-file (no-littering-expand-var-file-name "savehist.el"))
+   '(save-place-mode nil)
    '(recentf-mode t))
 
   ;; text properties severely bloat the history so delete them (courtesy of PythonNut)
   (defun unpropertize-savehist ()
     (mapc (lambda (list)
-            (with-demoted-errors
-                (when (boundp list)
-                  (set list (mapcar #'substring-no-properties (eval list))))))
-          '(kill-ring minibuffer-history helm-grep-history helm-ff-history file-name-history
-                      read-expression-history extended-command-history)))
+	    (with-demoted-errors
+		(when (boundp list)
+		  (set list (mapcar #'substring-no-properties (eval list))))))
+	  '(kill-ring minibuffer-history helm-grep-history helm-ff-history file-name-history
+		      read-expression-history extended-command-history)))
   (add-hook 'kill-emacs-hook    #'unpropertize-savehist)
   (add-hook 'savehist-save-hook #'unpropertize-savehist)
+#+end_src
+
+** Tangle
+#+begin_src emacs-lisp
+  (defun tangle-init ()
+    (when (equal (buffer-file-name)
+                 (file-truename (concat user-emacs-directory "config.org")))
+      (let ((prog-mode-hook nil))
+        (org-babel-tangle))))
+  (add-hook 'elpaca-after-init-hook 'tangle-init)
 #+end_src
 
 ** Better Defaults
@@ -204,13 +220,13 @@
     (fontify-face-mode))
 
   ;; Default Font
-  (set-face-attribute 'default nil :font "Fira Code" :height 80)
+  (set-face-attribute 'default nil :font "Jetbrains Mono" :height 80)
   ;; (set-face-attribute 'default nil :font "cozette" :height 100)
   ;; Fixed Font Pitch
-  (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 80)
+  (set-face-attribute 'fixed-pitch nil :font "Jetbrains Mono" :height 80)
   ;; (set-face-attribute 'fixed-pitch nil :font "cozette" :height 100)
   ;; Variable Font Pitch
-  (set-face-attribute 'variable-pitch nil :font "Fira Code" :height 80 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :font "Jetbrains Mono" :height 80 :weight 'regular)
   ;; (set-face-attribute 'variable-pitch nil :font "cozette" :height 100 :weight 'regular)
 #+end_src
 
@@ -260,11 +276,15 @@
 
 *** Theme
 #+begin_src emacs-lisp :tangle yes
-  (elpaca gruber-darker-theme)
+  ;; (elpaca gruber-darker-theme)
   ;;   (load-theme 'gruber-darker t))
-  (elpaca (tao-theme
-           :repo     "11111000000/tao-theme-emacs"
-           :fetcher  github))
+
+  ;; (elpaca almost-mono-themes)
+  ;; (load-theme 'almost-mono-black t nil)
+
+  ;; (elpaca (tao-theme
+  ;;          :repo     "11111000000/tao-theme-emacs"
+  ;;          :fetcher  github))
   ;;   (load-theme 'tao-yin t))
 
 
@@ -1234,8 +1254,9 @@
 *** Epub/Pdf
 * Custom
 #+begin_src emacs-lisp :tangle yes
-  (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
-  (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
+  ;; (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+  ;; (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
 #+end_src
 
 * Footer

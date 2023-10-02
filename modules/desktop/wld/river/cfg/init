@@ -15,7 +15,7 @@ mod="Mod4"
 riverctl map normal $mod+Shift Return spawn 'footclient tmux'
 # riverctl map normal $mod+Shift Return spawn footclient
 
-# riverctl map normal $mod none  V spawn 'footclient -a float -w 450x100  -e pulsemixer'
+# riverctl map normal $mod V spawn 'footclient --app-id float -w 450x100 -e pulsemixer'
 
 riverctl map normal $mod E spawn emw
 riverctl map normal $mod B spawn brave
@@ -152,20 +152,23 @@ riverctl spawn-tagmask ${all_but_scratch_tag}
 
 # Various media key mapping examples for both normal and locked mode which do
 # not have a modifier
+volume_limit=100
+volume_step=2
 for mode in normal locked
 do
     # Eject the optical drive (well if you still have one that is)
     riverctl map $mode None XF86Eject spawn 'eject -T'
 
     # Control pulse audio volume with pamixer (https://github.com/cdemoulins/pamixer)
-    riverctl map $mode None XF86AudioRaiseVolume  spawn 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
+    riverctl map $mode None XF86AudioRaiseVolume  spawn 'volume --limit "$volume_limit" --increase "$volume_step"'
     # riverctl map $mode None XF86AudioRaiseVolume  spawn 'vol up'
     
-    riverctl map $mode None XF86AudioLowerVolume  spawn 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
+    riverctl map $mode None XF86AudioLowerVolume  spawn 'volume --limit "$volume_limit" --decrease "$volume_step"'
     # riverctl map $mode None XF86AudioLowerVolume  spawn 'vol down'
     
-    riverctl map $mode None XF86AudioMute spawn 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+    riverctl map $mode None XF86AudioMute spawn 'pactl set-sink-mute @DEFAULT_SINK@ toggle && volume'
     # riverctl map $mode None XF86AudioMute spawn 'vol mute'
+    riverctl map $mode None XF86AudioMicMute spawn 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
         
     # Control MPRIS aware media players with playerctl (https://github.com/altdesktop/playerctl)
     riverctl map $mode None XF86AudioMedia spawn 'playerctl play-pause'
@@ -228,4 +231,4 @@ riverctl spawn "dunst"
 riverctl spawn "kanshi"
 riverctl spawn "foot --server"
 riverctl spawn "wlsunset -l -23.6 -L -43.5"
-notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"
+notify-send "Welcome back, sir!"

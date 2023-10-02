@@ -37,7 +37,7 @@
                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
                  ((require 'elpaca))
                  ((elpaca-generate-autoloads "elpaca" repo)))
-            (kill-buffer buffer)
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
           (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
   (unless (require 'elpaca-autoloads nil t)
@@ -54,7 +54,7 @@
 (setq frame-title-format '("%b"))
 (setq ring-bell-function 'ignore)
 (setq use-short-answers t)
-(setq native-comp-async-report-warnings-errors 'silent) ; Emacs 28 with native compilation
+(setq native-comp-async-report-warnings-errors 'silent) ; EMACS 28 WITH NATIVE COMPILATION
 (setq native-compile-prune-cache t) ; Emacs 29
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
@@ -65,10 +65,17 @@
 
 ;; load config file
 (require 'ob-tangle)
-(org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
+;; (org-babel-load-file (expand-file-name "./config.org" user-emacs-directory))
+;; (add-hook 'elpaca-after-init-hook (lambda () (load-file "./config.el")))
+
+(let ((config-dot-el (concat user-emacs-directory "config.el"))
+      (config-dot-org (concat user-emacs-directory "config.org")))
+  (if (not (file-exists-p config-dot-el))
+      (org-babel-tangle-file config-dot-org))
+  (load-file config-dot-el))
 
 ;;END OF INIT FILE
-(setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
+;; (setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
 
 (provide 'init)
 ;;; init.el ends here.

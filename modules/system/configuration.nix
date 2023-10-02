@@ -18,10 +18,7 @@
       curl
       wget
       cachix
-      clinfo
       acpi
-      glib
-      gnumake
       lm_sensors
       tlp
       dnsutils
@@ -246,6 +243,7 @@
       enable = true;
       packages = [pkgs.dconf];
     };
+    fstrim.enable = true;
     fwupd = {
       # Bios Update.
       enable = true;

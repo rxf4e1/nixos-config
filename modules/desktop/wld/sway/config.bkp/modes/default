@@ -173,7 +173,7 @@ $bindsym $mod+a focus parent
 default_border pixel 1
 hide_edge_borders smart
 titlebar_border_thickness 0
-titlebar_padding 0 0
+titlebar_padding 0
 
 
 # allow to kill focused floating shell windows using Esc

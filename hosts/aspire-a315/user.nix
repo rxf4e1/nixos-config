@@ -9,15 +9,15 @@
   config.modules = {
     # Browsers
     brave.enable = true;
-    # firefox.enable = true;
+    # firefox.enable = false;
     nyxt.enable = false;
-    qutebrowser.enable = true;
+    qutebrowser.enable = false;
 
     # Editors
     editor = {
-      emacs.enable = false;
+      emacs.enable = true;
       helix.enable = false;
-      kakoune.enable = true;
+      kakoune.enable = false;
       micro.enable = false;
       nano.enable = true;
       neovim.enable = false;
@@ -47,8 +47,8 @@
         common.enable = true;
         hikari.enable = false;
         hyprland.enable = false;
-        river.enable = true;
-        sway.enable = false;
+        river.enable = false;
+        sway.enable = true;
         notify.enable = true;
       };
       gtk.enable = true;

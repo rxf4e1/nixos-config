@@ -14,6 +14,7 @@ in {
     home.packages = with pkgs; [
       bashSnippets
       nix-bash-completions
+      nodePackages.bash-language-server
       shfmt
     ];
     home.sessionPath = [

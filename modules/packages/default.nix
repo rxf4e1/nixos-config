@@ -16,6 +16,7 @@ with lib; let
 
   zig-tools = with pkgs; [
     zig
+    zig-shell-completions
     zls
   ];
 
@@ -85,13 +86,14 @@ in {
         zip
         killall
         lolcat
+        stow
       ]
       ++ code-tools
       ++ file-tools
       ++ inet-tools
       ++ media-tools
       ++ rust-tools
-      # ++ zig-tools
+      ++ zig-tools
       ++ c-tools
       ++ irc-tools
       ++ nix-tools;

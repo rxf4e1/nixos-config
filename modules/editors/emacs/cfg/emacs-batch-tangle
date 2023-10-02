@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+function main () {
+  emacs --batch --load org "$1" --funcall org-babel-tangle
+}
+main "$@"

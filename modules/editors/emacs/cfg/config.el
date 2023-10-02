@@ -1,6 +1,10 @@
 ;;; config.el --- -*- lexical-binding: t -*-
 
 (elpaca no-littering
+  (setq no-littering-etc-directory
+      (expand-file-name ".local/etc" user-emacs-directory))
+  (setq no-littering-var-directory
+      (expand-file-name ".local/var" user-emacs-directory))
   (require 'no-littering))
 
 (require 'savehist)
@@ -15,19 +19,27 @@
  '(recentf-auto-cleanup 100)
  '(history-length 25)
  '(savehist-mode t)
- '(save-place nil)
+ '(savehist-file (no-littering-expand-var-file-name "savehist.el"))
+ '(save-place-mode nil)
  '(recentf-mode t))
 
 ;; text properties severely bloat the history so delete them (courtesy of PythonNut)
 (defun unpropertize-savehist ()
   (mapc (lambda (list)
-          (with-demoted-errors
-              (when (boundp list)
-                (set list (mapcar #'substring-no-properties (eval list))))))
-        '(kill-ring minibuffer-history helm-grep-history helm-ff-history file-name-history
-                    read-expression-history extended-command-history)))
+	  (with-demoted-errors
+	      (when (boundp list)
+		(set list (mapcar #'substring-no-properties (eval list))))))
+	'(kill-ring minibuffer-history helm-grep-history helm-ff-history file-name-history
+		    read-expression-history extended-command-history)))
 (add-hook 'kill-emacs-hook    #'unpropertize-savehist)
 (add-hook 'savehist-save-hook #'unpropertize-savehist)
+
+(defun tangle-init ()
+  (when (equal (buffer-file-name)
+               (file-truename (concat user-emacs-directory "config.org")))
+    (let ((prog-mode-hook nil))
+      (org-babel-tangle))))
+(add-hook 'elpaca-after-init-hook 'tangle-init)
 
 ;; For my "settings" I prefer to use custom-set-variables, which does a bunch of neat stuff.
 ;; First, it calls a variable's "setter" function, if it has one.
@@ -172,13 +184,13 @@
   (fontify-face-mode))
 
 ;; Default Font
-(set-face-attribute 'default nil :font "Fira Code" :height 80)
+(set-face-attribute 'default nil :font "Jetbrains Mono" :height 80)
 ;; (set-face-attribute 'default nil :font "cozette" :height 100)
 ;; Fixed Font Pitch
-(set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 80)
+(set-face-attribute 'fixed-pitch nil :font "Jetbrains Mono" :height 80)
 ;; (set-face-attribute 'fixed-pitch nil :font "cozette" :height 100)
 ;; Variable Font Pitch
-(set-face-attribute 'variable-pitch nil :font "Fira Code" :height 80 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Jetbrains Mono" :height 80 :weight 'regular)
 ;; (set-face-attribute 'variable-pitch nil :font "cozette" :height 100 :weight 'regular)
 
 (elpaca all-the-icons)
@@ -220,31 +232,37 @@
     (add-to-list 'keycast-substitute-alist `(,input "." "Typing…"))))
 
 (elpaca gruber-darker-theme)
-;;   (load-theme 'gruber-darker t))
-(elpaca (tao-theme
-         :repo     "11111000000/tao-theme-emacs"
-         :fetcher  github))
-;;   (load-theme 'tao-yin t))
+  ;;   (load-theme 'gruber-darker t))
+
+(elpaca (almost-mono-themes
+         :repo "cryon/almost-mono-themes"
+         :fetcher github
+    (load-theme 'almost-mono-black t nil)))
+
+  (elpaca (tao-theme
+           :repo     "11111000000/tao-theme-emacs"
+           :fetcher  github))
+  ;;   (load-theme 'tao-yin t))
 
 
-(defun my-modus-themes-invisible-dividers (_theme)
-  "Make window dividers for THEME invisible."
-  (let ((bg (face-background 'default)))
-    (custom-set-faces
-     `(fringe ((t :background ,bg :foreground ,bg)))
-     `(window-divider ((t :background ,bg :foreground ,bg)))
-     `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
-     `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
+  (defun my-modus-themes-invisible-dividers (_theme)
+    "Make window dividers for THEME invisible."
+    (let ((bg (face-background 'default)))
+      (custom-set-faces
+       `(fringe ((t :background ,bg :foreground ,bg)))
+       `(window-divider ((t :background ,bg :foreground ,bg)))
+       `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
+       `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
 
-(add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
 
-(custom-set-variables
- '(modus-themes-to-toggle '(modus-operandi modus-vivendi)))
+  (custom-set-variables
+   '(modus-themes-to-toggle '(modus-operandi modus-vivendi)))
 
-(load-theme 'modus-vivendi t nil)
-(my-leader-def
-  "t s" #'consult-theme
-  "t t" #'modus-themes-toggle)
+  ;; (load-theme 'modus-vivendi t nil)
+  (my-leader-def
+    "t s" #'consult-theme
+    "t t" #'modus-themes-toggle)
 
 (elpaca orderless)
 
@@ -932,7 +950,9 @@ Else create a new file."
        today
        '("journal"))))))
 
-(setq custom-file (expand-file-name "customs.el" user-emacs-directory))
-(add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
+;; (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
+(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(add-hook 'elpaca-after-init-hook (lambda ()
+                                    (load custom-file 'noerror)))
 
 ;;; config.el ends here.

@@ -32,7 +32,7 @@ in {
         size = 24;
       };
       font = {
-        name = "Fira Code";
+        name = "Jetbrains Mono";
         size = 9;
       };
       iconTheme.name = "candy-icons";
