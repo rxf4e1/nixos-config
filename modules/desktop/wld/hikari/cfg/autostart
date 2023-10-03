@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-swaybg -i $NIXOS_CONFIG/modules/desktop/wallpapers/image.jpg -m fill &
-foot --server >/dev/null 2>&1 &
-dunst >/dev/null 2>&1 &
-emacs --daemon >/dev/null 2>&1 &
-kanshi >/dev/null 2>&1 &
-notify-send -i ~/.icons/candy-icons/apps/scalable/retroarch.svg "Welcome back, sir!"
+[ -x "$(command -v foot)" ] && foot --server >/dev/null &
+[ -x "$(command -v dunst)" ] && dunst >/dev/null &
+[ -x "$(command -v kanshi)" ] && kanshi >/dev/null &
+[ -x "$(command -v notify-send)" ] && notify-send "Welcome back, sir!"

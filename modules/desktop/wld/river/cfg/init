@@ -11,8 +11,10 @@
 # Note: the "$mod" modifier is also known as Logo, GUI, Windows, Mod4, etc.
 mod="Mod4"
 
+term="foot"
+
 # $mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
-riverctl map normal $mod+Shift Return spawn 'footclient tmux'
+riverctl map normal $mod+Shift Return spawn 'foot'
 # riverctl map normal $mod+Shift Return spawn footclient
 
 # riverctl map normal $mod V spawn 'footclient --app-id float -w 450x100 -e pulsemixer'
@@ -51,8 +53,11 @@ riverctl map normal $mod+Shift Comma send-to-output previous
 riverctl map normal $mod Return zoom
 
 # Show Rofi menu
-# riverctl map normal $mod D spawn "rofi -show drun"
-riverctl map normal $mod x spawn fuzzel.sh
+riverctl map normal $mod x spawn 'rofi -terminal "$term" \
+	     	    	   	       -show combi \
+				       -combi-modes drun#run \
+				       -modes combi'
+# riverctl map normal $mod x spawn fuzzel.sh
 riverctl map normal $mod+Shift x spawn 'footclient -a float -w 300x300 -e fzf-menu.sh'
 
 # $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
@@ -154,6 +159,11 @@ riverctl spawn-tagmask ${all_but_scratch_tag}
 # not have a modifier
 volume_limit=100
 volume_step=2
+brightness_cmd='$(command -v notify-send >/dev/null && \
+			  VALUE=$(light) && VALUE=${VALUE%%.*} && \
+			  notify-send -e \
+			  -h string:x-canonical-private-synchronous:brightness \
+		          -h "int:value:$VALUE" -t 800 "Brightness: ${VALUE}%")'
 for mode in normal locked
 do
     # Eject the optical drive (well if you still have one that is)
@@ -177,10 +187,8 @@ do
     riverctl map $mode None XF86AudioNext  spawn 'playerctl next'
 
     # Control screen backlight brightness with light (https://github.com/haikarainen/light)
-    # riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 10.0'
-    riverctl map $mode None XF86MonBrightnessUp   spawn 'bright up'
-    # riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 10.0'
-    riverctl map $mode None XF86MonBrightnessDown spawn 'bright down'
+    riverctl map $mode None XF86MonBrightnessUp   spawn 'STEP="$brightness_step" && light -A ${STEP:-5} && $brightness_notification_cmd'
+    riverctl map $mode None XF86MonBrightnessDown spawn 'STEP="$brightness_step" && light -U ${STEP:-5} && $brightness_notification_cmd'
 done
 
 # Set background and border color

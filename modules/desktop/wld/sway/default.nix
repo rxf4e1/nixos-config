@@ -36,7 +36,7 @@ in {
       swaybg
       swayimg
       swaycwd
-      lxqt.lxqt-policykit
+      autotiling-rs
       # xdg-user-dirs
       glfw-wayland
       sway-contrib.grimshot

@@ -8,25 +8,30 @@
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
+
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
+
 # Your preferred terminal emulator
 # Recommends: foot
 set $term foot
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 # Recommends: rofi-wayland
-set $rofi_cmd rofi \
-        -terminal '$term'
+set $rofi_cmd rofi -terminal '$term'
 # Shows a combined list of the applications with desktop files and
 # executables from PATH.
 # TODO: add window with the next release of rofi-wayland
-# set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
-set $menu fuzzel.sh
+set $menu $rofi_cmd -show combi -combi-modes drun #run -modes combi
+# set $menu fuzzel.sh
+
+## Launch // Open clipboard ##
+bindsym $mod+Shift+p exec $clipboard
 
 ### Output configuration
 #
@@ -91,7 +96,7 @@ input type:touchpad {
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+x exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -220,7 +225,7 @@ bindsym $mod+r mode "resize"
 
 # Some settings
 default_border pixel 1
-hide_edge_borders smart
+# hide_edge_borders smart
 titlebar_border_thickness 0
 titlebar_padding 0
 
@@ -229,6 +234,7 @@ bindsym $mod+q exec emw
 
 # Autostart applications
 set $foot_server '[ -x "$(command -v foot)" ] && foot --server'
+set $autotiling '[ -x "$(command -v autotiling-rs)" ] && autotiling-rs'
 set $kanshi '[ -x "$(command -v kanshi)" ] && pkill kanshi; exec kanshi'
 set $dunst '[ -x "$(command -v dunst)" ] && dunst'
 set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 swaybar'
@@ -237,6 +243,7 @@ set $nm_applet '[ -x "$(command -v nm-applet)" ] && nm-applet'
 set $message '[ -x "$(command -v notify-send)" ] && notify-send "Welcome Back, sir!"'
 
 exec {
+  $autotiling
   $dunst
   $foot_server
   $cliphist_store

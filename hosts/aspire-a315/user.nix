@@ -8,10 +8,10 @@
 
   config.modules = {
     # Browsers
-    brave.enable = true;
-    # firefox.enable = false;
+    brave.enable = false;
+    firefox.enable = true;
     nyxt.enable = false;
-    qutebrowser.enable = false;
+    qutebrowser.enable = true;
 
     # Editors
     editor = {
@@ -35,7 +35,7 @@
         bash.enable = true;
         fish.enable = false;
         ion.enable = false;
-        nu.enable = true;
+        nu.enable = false;
         zsh.enable = false;
       };
       prompt.starship.enable = true;
@@ -45,10 +45,10 @@
     desktop = {
       wld = {
         common.enable = true;
-        hikari.enable = false;
+        hikari.enable = true;
         hyprland.enable = false;
         river.enable = false;
-        sway.enable = true;
+        sway.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;

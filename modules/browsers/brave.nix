@@ -13,7 +13,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = [
       pkgs.brave
-      pkgs.mullvad-browser
+      # pkgs.mullvad-browser
     ];
     home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
   };
