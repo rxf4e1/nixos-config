@@ -12,7 +12,7 @@ in {
   };
   config = mkIf cfg.enable {
     home.packages = [
-      pkgs.firefox
+      # pkgs.firefox
       # pkgs.mullvad-browser
     ];
     programs.firefox = {
@@ -21,7 +21,7 @@ in {
         cfg = {
           enableTridactylNative = true;
         };
-      }
+      };
     };
   };
 }
