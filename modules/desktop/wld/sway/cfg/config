@@ -38,7 +38,7 @@ bindsym $mod+Shift+p exec $clipboard
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg
 # output * bg /usr/share/backgrounds/default.png fill
-output * bg $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/image.jpg fill
+output * bg $HOME/.dotfiles/nixos-config/modules/desktop/wallpapers/landscape.jpg fill
 #
 # Example configuration:
 #

@@ -34,7 +34,6 @@ in {
       historyControl = ["erasedups" "ignoredups" "ignorespace"];
 
       sessionVariables = {
-        BROWSER = "brave";
         VISUAL = "\${EDITOR}";
         PAGER = "less";
         LC_COLLATE = "C";

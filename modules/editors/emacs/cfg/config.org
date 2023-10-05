@@ -302,10 +302,13 @@
   (custom-set-variables
    '(modus-themes-to-toggle '(modus-operandi modus-vivendi)))
 
-  (load-theme 'modus-vivendi t nil)
+  ;; (load-theme 'modus-vivendi t nil)
   (my-leader-def
     "t s" #'consult-theme
     "t t" #'modus-themes-toggle)
+
+  (add-to-list 'custom-theme-load-path "~/.config/emacs/themes")
+  (load-theme 'gsh t)
 #+end_src
 
 * Modules

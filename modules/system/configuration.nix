@@ -84,8 +84,8 @@
       wlr.enable = true;
       extraPortals = [
         # pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-wlr
-        # pkgs.xdg-desktop-portal-hyprland
+        # pkgs.xdg-desktop-portal-wlr
+        pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
@@ -184,7 +184,7 @@
   # Set up networking and secure it
   networking = {
     # Quad-9 DNS
-    # nameservers = ["9.9.9.9" "149.112.112.112"];
+    nameservers = ["9.9.9.9" "149.112.112.112"];
     networkmanager = {
       enable = true;
       wifi = {
@@ -207,8 +207,8 @@
 
     firewall = {
       enable = true;
-         allowedTCPPorts = [ 80 443 55555];
-         allowedUDPPorts = [ 80 443 55555];
+         allowedTCPPorts = [ 80 443 8888];
+         allowedUDPPorts = [ 80 443 8888];
          allowPing = true;
     };
   };
@@ -234,8 +234,6 @@
   programs.dconf.enable = true;
   programs.adb.enable = true;
   programs.light.enable = true;
-  # programs.fish.enable = true;
-  # programs.zsh.enable = true;
 
   # DBUS
   services = {

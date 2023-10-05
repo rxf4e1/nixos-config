@@ -11,7 +11,11 @@ with lib; let
 
     export LIBSEAT_BACKEND=logind
 
-    exec Hyprland
+    if [ -z $DISPLAY ]; then
+      exec dbus-run-session Hyprland
+    else
+      echo "Hyprland is running."
+    fi
   '';
 
   dbus-hyprland-environment = pkgs.writeTextFile {
@@ -36,8 +40,8 @@ in {
     home.packages = with pkgs; [
       dbus-hyprland-environment
       hyprland
+      hyprpaper
       swayimg
-      swaybg
       xwayland
       xorg.xprop
       wrapped-hl

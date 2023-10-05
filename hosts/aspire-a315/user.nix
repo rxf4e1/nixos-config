@@ -11,7 +11,7 @@
     brave.enable = false;
     firefox.enable = true;
     nyxt.enable = false;
-    qutebrowser.enable = true;
+    qutebrowser.enable = false;
 
     # Editors
     editor = {
@@ -45,10 +45,10 @@
     desktop = {
       wld = {
         common.enable = true;
-        hikari.enable = true;
+        hikari.enable = false;
         hyprland.enable = false;
         river.enable = false;
-        sway.enable = false;
+        sway.enable = true;
         notify.enable = true;
       };
       gtk.enable = true;
