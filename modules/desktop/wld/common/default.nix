@@ -13,8 +13,8 @@ in {
       cliphist
       jq
       kanshi
-      rofi-wayland
-      # fuzzel
+      # rofi-wayland
+      fuzzel
       playerctl
       wl-clipboard
       wlsunset

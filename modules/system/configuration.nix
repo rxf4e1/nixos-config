@@ -186,24 +186,24 @@
     # Quad-9 DNS
     nameservers = ["9.9.9.9" "149.112.112.112"];
     networkmanager = {
-      enable = true;
+      enable = false;
       wifi = {
         backend = "wpa_supplicant"; # or iwd
         # macAddress = "random";
       };
       # dns = "none";
     };
-    # wireless.iwd = {
-    #   enable = true;
-    #   settings = {
-    #     General.AddressRandomization = "network";
-    #     Settings = {
-    #       # change both to true for ipv6.
-    #       AlwaysRandomizeAddress = true;
-    #       EnableIPv6 = true;
-    #     };
-    #   };
-    # };
+    wireless.iwd = {
+      enable = true;
+      settings = {
+        General.AddressRandomization = "network";
+        Settings = {
+          # change both to true for ipv6.
+          AlwaysRandomizeAddress = true;
+          EnableIPv6 = true;
+        };
+      };
+    };
 
     firewall = {
       enable = true;

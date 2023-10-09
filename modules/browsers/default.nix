@@ -1,7 +1,7 @@
 {...}: {
   imports = [
-    ./brave.nix
-    ./firefox.nix
+    ./brave
+    ./firefox
     ./qutebrowser.nix
     ./nyxt.nix
   ];
