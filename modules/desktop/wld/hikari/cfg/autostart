@@ -2,5 +2,7 @@
 
 [ -x "$(command -v foot)" ] && foot --server >/dev/null &
 [ -x "$(command -v dunst)" ] && dunst >/dev/null &
-[ -x "$(command -v kanshi)" ] && kanshi >/dev/null &
+[ -x "$(command -v kanshi)" ] && systemctl --user start kanshi >/dev/null &
+# [ -x "$(command -v wlr-randr)" ] && wlr-randr >/dev/null &
+# [ -x "$(command -v dbus-hikari-environment)" ] && dbus-hikari-environment >/dev/null &
 [ -x "$(command -v notify-send)" ] && notify-send "Welcome back, sir!"

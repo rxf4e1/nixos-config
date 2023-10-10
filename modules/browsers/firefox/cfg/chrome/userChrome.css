@@ -1,38 +1,233 @@
+/*
+-------------------------------------
+ULTRA-MINIMALIST "ONE LINE" FIREFOX
+-------------------------------------
+
+Works best with 'Tree Tab' extension
+'Tree Style Tab' extension works too
+
+-------------------------------------
+USEFUL "about:" & XUL PAGES:
+
+Library Popout		= 	chrome://browser/content/places/places.xul
+Bookmarks Sidebar	= 	chrome://browser/content/places/bookmarksSidebar.xul
+History	Sidebar		=	chrome://browser/content/places/historySidebar.xul
+
+Options / Prefs 	= 	about:preferences
+Addons / Extensions	= 	about:addons
+Config			= 	about:config
+Extension Debugging	= 	about:debugging
+Support			= 	about:support
+
+-------------------------------------
+
+USEFUL FF KEYBOARD SHORTCUTS:
+
+Menu bar toggle		=	tap Alt
+go to Home Page		=	Alt + Home
+Select Address Bar	=	Alt + D
+Bookmark the page	=	Ctrl + D
+
+New Tab			=	Ctrl + T
+Close Tab		=	Ctrl + W
+Undo Close Tab		=	Ctrl + Shift + T
+
+go to Next Tab		=	Ctrl + Tab
+go to Previous Tab	=	Ctrl + Shift + Tab
+
+go to Add-ons page	=	Ctrl + Shift + A
+Tree Tabs sidebar	=	F1 (with Tree Tabs)
+History sidebar		=	Ctrl + H
+Bookmarks sidebar	=	Ctrl + B
+
+New Window		=	Ctrl + N
+Close Window		=	Ctrl + Shift + W
+Undo Close Window	=	Ctrl + Shift + N
+Exit Firefox		=	Ctrl + Shift + Q
+
+USEFUL WINDOWS SHORTCUTS:
+
+Maximize Window		=	Win + Up
+Minimize Window		=	Win + Down
+Max Win to L-side	=	Win + Left
+Max Win to R-side	= 	Win + Right
+
+-------------------------------------
+
+OTHER MISC NOTES:
+
+ui.popup.disable_autohide to true in about:config to find id's of popup elements using browser toolbox element picker
+about:debugging for enabling browser toolbox debugging of extentions
+if browser toolbox won't open anymore, delete `chrome_debugger_profile` folder in %AppData%\Roaming\Mozilla\Firefox\Profiles\XXXX.default\
+
+-------------------------------------
+*/
+
 :root {
   --tab-max-height: 24px !important;
   --tab-min-height: 0 !important;
   --urlbar-toolbar-height: var(--tab-max-height) !important;
 }
 
-/* Bar resizing */
-#nav-bar,
-.toolbar-items,
-.titlebar-buttonbox-container,
-.tab-content,
-.tab-background,
-.tab-label-container {
-  height: var(--tab-max-height);
-}
-.tab-background {
-  margin: 0 !important;
-}
-.tab-secondary-label {
-  font-size: .5em !important;
-  margin: -.6em 0 .5em !important;
+/*
+TAB BAR - HIDDEN
+*/
+#TabsToolbar {
+    visibility: collapse;
 }
 
-/* Selection highlight */
-#nav-bar toolbaritem,
-#nav-bar toolbarbutton {
-  --focus-outline: none;
-  --slimbar-highlight-color: color-mix(in srgb, var(--lwt-toolbar-field-highlight) 40%, var(--toolbar-bgcolor));
-  /* --toolbar-field-focus-background-color: var(--slimbar-highlight-color); */
+/*
+TAB BAR CONTEXT MENU - ITEMS HIDDEN
+not needed with "Tree Tab" extension, it has its own custom tab context menus
+"Tree Style Tab" extension uses the native tab bar context menu, so uncomment below items if you use it and want some useless/repetitive menu items removed
+
+#tabContextMenu menuseparator, #context_duplicateTab, #context_closeTabsToTheEnd, #context_reloadAllTabs, #context_bookmarkAllTabs, #context_closeOtherTabs {
+    display: none !important 
+}*/
+
+/*
+TITLEBAR - HIDDEN
+No windows buttons anymore
+use WIN+Up and WIN+Down for min/max window instead
+CTRL+SHIFT+W to close select browser window, CTRL+SHIFT+Q to close Firefox entirely
+*/
+/* Firefox 65 broke this...  
+#titlebar {
+	display: none !important
 }
-#nav-bar toolbaritem:focus-visible,
-#nav-bar toolbarbutton:focus-visible,
-#nav-bar toolbaritem #identity-icon-box:focus-visible,
-#nav-bar toolbaritem #star-button-box:focus-visible,
-#nav-bar toolbaritem .unified-extensions-item-action-button:focus-visible {
-  background-color: var(--slimbar-highlight-color) !important;
+*/
+#titlebar {
+	visibility: collapse;
 }
+
+/* needed to prevent address bar from being too high when window maximized*/
+#main-window[sizemode="maximized"] {
+  margin-top: 8px;
+}
+
+/*
+TOOLBAR NAVIGATION BUTTONS - HIDDEN
+use ALT+left (back), ALT+right (FORWARD) or page context menu navigation instead
+*/
+#back-button, #forward-button {
+	display: none !important
+}
+
+
+/*
+LIBRARY MENU - ITEMS HIDDEN
+removed pocket crap, recent highlights and all separators
+*/
+#appMenu-library-pocket-button, .panel-subview-body toolbarseparator, .subview-subheader, #appMenu-library-recentHighlights {
+	display: none !important
+}
+
+/*
+SIDEBAR HEADER - HIDDEN
+comment out if you don't want it hidden
+*/
+.sidebar-header, #sidebar-header {
+	display: none !important
+}
+/*
+SIDEBAR HEADER MENU - ITEMS HIDDEN
+not needed if header is completely hidden
+uncomment below items if have header unhidden and also want some useless/repetitive menu items removed
+
+#sidebar-switcher-bookmarks, #sidebar-switcher-history, #sidebar-switcher-tabs, #sidebar-extensions-separator, #sidebar-reverse-position {
+	display: none !important 
+}*/
+
+/*
+HAMBURGER ICON - HIDDEN
+comment out if you don't want it hidden
+*/
+#PanelUI-menu-button {
+	display: none !important
+}
+/*
+HAMBURGER MENU - ITEMS HIDDEN
+not needed if it's completely hidden
+uncomment items below if you want it back and some useless/repetitive elements removed
+
+.panel-subview-body toolbarseparator, #appMenu-new-window-button, #appMenu-private-window-button, #appMenu-zoom-controls, #appMenu-edit-controls, #appMenu-open-file-button, #appMenu-save-file-button, #appMenu-print-button, #appMenu-find-button, #appMenu-more-button, #appMenu-library-button, #appMenu-addons-button, #appMenu-customize-button, #appMenu-help-button, #appMenu-developer-button {
+	display: none !important
+}*/
+
+/*
+ADDRESS / SEARCH BAR - ITEMS HIDDEN
+security icon labels hidden, icons still show though
+small margin to left/right of bar for dragging windows with mouse
+pocket, email link and send-to-device in "..." dropdown hidden
+*/
+#identity-icon-labels {
+	display: none !important
+}
+#urlbar-container {
+	margin: 0 10px 0 10px;
+}
+#pageAction-panel-pocket, #pageAction-panel-emailLink, #pageAction-panel-sendToDevice  {
+	display: none !important
+}
+/* ADDRESS / SEARCH BAR - SET 'NOT SECURE' TEXT TO RED (set security.insecure_connection_text.enabled = true in about:config) */
+#urlbar > #identity-box.notSecureText > #identity-icon-labels > #identity-icon-label {
+  color: rgba(255, 0, 0, 0.867) !important;
+}
+
+/*
+FIND BAR - MOVE TO TOP
+*/
+.browserContainer > findbar {
+    -moz-box-ordinal-group: 0;
+	border: 1px solid threedshadow !important;
+}
+
+/*
+BOOKMARKS TOOLBAR HIDDEN ON ALL BUT NEW TAB PAGE
+*/
+#main-window #PersonalToolbar {
+  visibility: collapse !important;
+}
+#main-window[title^="about:newtab"] #PersonalToolbar, #main-window[title^="New Tab"] #PersonalToolbar, #main-window[title^="Nightly"] #PersonalToolbar, #main-window[title^="Mozilla Firefox"] #PersonalToolbar, #main-window[title^="Firefox"] #PersonalToolbar {
+  visibility: visible !important;
+}
+/* centers bookmark toolbar elements */
+#PlacesToolbarItems {
+	-moz-box-pack: center
+}
+
+/*
+PAGE CONTEXT MENUS - ITEMS HIDDEN
+(for the popup when you right click on page elements)
+removed: copy image (to clipboard), email image, set image as background, view image info
+removed: some separators, save page, pocket BS, view page info
+*/
+#context-copyimage-contents, #context-sendimage, #context-setDesktopBackground, #context-viewimageinfo,
+#context-sep-navigation, #inspect-separator, #context-savepage, #context-pocket, #context-savelinktopocket, #context-viewinfo { 
+    display: none !important
+}
+/* take screenshot (is in URL dropdown anyways) */
+#screenshots_mozilla_org-menuitem-_create-screenshot {
+	display: none !important
+}
+
+/*
+-------------------------
+EXTENSION SPECIFIC TWEAKS
+-------------------------
+*/
+
+/*
+LASTPASS CONTEXT MENU ITEM FIX
+stupid extension keeps ignoring "Hide Context Menu Options" in its own settings page
+*/
+menuitem[label="LastPass"] {
+  display: none !important;
+}
+
+/*
+TREE TABS
+eventually going to customize context menus there as well
+*/
+
 

@@ -60,9 +60,11 @@ done
 if [ "$CHANGE" -ne 0 ]; then
     VOLUME=$(get_sink_volume "$SINK")
     VOLUME=$(( VOLUME + CHANGE ))
-    pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
+    wpctl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
+    # pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
 elif [ "$VOLUME" -ge 0 ]; then
-    pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
+    wpctl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
+    # pactl set-sink-volume "$SINK" "$(clamp "$VOLUME")%"
 fi
 
 # Display desktop notification
@@ -73,7 +75,8 @@ fi
 
 VOLUME=$(get_sink_volume "$SINK")
 TEXT="Volume: ${VOLUME}%"
-case $(pactl get-sink-mute "$SINK") in
+case $(wpctl get-sink-mute "$SINK") in
+# case $(pactl get-sink-mute "$SINK") in
     *yes)
 	TEXT="Volume: muted"
 	VOLUME=0

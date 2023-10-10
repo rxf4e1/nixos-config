@@ -7,7 +7,7 @@
 with lib; let
   wrapped-hikari = pkgs.writeShellScriptBin "wrapped-hikari" ''
     cd ~
-    exec hikari
+    exec dbus-run-session hikari
   '';
   dbus-hikari-environment = pkgs.writeTextFile {
       name = "dbus-hikari-environment";
@@ -16,7 +16,7 @@ with lib; let
 
       text = ''
         dbus-update-activation-environment --systemd \
-        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+        WAYLAND_DISPLAY=wlroots XDG_CURRENT_DESKTOP=wlroots
         systemctl --user stop pipewire pipewire-media-session \
         xdg-desktop-portal xdg-desktop-portal-wlr
         systemctl --user start pipewire pipewire-media-session \

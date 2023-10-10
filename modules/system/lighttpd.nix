@@ -15,7 +15,7 @@ in {
     # https://github.com/bjornfor/nixos-config/blob/master/profiles/webserver.nix
     enable = true;
     package = pkgs.lighttpd;
-    port = 8080;
+    port = 80;
     document-root = "/srv/www";
     mod_status = true;
     mod_userdir = false;

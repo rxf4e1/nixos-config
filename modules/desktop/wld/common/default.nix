@@ -12,9 +12,8 @@ in {
     home.packages = with pkgs; [
       cliphist
       jq
-      kanshi
-      # rofi-wayland
-      fuzzel
+      kanshi # wdisplays
+      fuzzel # rofi-wayland
       playerctl
       wl-clipboard
       wlsunset
@@ -34,6 +33,7 @@ in {
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
       WLR_NO_HARDWARE_CURSORS = "1";
+      # LIBSEAT_BACKEND = "seatd";
       LIBSEAT_BACKEND = "logind";
     };
   };

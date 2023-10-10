@@ -10,7 +10,7 @@ in {
   options.modules.desktop.wld.notify = {enable = mkEnableOption "notify";};
   config = mkIf cfg.enable {
     services.mako = {
-      enable = true;
+      enable = false;
       actions = true;
       anchor = "bottom-right";
       borderRadius = 0;
@@ -43,7 +43,7 @@ in {
     };
 
     home.packages = with pkgs; [
-      # dunst
+      dunst
       # fnott
       # swaynotificationcenter
       libnotify

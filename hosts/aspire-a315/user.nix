@@ -15,9 +15,9 @@
 
     # Editors
     editor = {
-      emacs.enable = false;
+      emacs.enable = true;
       helix.enable = false;
-      kakoune.enable = true;
+      kakoune.enable = false;
       micro.enable = false;
       nano.enable = true;
       neovim.enable = false;
@@ -45,10 +45,10 @@
     desktop = {
       wld = {
         common.enable = true;
-        hikari.enable = false;
+        hikari.enable = true;
         hyprland.enable = false;
         river.enable = false;
-        sway.enable = true;
+        sway.enable = false;
         notify.enable = true;
       };
       gtk.enable = true;

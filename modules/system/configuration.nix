@@ -4,7 +4,7 @@
 
   imports = [
     # ./acme.nix
-    # ./lighttpd.nix
+    ./lighttpd.nix
     # ./virt.nix
     # ./searx.nix
     # ./opencl.nix
@@ -28,6 +28,7 @@
       vulkan-loader
       vulkan-tools
       gnome.adwaita-icon-theme
+      # seatd
     ];
     # Set environment variables
     variables = {
@@ -84,8 +85,8 @@
       wlr.enable = true;
       extraPortals = [
         # pkgs.xdg-desktop-portal-gtk
-        # pkgs.xdg-desktop-portal-wlr
-        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-wlr
+        # pkgs.xdg-desktop-portal-hyprland
       ];
     };
   };
@@ -177,6 +178,7 @@
         "audio"
         "networkmanager"
         "kvm"
+        "openrazr"
       ];
     };
   };
@@ -196,11 +198,19 @@
     wireless.iwd = {
       enable = true;
       settings = {
-        General.AddressRandomization = "network";
+        General = {
+          EnableNetworkConfiguration = true;
+          # AddressRandomization = "network";
+        };
+        # Scan.DisablePeriodicScan = true;
         Settings = {
-          # change both to true for ipv6.
-          AlwaysRandomizeAddress = true;
-          EnableIPv6 = true;
+          # IPv6 enabled by default since v2.0.
+          # EnableIPv6 = true;
+          # AlwaysRandomizeAddress = true;
+        };
+        Network = {
+          # NameResolvingService = "resolvconf";
+          NameResolvingService = "systemd";
         };
       };
     };
@@ -260,15 +270,15 @@
 
   # Sound
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  # services.pipewire = {
-  #   enable = true;
-  #   wireplumber.enable = true;
-  #   audio.enable = true;
-  #   alsa.enable = true;
-  #   alsa.support32Bit = true;
-  #   pulse.enable = true;
-  # };
+  # hardware.pulseaudio.enable = true;
+  services.pipewire = {
+    enable = true;
+    wireplumber.enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   # Set up hardware stuff: bluetooth opengl etc
   hardware = {
