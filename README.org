@@ -1,0 +1,87 @@
+#+TITLE: NixOS Personal Configuration
+#+AUTHOR: rxf4e1
+#+DATE: <2023-10-10 Tue>
+---
+* Preamble
+* How To Install
+I used to do a =Btrfs=, but since we are pretty near to mainline
+=Bcachefs= i started to give it a try. The process to install ~NixOS~ is
+pretty straight forward, but today we have to build our personal iso
+to support ~bcachefs~, and this process i will upload here some day.
+By now, just the installation process, so let's begin:
+** Partitioning
+I like the simplicity of =SGDISK=:
+#+BEGIN_SRC shell
+  # Delete all existing partitions
+  sgdisk --zap-all /dev/<disk>
+
+  # Creating partitions
+  sgdisk -a1 -n0:1M:+512M -t0:EF00 -c0:efiboot /dev/<disk>
+  sgdisk -n2:0:+4G        -t2:8200 -c2:swapfs  /dev/<disk>
+  sgdisk -n3:0:0          -t3:8300 -c3:rootfs  /dev/<disk>
+#+END_SRC
+then i usually set some variables to help in the process:
+#+begin_src shell
+  b=/dev/disk/by-id/<disk>-part1
+  s=/dev/disk/by-id/<disk>-part2
+  r=/dev/disk/by-id/<disk>-part3
+#+end_src
+** Formatting
+Since i use =UEFI boot= i format my efi partition as =vfat=.
+#+begin_src shell
+  # EFIBOOT
+  mkfs.vfat -F32 $b
+
+  # SWAPFS
+  mkswap $s
+  swapon $s
+
+  # ROOTFS
+  bcachefs format \
+           --compression=zstd \
+           --encrypted \
+           --label=ssd.ssd1 $r
+#+end_src
+The process to format the bcachefs filesystem is simple and it varies
+depending on use case. When bcachefs format command finishes, it will
+ask to put your passwd for encryption.
+** Mounting
+Since we have encrypted our root partition we have to unlock it before
+start to mount the system.
+#+begin_src shell
+  bcachefs unlock -k session $r
+  # note: -k session is for systemd
+
+  mount -t bcachefs $r /mnt
+#+end_src
+Now with our root mounted let's move into it and create the subvolumes
+and boot directories.
+#+begin_src shell
+  cd /mnt
+  mkdir -pv boot
+  mount $b boot
+  bcachefs subvolume create home
+  bcachefs subvolume create nix
+  bcachefs subvolume create var
+#+end_src
+** Generate Config
+Now generate the =configuration.nix= and =hardware-configuration.nix=,
+edit it and we are almost done!
+#+begin_src shell
+  nixos-generate-config --root /mnt
+  nano -w /mnt/etc/nixos/configuration.nix
+#+end_src
+Don't forget to add support for bcachefs and for flakes:
+#+begin_src shell
+  boot.supportedFilesystems = ["bcachefs"];
+  # ...
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+#+end_src
+Now just check if =/mnt/etc/nixos/hardware-configuration.nix= is ok and
+begin to install.
+** Finishing
+#+begin_src shell
+  nixos-install
+#+end_src
+Add your root passwd and reboot.
+Done!
