@@ -4,11 +4,10 @@
 
   imports = [
     # ./acme.nix
-    ./lighttpd.nix
+    # ./lighttpd.nix
     # ./virt.nix
     # ./searx.nix
     # ./opencl.nix
-    # ./nginx.nix
   ];
 
   environment = {
@@ -28,7 +27,7 @@
       vulkan-loader
       vulkan-tools
       gnome.adwaita-icon-theme
-      # seatd
+      pulseaudio
     ];
     # Set environment variables
     variables = {
