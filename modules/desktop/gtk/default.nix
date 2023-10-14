@@ -33,9 +33,9 @@ in {
       };
       font = {
         name = "Jetbrains Mono";
-        size = 9;
+        size = 10;
       };
-      iconTheme.name = "candy-icons";
+      # iconTheme.name = "candy-icons";
       theme = {
         name = "Sweet-Dark";
         package = pkgs.sweet;

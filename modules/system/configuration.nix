@@ -5,7 +5,7 @@
   imports = [
     # ./acme.nix
     # ./lighttpd.nix
-    # ./virt.nix
+    ./virt.nix
     # ./searx.nix
     # ./opencl.nix
   ];
@@ -61,6 +61,7 @@
         fonts = ["NerdFontsSymbolsOnly"];
       })
       cozette
+      creep
       # fira-code
       # fira-code-symbols
       inconsolata
@@ -216,8 +217,8 @@
 
     firewall = {
       enable = true;
-         allowedTCPPorts = [ 80 443 8888];
-         allowedUDPPorts = [ 80 443 8888];
+         allowedTCPPorts = [ 80 443 10123];
+         allowedUDPPorts = [ 80 443 10123];
          allowPing = true;
     };
   };

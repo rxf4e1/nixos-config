@@ -53,9 +53,9 @@ in {
         md = "mkdir -pv";
         cp = "cp -iv";
         mv = "mv -iv";
-        rm = "rm -Iv";
+        rm = "rm -iv";
 
-        v = "nano -v";
+        view = "nano -v";
 
         rebuild = "doas nixos-rebuild switch --flake $NIXOS_CONFIG/'#${machine_id}'";
         rebuild-boot = "doas nixos-rebuild boot --flake $NIXOS_CONFIG/'#${machine_id}'";

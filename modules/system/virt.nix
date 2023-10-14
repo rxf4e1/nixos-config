@@ -16,7 +16,7 @@
     waydroid.enable = false;
   };
   environment.systemPackages = [
-    # virt-manager
+    pkgs.virt-manager
     # libguestfs
   ];
 

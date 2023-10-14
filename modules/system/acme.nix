@@ -1,20 +1,23 @@
 {
+  pkgs,
   ...
-}: let
+}:
+
+let
 
 	myDomain = "optin.org";
-	acmeChallengesDir = "/var/lib/acme/acme-challenge";
+	# acmeChallengesDir = "/var/lib/acme/acme-challenge";
 
 in {
-  security.acme = {
-    acceptTerms = true;
-    certs = {
-      "${myDomain}" = {
-        email = "0xf4e1@tuta.io";
-        webroot = acmeChallengesDir;
-      };
-    };
-  };
+  # security.acme = {
+  #   acceptTerms = true;
+  #   certs = {
+  #     "${myDomain}" = {
+  #       email = "0xf4e1@tuta.io";
+  #       webroot = acmeChallengesDir;
+  #     };
+  #   };
+  # };
 
   services.nginx = {
     enable = true;
@@ -24,10 +27,19 @@ in {
     # recommendedProxySettings = true;
     # recommendedTlsSettings = true;
     virtualHosts."${myDomain}" = {
-      addSSL = true;
-      enableACME = true;
-      root = "/var/www/${myDomain}";
+      # addSSL = true;
+      # enableACME = true;
+      listen = [
+        {
+          # 0x101.duckdns.org
+          addr = "[2804:431:c7c9:c323:d652:c94:fbb0:e7b6]";
+          port = 10123;
+        }
+      ];
+      root = "/srv/www/optin";
     };
-    # logError = "stderr debug";
+    # defaultListenAddresses = ["10.0.0.10" "[2804:431:c7c8:a8de:a663:a1ff:fe25:aa98]"];
+    # defaultHTTPListenPort = 10123;
   };
+
 }

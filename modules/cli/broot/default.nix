@@ -15,7 +15,7 @@ in {
       enable = true;
       package = pkgs.broot;
       enableBashIntegration = true;
-      enableZshIntegration = true;
+      # enableZshIntegration = true;
       settings = {
         quit_on_last_cancel = true;
         show_selection_mark = true;
