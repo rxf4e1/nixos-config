@@ -26,7 +26,7 @@ then i usually set some variables to help in the process:
   s=/dev/disk/by-id/<disk>-part2
   r=/dev/disk/by-id/<disk>-part3
 #+end_src
-** Formatting
+** Formating
 Since i use =UEFI boot= i format my efi partition as =vfat=.
 #+begin_src shell
   # EFIBOOT
