@@ -13,6 +13,11 @@ in {
       enable = true;
       userName = "rxf4e1";
       userEmail = "rxf4e1@pm.me";
+      # signing = {
+      #   gpgPath = "";
+      #   key = "";
+      #   signByDefault = true;
+      # };
       extraConfig = {
         init = {defaultBranch = "main";};
         core = {
