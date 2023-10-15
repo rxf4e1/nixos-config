@@ -5,7 +5,7 @@
   ...
 }:
 with lib; let
-  browser = "firefox";
+  browser = "librewolf";
   cfg = config.modules.firefox;
 in {
   options.modules.firefox = {

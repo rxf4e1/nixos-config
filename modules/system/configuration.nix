@@ -5,7 +5,7 @@
   imports = [
     # ./acme.nix
     # ./lighttpd.nix
-    ./virt.nix
+    # ./virt.nix
     # ./searx.nix
     # ./opencl.nix
   ];
