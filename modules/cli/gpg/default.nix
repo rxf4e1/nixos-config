@@ -21,7 +21,7 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODY0WfRi17oHSj2Il2rHeXQmBQD03jJI+eL8gMqVlZA dev.op0x6@slmail.me"
       ];
       grabKeyboardAndMouse = true;
-      pinentryFlavor = "emacs";
+      pinentryFlavor = "curses";
     };
     home.sessionVariables = {
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";

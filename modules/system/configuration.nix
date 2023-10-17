@@ -117,32 +117,28 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 3d";
     };
   };
 
   # Boot settings: clean /tmp/, latest kernel and bootloader
   boot = {
-    # kernelPackages = pkgs.linuxPackages_latest;
-
     readOnlyNixStore = true;
-
-    plymouth = {
-      enable = false;
-      theme = "breeze";
-    };
-
     supportedFilesystems = ["bcachefs" "ntfs"];
-
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
 
     loader = {
       systemd-boot.enable = true;
       systemd-boot.editor = false;
-      systemd-boot.consoleMode = "auto";
+      systemd-boot.consoleMode = "max";
       efi.canTouchEfiVariables = true;
       timeout = 2;
+    };
+    
+    plymouth = {
+      enable = false;
+      # theme = "breeze";
     };
 
     kernel.sysctl = {
@@ -252,11 +248,7 @@
       packages = [pkgs.dconf];
     };
     fstrim.enable = true;
-    fwupd = {
-      # Bios Update.
-      enable = true;
-      package = pkgs.fwupd;
-    };
+    fwupd.enable = true;
     udev = {enable = true;};
     journald.console = "/dev/tty12";
     upower.enable = true; # Battery info & stuff
