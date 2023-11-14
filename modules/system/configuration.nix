@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{lib,pkgs, ...}: {
   # Remove unecessary preinstalled packages
   environment.defaultPackages = [];
 
@@ -61,7 +61,6 @@
         fonts = ["NerdFontsSymbolsOnly"];
       })
       cozette
-      creep
       # fira-code
       # fira-code-symbols
       inconsolata
@@ -101,13 +100,9 @@
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
       builders-use-substitutes = true;
-      substituters = [
-        # "https://hyprland.cachix.org"
-        "https://nix-community.cachix.org"
-      ];
+      substituters = ["https://nix-community.cachix.org"];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
       allowed-users = ["rxf4e1"];
       trusted-users = ["root" "rxf4e1"];
@@ -131,7 +126,7 @@
     loader = {
       systemd-boot.enable = true;
       systemd-boot.editor = false;
-      systemd-boot.consoleMode = "max";
+      systemd-boot.consoleMode = "auto";
       efi.canTouchEfiVariables = true;
       timeout = 2;
     };
@@ -163,7 +158,7 @@
     users.rxf4e1 = {
       isNormalUser = true;
       # shell = pkgs.nushell;
-      shell = pkgs.bash;
+      shell = pkgs.zsh;
       uid = 1000;
       group = "users";
       extraGroups = [
@@ -172,7 +167,6 @@
         "wheel"
         "video"
         "audio"
-        "networkmanager"
         "kvm"
         "openrazr"
       ];
@@ -212,7 +206,7 @@
     };
 
     firewall = {
-      enable = true;
+      enable = false;
          allowedTCPPorts = [ 80 443 10123];
          allowedUDPPorts = [ 80 443 10123];
          allowPing = true;
@@ -240,6 +234,7 @@
   programs.dconf.enable = true;
   programs.adb.enable = true;
   programs.light.enable = true;
+  programs.zsh.enable = true;
 
   # DBUS
   services = {
@@ -254,7 +249,7 @@
     upower.enable = true; # Battery info & stuff
     xserver = {
       desktopManager.xterm.enable = false;
-      # videoDrivers = lib.mkDefault ["amdgpu"];
+      videoDrivers = lib.mkDefault ["amdgpu"];
     };
   };
 

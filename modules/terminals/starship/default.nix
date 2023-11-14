@@ -9,6 +9,12 @@ with lib; let
 in {
   options.modules.terminal.prompt.starship = {enable = mkEnableOption "Starship Prompt";};
   config = mkIf cfg.enable {
-    home.packages = [pkgs.starship];
+    # home.packages = [pkgs.starship];
+    programs.starship = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      enableTransience = true;
+    };
   };
 }

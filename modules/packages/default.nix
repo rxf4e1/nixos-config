@@ -75,6 +75,7 @@ with lib; let
 in {
   options.modules.packages = {enable = mkEnableOption "Packages";};
   config = mkIf cfg.enable {
+    # manual.manpages.enable = false;
     home.packages = with pkgs;
       [
         bc

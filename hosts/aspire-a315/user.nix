@@ -1,9 +1,4 @@
-{
-  # config,
-  # lib,
-  # inputs,
-  ...
-}: {
+{ ... }: {
   imports = [../../modules];
 
   config.modules = {
@@ -36,7 +31,7 @@
         fish.enable = false;
         ion.enable = false;
         nu.enable = false;
-        zsh.enable = false;
+        zsh.enable = true;
       };
       prompt.starship.enable = true;
     };
@@ -45,9 +40,9 @@
     desktop = {
       wld = {
         common.enable = true;
-        hikari.enable = true;
+        hikari.enable = false;
         hyprland.enable = false;
-        river.enable = false;
+        river.enable = true;
         sway.enable = false;
         notify.enable = true;
       };

@@ -23,7 +23,7 @@ in {
       defaultKeymap = "emacs";
       enableVteIntegration = true;
       autocd = false;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
       shellAliases = {
         cat = "bat";
         less = "bat --paging=always";
@@ -49,7 +49,7 @@ in {
       };
       # shellGlobalAliases = {};
       sessionVariables = {
-        BROWSER = "brave";
+        BROWSER = "librewolf";
         VISUAL = "$EDITOR";
         PAGER = "less";
         LC_COLLATE = "C";

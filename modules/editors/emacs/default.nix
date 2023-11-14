@@ -13,7 +13,7 @@ in {
     programs.emacs = {
       enable = true;
       package = pkgs.emacs-git;
-      extraPackages = ( epkgs: [ epkgs.vterm ]);
+      extraPackages = ( epkgs: [ epkgs.vterm epkgs.pdf-tools ]);
     };
     home.sessionVariables.EDITOR = "emacsclient";
     services.emacs.enable = false;

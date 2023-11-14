@@ -31,7 +31,7 @@ with lib; let
 
       text = ''
         dbus-update-activation-environment --systemd \
-        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river
         systemctl --user stop pipewire pipewire-media-session \
         xdg-desktop-portal xdg-desktop-portal-wlr
         systemctl --user start pipewire pipewire-media-session \
@@ -55,11 +55,7 @@ in {
           XDG_CURRENT_DESKTOP = "river";
           XDG_SESSION_DESKTOP = "wlroots";
           XDG_SESSION_TYPE = "wayland";
-          
-          XKB_DEFAULT_LAYOUT = "br";
-          XKB_DEFAULT_VARIANT = "abnt2";
-          XKB_DEFAULT_OPTIONS = "ctrl:nocaps";
-        };
+      };
       home.shellAliases = {
           x = "wrapped-river";
         };

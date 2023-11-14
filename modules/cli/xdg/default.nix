@@ -16,9 +16,9 @@ in {
         enable = true;
         createDirectories = false;
         desktop = "$HOME/desktop";
-        documents = "$HOME/documents";
+        documents = "$HOME/docs";
         download = "$HOME/downloads";
-        pictures = "$HOME/pictures";
+        pictures = "$HOME/pics";
         publicShare = "$HOME/public";
         templates = "$HOME/templates";
       };
