@@ -52,9 +52,9 @@ done
 #################################################
 riverctl map normal Super Q spawn "foot"
 riverctl map normal Super+Shift Return spawn "foot --app-id=float"
-riverctl map normal Mod5 P spawn "fuzzel.sh"
+riverctl map normal Mod5 P spawn "fuzzel"
 riverctl map normal Super+Shift R spawn $HOME/.config/river/init
-riverctl map normal Super E spawn 'emw'
+riverctl map normal Super E spawn "emw"
 
 #################################################
 # WINDOW-MANAGEMENT

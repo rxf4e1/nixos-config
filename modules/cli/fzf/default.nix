@@ -14,8 +14,7 @@ in {
     programs.fzf = {
       enable = false;
       enableBashIntegration = true;
-      # enableFishIntegration = true;
-      # enableZshIntegration = true;
+      enableZshIntegration = true;
       tmux.enableShellIntegration = true;
       tmux.shellIntegrationOptions = ["-d 30%"];
       changeDirWidgetCommand = "fd --color=auto --type=d";

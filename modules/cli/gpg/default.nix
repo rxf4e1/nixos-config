@@ -16,9 +16,10 @@ in {
     services.gpg-agent = {
       enable = true;
       enableBashIntegration = true;
+      enableZshIntegration = true;
       enableSshSupport = true;
       sshKeys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODY0WfRi17oHSj2Il2rHeXQmBQD03jJI+eL8gMqVlZA dev.op0x6@slmail.me"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHyGWhb0MNCq5K16DfBWQn0chx4jEDSnV9fVvR+Igmzi rxf4e1@pm.me"
       ];
       grabKeyboardAndMouse = true;
       pinentryFlavor = "curses";

@@ -34,6 +34,12 @@ with lib; let
     gcc
   ];
 
+  lua-tools = with pkgs; [
+    lua54Packages.lua
+    lua54Packages.luarocks
+    lua-language-server
+  ];
+
   code-tools = with pkgs; [
     gdb
     pandoc
@@ -96,6 +102,7 @@ in {
       ++ rust-tools
       ++ zig-tools
       ++ c-tools
+      ++ lua-tools
       ++ irc-tools
       ++ nix-tools;
     home.shellAliases = {

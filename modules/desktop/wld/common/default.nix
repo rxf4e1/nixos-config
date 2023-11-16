@@ -12,8 +12,8 @@ in {
     home.packages = with pkgs; [
       cliphist
       jq
-      kanshi # wdisplays
-      fuzzel # rofi-wayland
+      kanshi
+      fuzzel
       playerctl
       wl-clipboard
       wlsunset
@@ -36,5 +36,7 @@ in {
       # LIBSEAT_BACKEND = "seatd";
       LIBSEAT_BACKEND = "logind";
     };
+
+    home.file."fuzzel.ini".source = ./cfg/fuzzel.ini;
   };
 }
