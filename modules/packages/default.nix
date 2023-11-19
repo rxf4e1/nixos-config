@@ -15,9 +15,9 @@ with lib; let
   ];
 
   zig-tools = with pkgs; [
-    zig
+    # zig
     zig-shell-completions
-    zls
+    # zls
   ];
 
   rust-tools = with pkgs; [

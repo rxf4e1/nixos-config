@@ -16,9 +16,9 @@ mod=Mod4
 #################################################
 # APPEARANCE
 #################################################
-riverctl background-color 0x000000
-riverctl border-color-focused 0xAFFF00
-riverctl border-color-unfocused 0x8A8A8A
+riverctl background-color 0x002B36
+riverctl border-color-focused 0x586E75
+riverctl border-color-unfocused 0x073642
 riverctl border-width 1
 # riverctl xcursor-theme Breeze_Hacked
 
@@ -27,9 +27,9 @@ gsettings set org.gnome.desktop.interface gtk-theme Adwaita
 # gsettings set org.gnome.desktop.interface cursor-theme Breeze_Hacked
 gsettings set org.gnome.desktop.wm.preferences button-layout ""
 
-#find "${HOME}/Pictures/wallpaper/" -type f | shuf -n1 | read WALLPAPER
-WALLPAPER="${NIXOS_CONFIG}/modules/desktop/wallpapers/image.jpg"
-spawn_once swaybg -m fill -i "${WALLPAPER}"
+# find "${HOME}/pics/wallpaper/" -type f | shuf -n1 | read WALLPAPER
+# WALLPAPER="${NIXOS_CONFIG}/modules/desktop/wallpapers/image.jpg"
+# spawn_once swaybg -m fill -i "${WALLPAPER}"
 
 #################################################
 # INPUTS
@@ -183,9 +183,9 @@ riverctl csd-filter-remove app-id emacs
 #################################################
 # WIDGETS
 #################################################
-spawn_once dunst
+spawn_once mako
 spawn_once kanshi
-# spawn_once "foot --server"
+spawn_once "foot --server"
 spawn_once "wlsunset -l -23.6 -L -43.5"
 notify-send -t 2048 "Hack The World!"
 

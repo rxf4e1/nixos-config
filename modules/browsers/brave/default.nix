@@ -12,9 +12,10 @@ in {
   };
   config = mkIf cfg.enable {
     home.packages = [
-      pkgs.brave
-      # pkgs.mullvad-browser
+      # pkgs.brave
+      pkgs.vivaldi
+      pkgs.vivaldi-ffmpeg-codecs # support for proprietary codecs
     ];
-    home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
+    # home.file.".config/brave-flags.conf".source = ./brave-flags.conf;
   };
 }

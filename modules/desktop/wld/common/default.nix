@@ -37,6 +37,7 @@ in {
       LIBSEAT_BACKEND = "logind";
     };
 
-    home.file."fuzzel.ini".source = ./cfg/fuzzel.ini;
+    home.file.".config/fuzzel/fuzzel.ini".source = ./cfg/fuzzel.ini;
+    home.file.".config/kanshi/kanshi.conf".source = ./cfg/kanshi.conf;
   };
 }

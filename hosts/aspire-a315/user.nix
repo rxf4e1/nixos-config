@@ -3,7 +3,7 @@
 
   config.modules = {
     # Browsers
-    brave.enable = false;
+    brave.enable = true;
     firefox.enable = true;
     nyxt.enable = false;
     qutebrowser.enable = false;

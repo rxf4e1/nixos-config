@@ -10,12 +10,12 @@ in {
   options.modules.desktop.wld.notify = {enable = mkEnableOption "notify";};
   config = mkIf cfg.enable {
     services.mako = {
-      enable = false;
+      enable = true;
       actions = true;
       anchor = "bottom-right";
       borderRadius = 0;
-      borderSize = 3;
-      defaultTimeout = 15000;
+      borderSize = 2;
+      defaultTimeout = 2048;
       format = "<b>%s</b>\\n%b";
       font = "Monospace 9";
       # format = "";
@@ -24,26 +24,21 @@ in {
       # width = 300;
       padding = "20";
       margin = "20";
-      icons = true;
+      icons = false;
       maxIconSize = 32;
       layer = "overlay";
-      backgroundColor = "#282a36";
-      borderColor = "#282a36";
-      textColor = "#44475a";
+      backgroundColor = "#0D0208";
+      borderColor = "#AFFF00";
+      textColor = "#AFFF00";
       extraConfig = ''
-        [urgency=low]
-        border-color=#282a36
-
-        [urgency=normal]
-        border-color=#f1fa8c
-
         [urgency=high]
-        border-color=#ff5555
+        background-color=#002B36
+        border-color=#DC322F
       '';
     };
 
     home.packages = with pkgs; [
-      dunst
+      # dunst
       # fnott
       # swaynotificationcenter
       libnotify
