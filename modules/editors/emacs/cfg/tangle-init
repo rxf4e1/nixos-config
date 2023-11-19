@@ -1,4 +1,0 @@
-#!usr/bin/env bash
-
-./emacs-batch-tangle ./config.org
-# ./emacs-batch-tangle init.org

@@ -10,13 +10,13 @@
                               (time-subtract (current-time) before-init-time)))
                      gcs-done)))
 
-(defvar elpaca-installer-version 0.5)
+(defvar elpaca-installer-version 0.6)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
                               :ref nil
-                              :files (:defaults (:exclude "extensions"))
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
@@ -65,14 +65,14 @@
 
 ;; load config file
 (require 'ob-tangle)
-;; (org-babel-load-file (expand-file-name "./config.org" user-emacs-directory))
-;; (add-hook 'elpaca-after-init-hook (lambda () (load-file "./config.el")))
+(org-babel-load-file (expand-file-name "./config.org" user-emacs-directory))
+(add-hook 'elpaca-after-init-hook (lambda () (load-file "./config.el")))
 
-(let ((config-dot-el (concat user-emacs-directory "config.el"))
-      (config-dot-org (concat user-emacs-directory "config.org")))
-  (if (not (file-exists-p config-dot-el))
-      (org-babel-tangle-file config-dot-org))
-  (load-file config-dot-el))
+;; (let ((config-dot-el (concat user-emacs-directory "config.el"))
+;;       (config-dot-org (concat user-emacs-directory "config.org")))
+;;   (if (not (file-exists-p config-dot-el))
+;;       (org-babel-tangle-file config-dot-org))
+;;   (load-file config-dot-el))
 
 ;;END OF INIT FILE
 ;; (setq elpaca-after-init-time (current-time)) ;; prevents `elpaca-after-init-hook` from running later.
