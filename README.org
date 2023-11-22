@@ -27,6 +27,13 @@ then i usually set some variables to help in the process:
   r=/dev/disk/by-id/<disk>-part3
 #+end_src
 ** Formating
+In case you want to enable filesystem encryption, there's a workaround
+for a bug affecting NixOS 23.05.
+#+begin_example
+nix-env -iA nixos.keyutils
+keyctl link @u @s
+#+end_example
+
 Since i use =UEFI boot= i format my efi partition as =vfat=.
 #+begin_src shell
   # EFIBOOT
@@ -45,6 +52,7 @@ Since i use =UEFI boot= i format my efi partition as =vfat=.
 The process to format the bcachefs filesystem is simple and it varies
 depending on use case. When bcachefs format command finishes, it will
 ask to put your passwd for encryption.
+
 ** Mounting
 Since we have encrypted our root partition we have to unlock it before
 start to mount the system.
