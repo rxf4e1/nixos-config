@@ -29,10 +29,10 @@ then i usually set some variables to help in the process:
 ** Formating
 In case you want to enable filesystem encryption, there's a workaround
 for a bug affecting NixOS 23.05.
-#+begin_example
+#+begin_src shell
 nix-env -iA nixos.keyutils
 keyctl link @u @s
-#+end_example
+#+end_src
 
 Since i use =UEFI boot= i format my efi partition as =vfat=.
 #+begin_src shell
