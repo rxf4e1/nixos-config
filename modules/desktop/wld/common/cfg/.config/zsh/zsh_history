@@ -1,0 +1,4 @@
+: 1700615259:0;rebuild
+: 1700615605:0;zpool status
+: 1700615625:0;zpool list
+: 1700615652:0;zpool iostat

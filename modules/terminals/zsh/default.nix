@@ -1,5 +1,5 @@
 {
-  pkgs,
+  # pkgs,
   lib,
   config,
   ...
@@ -14,7 +14,7 @@ in {
       enable = true;
       dotDir = ".config/zsh";
       history = {
-        path = "\${XDG_CONFIG_HOME}/.config/zsh/zsh_history";
+        path = ".config/zsh/zsh_history";
         expireDuplicatesFirst = true;
         extended = true;
         ignoreDups = true;

@@ -17,7 +17,7 @@ in {
       borderSize = 2;
       defaultTimeout = 2048;
       format = "<b>%s</b>\\n%b";
-      font = "Monospace 9";
+      font = "JetBrains Mono 9";
       # format = "";
       # groupBy = "";
       # height = 200;
@@ -43,7 +43,6 @@ in {
       # swaynotificationcenter
       libnotify
       inotify-tools
-      # mako
     ];
   };
 }

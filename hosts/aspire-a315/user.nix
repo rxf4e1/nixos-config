@@ -53,9 +53,9 @@
 
     # CLI
     cli = {
-      broot.enable = true;
+      broot.enable = false;
       direnv.enable = true;
-      fzf.enable = true;
+      fzf.enable = false;
       ipfs.enable = false;
       git.enable = true;
       gpg.enable = true;

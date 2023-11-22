@@ -54,12 +54,12 @@ with lib; let
   media-tools = with pkgs; [
     imagemagick
     ffmpeg
-    mpv
-    pulsemixer
+    # mpv
+    # pulsemixer
   ];
 
   file-tools = with pkgs; [
-    pcmanfm
+    # pcmanfm
     poppler
     zathura
   ];
@@ -72,16 +72,15 @@ with lib; let
   ];
 
   irc-tools = with pkgs; [
-    irssi
-    # weechat
-    ncurses
+    # irssi
+    weechat
   ];
 
   cfg = config.modules.packages;
 in {
   options.modules.packages = {enable = mkEnableOption "Packages";};
   config = mkIf cfg.enable {
-    # manual.manpages.enable = false;
+    manual.manpages.enable = false;
     home.packages = with pkgs;
       [
         bc
@@ -93,7 +92,6 @@ in {
         zip
         killall
         lolcat
-        stow
       ]
       ++ code-tools
       ++ file-tools

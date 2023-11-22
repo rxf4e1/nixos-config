@@ -1,14 +1,8 @@
 {lib,pkgs, ...}: {
   # Remove unecessary preinstalled packages
   environment.defaultPackages = [];
-
-  imports = [
-    # ./acme.nix
-    # ./lighttpd.nix
-    # ./virt.nix
-    # ./searx.nix
-    # ./opencl.nix
-  ];
+  
+  imports = [ ./zfs.nix ];
 
   environment = {
     # Generic Packages (others are managed in `packages.nix`)
@@ -40,12 +34,12 @@
       NIXOS_OZONE_WL = "1";
 
       # Force AMDVLK - (opensource)
-      AMD_VULKAN_ICD = "AMDVLK";
-      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
+      # AMD_VULKAN_ICD = "AMDVLK";
+      # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
 
       # Force RADV - (proprietary)
-      # AMD_VULKAN_ICD = "RADV";
-      # VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+      AMD_VULKAN_ICD = "RADV";
+      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
 
       # FIX:
       __GL_SHADER_DISK_CACHE_PATH = "$XDG_CACHE_HOME/AMD";
@@ -57,12 +51,8 @@
     enableDefaultPackages = true;
     fontDir.enable = true;
     packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = ["NerdFontsSymbolsOnly"];
-      })
-      cozette
-      # fira-code
-      # fira-code-symbols
+      (nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
+      terminus-nerdfont
       inconsolata
       liberation_ttf
       jetbrains-mono
@@ -72,7 +62,7 @@
       hinting.autohint = true;
       defaultFonts = {
         emoji = ["joypixels"];
-        monospace = ["Jetbrains Mono"];
+        monospace = ["Terminess Nerd Font Mono"];
       };
     };
   };
@@ -83,7 +73,7 @@
       enable = true;
       wlr.enable = true;
       extraPortals = [
-        # pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-wlr
         # pkgs.xdg-desktop-portal-hyprland
       ];
@@ -95,6 +85,7 @@
     allowUnfree = true;
     joypixels.acceptLicense = true;
   };
+
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -118,11 +109,15 @@
 
   # Boot settings: clean /tmp/, latest kernel and bootloader
   boot = {
+    kernel.sysctl = {
+      "vm.swappiness" = 10;
+      "vm.vfs_cache_pressure" = 50;
+      "vm.dirty_background_ratio" = 1;
+    };
     readOnlyNixStore = true;
-    supportedFilesystems = ["bcachefs" "ntfs"];
+    supportedFilesystems = ["ntfs"];
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
-
     loader = {
       systemd-boot.enable = true;
       systemd-boot.editor = false;
@@ -130,16 +125,9 @@
       efi.canTouchEfiVariables = true;
       timeout = 2;
     };
-    
     plymouth = {
       enable = false;
-      # theme = "breeze";
-    };
-
-    kernel.sysctl = {
-      "vm.swappiness" = 10;
-      "vm.vfs_cache_pressure" = 50;
-      "vm.dirty_background_ratio" = 1;
+      theme = "breeze";
     };
   };
 
@@ -157,7 +145,6 @@
   users = {
     users.rxf4e1 = {
       isNormalUser = true;
-      # shell = pkgs.nushell;
       shell = pkgs.zsh;
       uid = 1000;
       group = "users";
@@ -192,14 +179,8 @@
           EnableNetworkConfiguration = true;
           # AddressRandomization = "network";
         };
-        # Scan.DisablePeriodicScan = true;
-        Settings = {
-          # IPv6 enabled by default since v2.0.
-          # EnableIPv6 = true;
-          # AlwaysRandomizeAddress = true;
-        };
+        # Settings = { AlwaysRandomizeAddress = true; };
         Network = {
-          # NameResolvingService = "resolvconf";
           NameResolvingService = "systemd";
         };
       };
@@ -207,8 +188,8 @@
 
     firewall = {
       enable = false;
-         allowedTCPPorts = [ 80 443 10123];
-         allowedUDPPorts = [ 80 443 10123];
+         allowedTCPPorts = [ 80 443 ];
+         allowedUDPPorts = [ 80 443 ];
          allowPing = true;
     };
   };
@@ -231,8 +212,8 @@
     protectKernelImage = true;
   };
 
-  programs.dconf.enable = true;
   programs.adb.enable = true;
+  programs.dconf.enable = true;
   programs.light.enable = true;
   programs.zsh.enable = true;
 
@@ -242,7 +223,7 @@
       enable = true;
       packages = [pkgs.dconf];
     };
-    fstrim.enable = true;
+    # fstrim.enable = true;
     fwupd.enable = true;
     udev = {enable = true;};
     journald.console = "/dev/tty12";
