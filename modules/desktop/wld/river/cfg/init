@@ -183,7 +183,7 @@ riverctl csd-filter-remove app-id emacs
 #################################################
 # WIDGETS
 #################################################
-spawn_once mako
+spawn_once dunst
 spawn_once kanshi
 spawn_once "foot --server"
 spawn_once "wlsunset -l -23.6 -L -43.5"

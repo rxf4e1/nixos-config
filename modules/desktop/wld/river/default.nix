@@ -47,8 +47,8 @@ in {
       home.packages = with pkgs; [
         dbus-river-environment
         river
-        swayimg
-        swaybg
+        # swayimg
+        # swaybg
         wrapped-river
       ];
       home.sessionVariables = {

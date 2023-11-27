@@ -52,7 +52,6 @@
     fontDir.enable = true;
     packages = with pkgs; [
       (nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
-      terminus-nerdfont
       inconsolata
       liberation_ttf
       jetbrains-mono
@@ -62,7 +61,7 @@
       hinting.autohint = true;
       defaultFonts = {
         emoji = ["joypixels"];
-        monospace = ["Terminess Nerd Font Mono"];
+        monospace = ["JetBrains Mono"];
       };
     };
   };
@@ -72,11 +71,16 @@
     portal = {
       enable = true;
       wlr.enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-wlr
-        # pkgs.xdg-desktop-portal-hyprland
-      ];
+      config = {
+        common.default = ["wlr" "gtk"];
+        hyprland.default = ["hyprland"];
+        river.default = ["wlr" "gtk"];
+      };
+      # extraPortals = [
+      #   # pkgs.xdg-desktop-portal-gtk
+      #   # pkgs.xdg-desktop-portal-wlr
+      #   # pkgs.xdg-desktop-portal-hyprland
+      # ];
     };
   };
 

@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   config,
@@ -9,7 +8,7 @@ with lib; let
   wrapped-hl = pkgs.writeShellScriptBin "wrapped-hl" ''
     cd ~
 
-    export LIBSEAT_BACKEND=logind
+    export MOZ_ENABLE_WAYLAND=1
 
     if [ -z $DISPLAY ]; then
       exec dbus-run-session Hyprland
@@ -41,8 +40,7 @@ in {
       dbus-hyprland-environment
       hyprland
       hyprpaper
-      swayimg
-      xwayland
+      # swayimg
       xorg.xprop
       wrapped-hl
     ];

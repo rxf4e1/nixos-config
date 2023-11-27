@@ -15,9 +15,10 @@ with lib; let
   ];
 
   zig-tools = with pkgs; [
-    # zig
+    zig
     zig-shell-completions
-    # zls
+    zls
+    ztags
   ];
 
   rust-tools = with pkgs; [
@@ -45,7 +46,6 @@ with lib; let
     pandoc
     python3
     perl
-    # go
     bun
     # deno
     # nodejs
@@ -53,13 +53,10 @@ with lib; let
 
   media-tools = with pkgs; [
     imagemagick
-    ffmpeg
-    # mpv
-    # pulsemixer
+    ffmpeg_5-full
   ];
 
   file-tools = with pkgs; [
-    # pcmanfm
     poppler
     zathura
   ];
@@ -69,11 +66,6 @@ with lib; let
     nix-prefetch-git
     nix-index
     nil
-  ];
-
-  irc-tools = with pkgs; [
-    # irssi
-    weechat
   ];
 
   cfg = config.modules.packages;
@@ -92,6 +84,7 @@ in {
         zip
         killall
         lolcat
+        weechat
       ]
       ++ code-tools
       ++ file-tools
@@ -101,7 +94,6 @@ in {
       ++ zig-tools
       ++ c-tools
       ++ lua-tools
-      ++ irc-tools
       ++ nix-tools;
     home.shellAliases = {
       ed = "rlwrap ed --extended-regexp --prompt=': '";

@@ -11,7 +11,7 @@
     # Editors
     editor = {
       emacs.enable = true;
-      helix.enable = false;
+      helix.enable = true;
       kakoune.enable = false;
       micro.enable = false;
       nano.enable = true;
@@ -23,7 +23,7 @@
       emu = {
         foot.enable = true;
         kitty.enable = false;
-        tmux.enable = true;
+        tmux.enable = false;
         wezterm.enable = false;
       };
       shell = {
@@ -40,9 +40,9 @@
     desktop = {
       wld = {
         common.enable = true;
-        hikari.enable = false;
-        hyprland.enable = false;
-        river.enable = true;
+        # cagereak.enable = false;
+        hyprland.enable = true;
+        river.enable = false;
         sway.enable = false;
         notify.enable = true;
       };
