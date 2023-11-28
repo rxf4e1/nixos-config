@@ -1,4 +1,4 @@
-theme = "tokyonight"
+theme = "solarized_dark"
 
 [editor]
 auto-completion = true
@@ -59,15 +59,8 @@ mode.normal = "NOR"
 mode.insert = "INS"
 mode.select = "SEL"
 
-# [editor.line-number]
-# normal = "relative"
-# insert = "absolute"
-
 ################################################################
 ## Keybindings:
 ##
 [keys.normal]
-
 [keys.insert]
-j = { k = "normal_mode" }
-k = { j = "normal_mode" }
