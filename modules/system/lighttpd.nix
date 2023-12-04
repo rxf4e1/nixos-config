@@ -31,12 +31,12 @@
       "mod_auth"
     ];
     extraConfig = ''
-        # server.bind = "10.0.0.10"
-        # server.port = "80"
+        server.bind = "10.0.0.13"
+        server.port = "8888"
         # server.use-ipv6 = "enable"
-        $SERVER["socket"] == "[2002:c0a8:f03:1::1002]:80" {
-            server.document-root = "/srv/www"
-        }
+        # $SERVER["socket"] == "[2002:c0a8:f03:1::1002]:80" {
+            # server.document-root = "/srv/www"
+        # }
     '';
   };
 }

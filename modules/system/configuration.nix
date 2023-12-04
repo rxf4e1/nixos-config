@@ -2,7 +2,10 @@
   # Remove unecessary preinstalled packages
   environment.defaultPackages = [];
   
-  imports = [ ./zfs.nix ];
+  imports = [
+    # ./acme.nix
+    ./zfs.nix
+  ];
 
   environment = {
     # Generic Packages (others are managed in `packages.nix`)
@@ -117,6 +120,7 @@
       "vm.swappiness" = 10;
       "vm.vfs_cache_pressure" = 50;
       "vm.dirty_background_ratio" = 1;
+      "vm.max_map_count" = 1048576;
     };
     readOnlyNixStore = true;
     supportedFilesystems = ["ntfs"];
@@ -191,9 +195,9 @@
     };
 
     firewall = {
-      enable = false;
-         allowedTCPPorts = [ 80 443 ];
-         allowedUDPPorts = [ 80 443 ];
+      enable = true;
+         allowedTCPPorts = [ 80 443 10123  ];
+         allowedUDPPorts = [ 80 443 10123 ];
          allowPing = true;
     };
   };

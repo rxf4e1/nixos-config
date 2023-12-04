@@ -32,11 +32,11 @@ in {
       listen = [
         {
           # 0x101.duckdns.org
-          addr = "[2804:431:c7c9:c323:d652:c94:fbb0:e7b6]";
+          addr = "[::1]";
           port = 10123;
         }
       ];
-      root = "/srv/www/optin";
+      root = "/srv/www";
     };
     # defaultListenAddresses = ["10.0.0.10" "[2804:431:c7c8:a8de:a663:a1ff:fe25:aa98]"];
     # defaultHTTPListenPort = 10123;

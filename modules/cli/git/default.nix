@@ -9,6 +9,9 @@ with lib; let
 in {
   options.modules.cli.git = {enable = mkEnableOption "git";};
   config = mkIf cfg.enable {
+
+    home.packages = [ pkgs.pijul ];
+    
     programs.git = {
       enable = true;
       userName = "rxf4e1";
